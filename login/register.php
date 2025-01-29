@@ -80,6 +80,11 @@
                     <label for="contrasena" class="form-label">Contraseña</label>
                     <input type="password" name="contrasena" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" required>
                 </div>
+
+                <div class="mb-3">
+                    <label for="confirmar_contrasena" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" name="confirmar_contrasena" class="form-control" id="confirmar_contrasena" placeholder="Ingrese su contraseña" required>
+                </div>
                 <button type="submit" class="btn btn-primary w-100 mb-3">Registrar</button>
 
                 <div class="text-center mt-2">

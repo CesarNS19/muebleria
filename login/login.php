@@ -63,14 +63,13 @@
         <div class="row w-100">
             <div class="col-md-8 mx-auto">
                 <div class="row login-container">
-                    <!-- Imagen directamente visible -->
                     <div class="col-md-6 d-none d-md-block bg-image">
                         <img src="../img/login.jpeg" alt="Mueblería">
                     </div>
                     <div class="col-md-6 p-5">
                         <h2 class="text-center login-title mb-4">Iniciar Sesión</h2>
                         
-                        <form action="login_proccess.php" method="POST">
+                        <form action="login_process.php" method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo" required>
