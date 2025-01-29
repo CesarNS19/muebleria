@@ -116,12 +116,10 @@ $title = "Muebleria ┃ Dashboard";
 
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Addons
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
@@ -142,40 +140,31 @@ $title = "Muebleria ┃ Dashboard";
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
         </ul>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
@@ -189,8 +178,8 @@ $title = "Muebleria ┃ Dashboard";
                         </div>
                     </form>
 
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        
                     <?php
                         if (isset($_SESSION['nombre'], $_SESSION['apellido_paterno'], $_SESSION['apellido_materno'])) {
                             $fullName = $_SESSION['nombre'] . ' ' . $_SESSION['apellido_paterno'] . ' ' . $_SESSION['apellido_materno'];
@@ -205,7 +194,7 @@ $title = "Muebleria ┃ Dashboard";
                             echo "<a class='nav-link' href='../login/login.php' style='color: black; font-size: 18px; text-decoration: none; font-weight: 600;'>Log In</a>";
                         }
                     ?>
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+
                         <li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
