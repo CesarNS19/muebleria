@@ -48,7 +48,7 @@
 <body>
     <div class="container d-flex align-items-center justify-content-center min-vh-100">
         <div class="register-container">
-            <h2 class="text-center register-title mb-4">Registro de Cliente</h2>
+            <h2 class="text-center register-title mb-4">Registro</h2>
 
             <form action="register_process.php" method="POST">
                 <div class="mb-3">

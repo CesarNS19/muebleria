@@ -1,7 +1,7 @@
 <?php
 require '../../../mysql/connection.php';
 
-$title = "Salas";
+$title = "Comedores";
 $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.tamaño, p.capacidad, p.precio
         FROM productos p
         JOIN categorias c ON p.id_categoria = c.id_categoria
