@@ -1,96 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Mueblería ┃ Login</title>
 
-    <title>Muebleria ┃ Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: 'Nunito', sans-serif;
+        }
 
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+        .login-container {
+            background-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+        }
 
+        .bg-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px 0 0 15px;
+        }
+
+        .form-label {
+            color: #0056b3;
+        }
+
+        .btn-primary {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-primary:hover {
+            background-color: #004494;
+            border-color: #004494;
+        }
+
+        a.link-secondary {
+            color: #007bff;
+        }
+
+        a.link-secondary:hover {
+            color: #0056b3;
+        }
+
+        .login-title {
+            color: #0056b3;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-primary">
-
-    <div class="container">
-
-        <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                                    </div>
-                                    <form class="user">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
-                                </div>
+<body>
+    <div class="container d-flex align-items-center justify-content-center min-vh-100">
+        <div class="row w-100">
+            <div class="col-md-8 mx-auto">
+                <div class="row login-container">
+                    <!-- Imagen directamente visible -->
+                    <div class="col-md-6 d-none d-md-block bg-image">
+                        <img src="../img/login.jpeg" alt="Mueblería">
+                    </div>
+                    <div class="col-md-6 p-5">
+                        <h2 class="text-center login-title mb-4">Iniciar Sesión</h2>
+                        
+                        <form action="login_proccess.php" method="POST">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo" required>
                             </div>
-                        </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                                <label class="form-check-label" for="remember">
+                                    Recordarme
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+
+                            <div class="text-center">
+                                <a href="forgot-password.html" class="link-secondary text-decoration-none">¿Olvidaste tu contraseña?</a>
+                            </div>
+                            <div class="text-center mt-2">
+                                <a href="register.php" class="link-secondary text-decoration-none">¿No tienes una cuenta? Regístrate aquí</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <script src="../js/sb-admin-2.min.js"></script>
-
+    <!-- Bootstrap JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

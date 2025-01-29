@@ -6,7 +6,7 @@ $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre
         FROM productos p
         JOIN categorias c ON p.id_categoria = c.id_categoria
         JOIN marcas m ON p.id_marca = m.id_marca
-        WHERE c.nombre = 'salas'";
+        WHERE c.nombre = 'sillas'";
 $result = $conn->query($sql);
 ?>
 <title><?php echo $title; ?></title>

@@ -6,7 +6,7 @@ $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre
         FROM productos p
         JOIN categorias c ON p.id_categoria = c.id_categoria
         JOIN marcas m ON p.id_marca = m.id_marca
-        WHERE c.nombre = 'salas'";
+        WHERE c.nombre = 'alacenas' OR c.nombre = 'gabinetes'";
 $result = $conn->query($sql);
 ?>
 <title><?php echo $title; ?></title>
@@ -20,6 +20,7 @@ $result = $conn->query($sql);
                         <div class="col-md-4 mb-4">
                             <div class="card h-100">
                                 <div class="card-body">
+                                    <p class="card-title">Categoía: ' . $row["categoria"] . '</p>
                                     <p class="card-text">Marca: ' . $row["marca"] . '</p>
                                     <p class="card-text">Descripción: ' . $row["descripcion"] . '</p>
                                     <ul class="list-group list-group-flush">

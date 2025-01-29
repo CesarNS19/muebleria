@@ -1,57 +1,44 @@
+<?php
+$title = "Muebleria ┃ Dashboard";
+?>
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <title><?php echo $title; ?></title>
 
-    <title>Muebleria ┃ Dashboard</title>
-
-    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
-    <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-couch"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Mueblería París</div>
             </a>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-chart-line"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
@@ -63,27 +50,40 @@
                     <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/rooms.php')">
                         <i class="fas fa-couch"></i> Salas
                     </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/bedrooms.php')">
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/canteens.php')">
                         <i class="fas fa-utensils"></i> Comedores
                     </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/rooms.php')">
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/bedrooms.php')">
                         <i class="fas fa-bed"></i> Recámaras
                     </a>
                     <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/office.php')">
                         <i class="fas fa-briefcase"></i> Oficina
                     </a>
-                    <a class="collapse-item" href="#"><i class="fas fa-tv"></i> Electrodomésticos</a>
-                    <a class="collapse-item" href="#"><i class="fas fa-paint-brush"></i> Decoración</a>
-                    <a class="collapse-item" href="#"><i class="fas fa-layer-group"></i> Camas y colchones</a> 
-                    <a class="collapse-item" href="#"><i class="fas fa-tags"></i> Accesorios</a>
-                    <a class="collapse-item" href="#"><i class="fas fa-tree"></i> Muebles de exterior</a>
-                    <a class="collapse-item" href="#"><i class="fas fa-warehouse"></i> Alacenas y gabinetes</a>
-                    <a class="collapse-item" href="#"><i class="fas fa-chair"></i> Sillas</a>
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/appliances.php')">
+                        <i class="fas fa-tv"></i> Electrodomésticos
+                    </a>
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/decoration.php')">
+                        <i class="fas fa-paint-brush"></i> Decoración
+                    </a>
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/beds.php')">
+                        <i class="fas fa-layer-group"></i> Camas y colchones
+                    </a> 
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/accesories.php')">
+                        <i class="fas fa-tags"></i> Accesorios
+                    </a>
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/furniture.php')">
+                        <i class="fas fa-tree"></i> Muebles de exterior
+                    </a>
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/cupboards.php')">
+                        <i class="fas fa-warehouse"></i> Alacenas y gabinetes
+                    </a>
+                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/chairs.php')">
+                        <i class="fas fa-chair"></i> Sillas
+                    </a>
                 </div>
             </div>
         </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -98,7 +98,6 @@
                 </div>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
@@ -116,7 +115,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="login/login.php">Login</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
@@ -201,7 +200,7 @@
                                     Profile
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="login/login.php">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -212,29 +211,7 @@
 
                 </nav>
 
-                <!-- Begin Page Content -->
-                <div id="main-content" class="container-fluid">
-                        
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="Login/login.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="main-content" class="container-fluid">
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -251,12 +228,16 @@
                 method: 'GET',
                 success: function (data) {
                     $('#main-content').html(data);
+
+                    let pageTitle = $('#main-content title').text();
+                    $('title').text("Mueblería ┃ " + pageTitle);
                 },
                 error: function () {
                     alert('Error al cargar el contenido');
                 }
             });
         }
+
     </script>
 
 </body>
