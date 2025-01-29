@@ -117,7 +117,9 @@ $result = $conn->query($sql);
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="src/admin/shopping_cart/shopping_cart.php">Mi carrito</a>
+                        <a class="collapse-item" href="#" onclick="loadContent('src/admin/shopping_cart/shopping_cart.php')">
+                        <i class="fas fa-fw fa-shopping-cart"></i> Mi carrito
+                    </a>
                     </div>
                 </div>
             </li>
