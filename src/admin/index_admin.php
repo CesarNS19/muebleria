@@ -71,38 +71,8 @@ $result = $conn->query($sql);
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/rooms.php')">
-                        <i class="fas fa-couch"></i> Salas
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/canteens.php')">
-                        <i class="fas fa-utensils"></i> Comedores
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/bedrooms.php')">
-                        <i class="fas fa-bed"></i> Recámaras
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/office.php')">
-                        <i class="fas fa-briefcase"></i> Oficina
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/appliances.php')">
-                        <i class="fas fa-tv"></i> Electrodomésticos
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/decoration.php')">
-                        <i class="fas fa-paint-brush"></i> Decoración
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/beds.php')">
-                        <i class="fas fa-layer-group"></i> Camas y colchones
-                    </a> 
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/accesories.php')">
-                        <i class="fas fa-tags"></i> Accesorios
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/furniture.php')">
-                        <i class="fas fa-tree"></i> Muebles de exterior
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/cupboards.php')">
-                        <i class="fas fa-warehouse"></i> Alacenas y gabinetes
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/chairs.php')">
-                        <i class="fas fa-chair"></i> Sillas
+                    <a class="collapse-item" href="#" onclick="loadContent('categories/categories.php')">
+                        <i class="fas fa-layer-group"></i>Categorias
                     </a>
                 </div>
             </div>

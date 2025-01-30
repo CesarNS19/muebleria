@@ -9,10 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $conn->prepare("
         SELECT id, email, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus
         FROM (
-            SELECT id_cliente AS id, email, contrasena, rol, nombre AS nombre, apellido_paterno, apellido_materno, estatus
+            SELECT id_cliente AS id, email AS email, contrasena, rol, nombre AS nombre, apellido_paterno, apellido_materno, estatus
             FROM clientes
             UNION
-            SELECT id_empleado AS id, email, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus
+            SELECT id_empleado AS id, email AS email, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus
             FROM empleados
         ) AS usuarios
         WHERE email = ?
@@ -34,15 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['apellido_paterno'] = $row['apellido_paterno'];
                 $_SESSION['apellido_materno'] = $row['apellido_materno'];
 
-                if (strtolower($row['rol']) === 'admin') {
-                    $_SESSION['id_cliente'] = $row['id'];
-                    header("Location: ../src/admin/index_admin.php");
-                } elseif (strtolower($row['rol']) === 'empleado') {
-                    $_SESSION['id_empleado'] = $row['id'];
-                    header("Location: ../src/employees/index.php");
-                } else {
-                    $_SESSION['id_cliente'] = $row['id'];
-                    header("Location: ../index.php");
+                $rol = strtolower(trim($row['rol']));
+
+                switch ($rol) {
+                    case 'admin':
+                        $_SESSION['id_cliente'] = $row['id'];
+                        header("Location: ../src/admin/index_admin.php");
+                        break;
+                    case 'empleado':
+                        $_SESSION['id_empleado'] = $row['id'];
+                        header("Location: ../src/employees/index.php");
+                        break;
+                    default:
+                        $_SESSION['id_cliente'] = $row['id'];
+                        header("Location: ../index.php");
+                        break;
                 }
                 exit();
             }
