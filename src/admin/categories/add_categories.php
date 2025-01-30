@@ -1,15 +1,15 @@
 <?php
-require '../../../login/connection.php';
+require '../../../mysql/connection.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $categoria = $_POST['categoria'];
+    $categoria = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
 
-    $sql = "INSERT INTO categorias (categoria, descripcion)
+    $sql = "INSERT INTO categorias (nombre, descripcion)
             VALUES (?, ?)";
     
-    $stmt = $con->prepare($sql);
+    $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $categoria, $descripcion);
 
     if ($stmt->execute()) {
@@ -25,5 +25,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 
-$con->close();
+$conn->close();
 ?>
