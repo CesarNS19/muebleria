@@ -78,17 +78,32 @@ $result = $conn->query($sql);
             </div>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-globe"></i>
+                <span>Marcas</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#" onclick="loadContent('brands/brands.php')">
+                        <i class="fas fa-globe"></i> Marcas
+                    </a>
+                </div>
+            </div>
+        </li>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-shopping-cart"></i>
-                    <span>Mi Carrito</span>
+                    <i class="fas fa-box"></i>
+                    <span>Productos</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#" onclick="loadContent('src/admin/shopping_cart/shopping_cart.php')">
-                        <i class="fas fa-fw fa-shopping-cart"></i> Mi carrito
+                        <a class="collapse-item" href="#" onclick="loadContent('products/products.php')">
+                        <i class="fas fa-box"></i> Productos
                     </a>
                     </div>
                 </div>
@@ -101,12 +116,12 @@ $result = $conn->query($sql);
             </div>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse"
+                    aria-expanded="true" aria-controls="collapse">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapse" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login/login.php">Login</a>

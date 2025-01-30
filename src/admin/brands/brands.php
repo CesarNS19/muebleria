@@ -1,6 +1,6 @@
 <?php
 require '../../../mysql/connection.php';
-$title = "Admin Categories";
+$title = "Admin Brands";
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,22 +13,22 @@ $title = "Admin Categories";
 <div id="Alert"></div>
 
 <section class="company-header">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoriesModal" style="float: right; margin: 10px;">
-            Agregar Categoria
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBrandModal" style="float: right; margin: 10px;">
+            Agregar Marca
         </button><br/>
     </section><br/>
 
 <!-- Modal para añadir categoria -->
-<div class="modal fade" id="addCategoriesModal" tabindex="-1" role="dialog" aria-labelledby="addCategoriesModalLabel" aria-hidden="true">
+<div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog" aria-labelledby="addBrandModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCategoriesModalLabel">Agregar Nueva Categoría</h5>
+                <h5 class="modal-title" id="addBrandModalLabel">Agregar Nueva Marca</h5>
             </div>
-            <form action="categories/add_categories.php" method="POST">
+            <form action="brands/add_brands.php" method="POST">
                 <div class="modal-body">
                     <div class="form-group mb-3">
-                        <label for="">Categoría</label>
+                        <label for="">Marca</label>
                         <input type="text" name="nombre" class="form-control" required>
                     </div>
                     <div class="form-group mb-3">
@@ -38,7 +38,7 @@ $title = "Admin Categories";
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Agregar Categoría</button>
+                    <button type="submit" class="btn btn-primary">Agregar Marca</button>
                 </div>
             </form>
         </div>
@@ -47,19 +47,19 @@ $title = "Admin Categories";
 
  <!-- Tabla de Categorias -->
  <section class="services-table container my-4">
-    <h2 class="text-center mb-4">Administrar Categorías</h2>
+    <h2 class="text-center mb-4">Administrar Marcas</h2>
     <div class="table-responsive">
         <table class="table table-bordered table-hover text-center">
             <thead class="thead-dark">
                 <tr>
-                    <th>Nombre de la categoría</th>
-                    <th>Descripción de la categoría</th>
+                    <th>Nombre de la Marca</th>
+                    <th>Descripción de la Marca</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM categorias";
+                $sql = "SELECT * FROM marcas";
                     $result = $conn->query($sql);
                     
                     if ($result->num_rows > 0) {
@@ -68,17 +68,17 @@ $title = "Admin Categories";
                             echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['descripcion']) . "</td>";
                             echo "<td>";
-                            echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar categoría'>
+                            echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar marca'>
                                     <i class='fas fa-edit'></i>
                                 </button>
-                                <a href='delete_service.php?id=" . $row['id_categoria'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta categoría?\")' title='Eliminar categoría'>
+                                <a href='delete_service.php?id=" . $row['id_marca'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta marca?\")' title='Eliminar Marca'>
                                     <i class='fas fa-trash'></i>
                                 </a>";
                             echo "</td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='6'>No se encontrarón categorías</td></tr>";
+                        echo "<tr><td colspan='6'>No se encontrarón marcas</td></tr>";
                     }
                 ?>
             </tbody>
