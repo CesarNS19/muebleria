@@ -36,10 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if (strtolower($row['rol']) === 'admin') {
                     $_SESSION['id_cliente'] = $row['id'];
-                    header("Location: ../src/admin/index.php");
+                    header("Location: ../src/admin/index_admin.php");
                 } elseif (strtolower($row['rol']) === 'empleado') {
                     $_SESSION['id_empleado'] = $row['id'];
-                    header("Location: ../employees/index.php");
+                    header("Location: ../src/employees/index.php");
                 } else {
                     $_SESSION['id_cliente'] = $row['id'];
                     header("Location: ../index.php");
