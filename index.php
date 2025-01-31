@@ -27,6 +27,7 @@ $result = $conn->query($sql);
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,7 +52,7 @@ $result = $conn->query($sql);
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-couch"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Mueblería París</div>
+                <div class="sidebar-brand-text mx-3">Mueblería</div>
             </a>
 
             <hr class="sidebar-divider my-0">
@@ -64,49 +65,52 @@ $result = $conn->query($sql);
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-layer-group"></i>
-                <span>Categorías</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/rooms.php')">
-                        <i class="fas fa-couch"></i> Salas
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/canteens.php')">
-                        <i class="fas fa-utensils"></i> Comedores
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/bedrooms.php')">
-                        <i class="fas fa-bed"></i> Recámaras
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/office.php')">
-                        <i class="fas fa-briefcase"></i> Oficina
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/appliances.php')">
-                        <i class="fas fa-tv"></i> Electrodomésticos
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/decoration.php')">
-                        <i class="fas fa-paint-brush"></i> Decoración
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/beds.php')">
-                        <i class="fas fa-layer-group"></i> Camas y colchones
-                    </a> 
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/accesories.php')">
-                        <i class="fas fa-tags"></i> Accesorios
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/furniture.php')">
-                        <i class="fas fa-tree"></i> Muebles de exterior
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/cupboards.php')">
-                        <i class="fas fa-warehouse"></i> Alacenas y gabinetes
-                    </a>
-                    <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/chairs.php')">
-                        <i class="fas fa-chair"></i> Sillas
-                    </a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Categorías</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/rooms.php')">
+                            <i class="fas fa-couch"></i> Salas
+                        </a>
+                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/canteens.php')">
+                            <i class="fas fa-utensils"></i> Comedores
+                        </a>
+                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/bedrooms.php')">
+                            <i class="fas fa-bed"></i> Recámaras
+                        </a>
+                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/office.php')">
+                            <i class="fas fa-briefcase"></i> Oficina
+                        </a>
+                        <a class="collapse-item" href="#"
+                            onclick="loadContent('src/customers/products/appliances.php')">
+                            <i class="fas fa-tv"></i> Electrodomésticos
+                        </a>
+                        <a class="collapse-item" href="#"
+                            onclick="loadContent('src/customers/products/decoration.php')">
+                            <i class="fas fa-paint-brush"></i> Decoración
+                        </a>
+                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/beds.php')">
+                            <i class="fas fa-layer-group"></i> Camas y colchones
+                        </a>
+                        <a class="collapse-item" href="#"
+                            onclick="loadContent('src/customers/products/accesories.php')">
+                            <i class="fas fa-tags"></i> Accesorios
+                        </a>
+                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/furniture.php')">
+                            <i class="fas fa-tree"></i> Muebles de exterior
+                        </a>
+                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/cupboards.php')">
+                            <i class="fas fa-warehouse"></i> Alacenas y gabinetes
+                        </a>
+                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/chairs.php')">
+                            <i class="fas fa-chair"></i> Sillas
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -117,9 +121,10 @@ $result = $conn->query($sql);
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#" onclick="loadContent('src/admin/shopping_cart/shopping_cart.php')">
-                        <i class="fas fa-fw fa-shopping-cart"></i> Mi carrito
-                    </a>
+                        <a class="collapse-item" href="#"
+                            onclick="loadContent('src/admin/shopping_cart/shopping_cart.php')">
+                            <i class="fas fa-fw fa-shopping-cart"></i> Mi carrito
+                        </a>
                     </div>
                 </div>
             </li>
@@ -190,7 +195,7 @@ $result = $conn->query($sql);
 
                     <ul class="navbar-nav ml-auto">
 
-                    <?php
+                        <?php
                         if (isset($_SESSION['nombre'], $_SESSION['apellido_paterno'], $_SESSION['apellido_materno'])) {
                             $fullName = $_SESSION['nombre'] . ' ' . $_SESSION['apellido_paterno'] . ' ' . $_SESSION['apellido_materno'];
 
@@ -215,32 +220,33 @@ $result = $conn->query($sql);
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">   
-                            </span>
-                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                </span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="login/login.php">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="login/login.php">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
 
-    <div id="main-content" class="container-fluid">
-        
-    <div class="container mt-5">
-        <div class="row">
-            <?php
+                <div id="main-content" class="container-fluid">
+
+                    <div class="container mt-5">
+                        <div class="row">
+                            <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo '
@@ -266,36 +272,36 @@ $result = $conn->query($sql);
             }
             $conn->close();
             ?>
-        </div>
-    </div>
+                        </div>
+                    </div>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js/sb-admin-2.min.js"></script>
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+                    <script src="vendor/jquery/jquery.min.js"></script>
+                    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <script src="js/sb-admin-2.min.js"></script>
+                    <script src="vendor/chart.js/Chart.min.js"></script>
+                    <script src="js/demo/chart-area-demo.js"></script>
+                    <script src="js/demo/chart-pie-demo.js"></script>
 
-    <script>
-        function loadContent(url) {
-            $.ajax({
-                url: url,
-                method: 'GET',
-                success: function (data) {
-                    $('#main-content').html(data);
+                    <script>
+                    function loadContent(url) {
+                        $.ajax({
+                            url: url,
+                            method: 'GET',
+                            success: function(data) {
+                                $('#main-content').html(data);
 
-                    let pageTitle = $('#main-content title').text();
-                    $('title').text("Mueblería ┃ " + pageTitle);
-                },
-                error: function () {
-                    alert('Error al cargar el contenido');
-                }
-            });
-        }
+                                let pageTitle = $('#main-content title').text();
+                                $('title').text("Mueblería ┃ " + pageTitle);
+                            },
+                            error: function() {
+                                alert('Error al cargar el contenido');
+                            }
+                        });
+                    }
 
-        document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
-    </script>
+                    document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    </script>
 
 </body>
 
