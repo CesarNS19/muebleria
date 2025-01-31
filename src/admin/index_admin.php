@@ -62,7 +62,9 @@ $result = $conn->query($sql);
             </li>
 
             <hr class="sidebar-divider">
-
+            <div class="sidebar-heading">
+                Productos
+            </div>
             <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
@@ -112,14 +114,14 @@ $result = $conn->query($sql);
             <hr class="sidebar-divider">
 
             <div class="sidebar-heading">
-                Addons
+                Ventas
             </div>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse"
                     aria-expanded="true" aria-controls="collapse">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Ventas</span>
                 </a>
                 <div id="collapse" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
