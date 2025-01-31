@@ -253,7 +253,5 @@ $result = $conn->query($sql);
 
         document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
     </script>
-
 </body>
-
 </html>
