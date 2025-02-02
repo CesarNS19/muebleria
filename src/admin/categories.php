@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../../mysql/connection.php';
 require 'slidebar.php';
 $title = "Muebleria ┃ Admin Categories";
@@ -45,6 +46,36 @@ $title = "Muebleria ┃ Admin Categories";
     </div>
 </div>
 
+<!-- Modal para editar categorias -->
+<div class="modal fade" id="editCategoriesModal" tabindex="-1" role="dialog" aria-labelledby="editCategoriesLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCategoriesLabel">Editar Categoría</h5>
+            </div>
+            <form action="categories/edit_categories.php" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="id_categoria" id="edit_id_categoria">
+
+                    <div class="form-group mb-3">
+                        <label for="edit_nombre">Nombre de la Categoría</label>
+                        <input type="text" name="nombre" id="edit_nombre" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="edit_descripcion">Descripción</label>
+                        <input type="text" name="descripcion" id="edit_descripcion" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
  <!-- Tabla de Categorias -->
  <section class="services-table container my-4">
     <h2 class="text-center mb-4">Administrar Categorías</h2>
@@ -71,7 +102,7 @@ $title = "Muebleria ┃ Admin Categories";
                             echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar categoría'>
                                     <i class='fas fa-edit'></i>
                                 </button>
-                                <a href='delete_service.php?id=" . $row['id_categoria'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta categoría?\")' title='Eliminar categoría'>
+                                <a href='categories/delete_categories.php?id=" . $row['id_categoria'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta categoría?\")' title='Eliminar categoría'>
                                     <i class='fas fa-trash'></i>
                                 </a>";
                             echo "</td>";
@@ -87,6 +118,13 @@ $title = "Muebleria ┃ Admin Categories";
 </section>
 
 <script>
+    function openEditModal(categoriesData) {
+        $('#edit_id_categoria').val(categoriesData.id_categoria);
+        $('#edit_nombre').val(categoriesData.nombre);
+        $('#edit_descripcion').val(categoriesData.descripcion);    
+        $('#editCategoriesModal').modal('show');
+    }
+
     function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';
             let alertClass = '';

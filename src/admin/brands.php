@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../../mysql/connection.php';
 require 'slidebar.php';
 $title = "Muebleria ┃ Admin Brands";
@@ -19,7 +20,7 @@ $title = "Muebleria ┃ Admin Brands";
         </button><br/>
     </section><br/>
 
-<!-- Modal para añadir categoria -->
+<!-- Modal para añadir Marcas -->
 <div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog" aria-labelledby="addBrandModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -46,7 +47,37 @@ $title = "Muebleria ┃ Admin Brands";
     </div>
 </div>
 
- <!-- Tabla de Categorias -->
+<!-- Modal para editar Marcas -->
+<div class="modal fade" id="editBrandsModal" tabindex="-1" role="dialog" aria-labelledby="editBrandsLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBrandsLabel">Editar Marca</h5>
+            </div>
+            <form action="brands/edit_brands.php" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="id_marca" id="edit_id_marca">
+
+                    <div class="form-group mb-3">
+                        <label for="edit_nombre">Nombre de la Marca</label>
+                        <input type="text" name="nombre" id="edit_nombre" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="edit_descripcion">Descripción</label>
+                        <input type="text" name="descripcion" id="edit_descripcion" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+ <!-- Tabla de Marcas -->
  <section class="services-table container my-4">
     <h2 class="text-center mb-4">Administrar Marcas</h2>
     <div class="table-responsive">
@@ -72,7 +103,7 @@ $title = "Muebleria ┃ Admin Brands";
                             echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar marca'>
                                     <i class='fas fa-edit'></i>
                                 </button>
-                                <a href='delete_service.php?id=" . $row['id_marca'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta marca?\")' title='Eliminar Marca'>
+                                <a href='brands/delete_brands.php?id=" . $row['id_marca'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta marca?\")' title='Eliminar Marca'>
                                     <i class='fas fa-trash'></i>
                                 </a>";
                             echo "</td>";
@@ -88,6 +119,14 @@ $title = "Muebleria ┃ Admin Brands";
 </section>
 
 <script>
+
+    function openEditModal(categoriesData) {
+        $('#edit_id_marca').val(categoriesData.id_marca);
+        $('#edit_nombre').val(categoriesData.nombre);
+        $('#edit_descripcion').val(categoriesData.descripcion);    
+        $('#editBrandsModal').modal('show');
+    }
+
     function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';
             let alertClass = '';

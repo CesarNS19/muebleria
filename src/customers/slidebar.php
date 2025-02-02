@@ -42,7 +42,7 @@ if ($hour >= 5 && $hour < 12) {
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-couch"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Mueblería</div>
+                <div class="sidebar-brand-text mx-3">Mueblería París</div>
             </a>
 
             <hr class="sidebar-divider my-0">
@@ -130,7 +130,7 @@ if ($hour >= 5 && $hour < 12) {
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login/login.php">Login</a>
+                        <a class="collapse-item" href="../../login/login.php">Login</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
@@ -192,7 +192,7 @@ if ($hour >= 5 && $hour < 12) {
                                 </a>
                             </div>";
                         } else {
-                            echo "<a class='nav-link' href='../login/login.php' style='color: black; font-size: 18px; text-decoration: none; font-weight: 600;'>Log In</a>";
+                            echo "<a class='nav-link' href='../../login/login.php' style='color: black; font-size: 18px; text-decoration: none; font-weight: 600;'>Log In</a>";
                         }
                     ?>
 
@@ -219,7 +219,7 @@ if ($hour >= 5 && $hour < 12) {
                                     Profile
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="login/login.php">
+                                <a class="dropdown-item" href="../../login/login.php">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
