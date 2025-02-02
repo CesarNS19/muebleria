@@ -43,11 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         break;
                     case 'empleado':
                         $_SESSION['id_empleado'] = $row['id'];
-                        header("Location: ../src/employees/index.php");
+                        header("Location: ../src/employees/index_employees.php");
                         break;
                     default:
                         $_SESSION['id_cliente'] = $row['id'];
-                        header("Location: ../index.php");
+                        header("Location: ../src/customers/index_customers.php");
                         break;
                 }
                 exit();

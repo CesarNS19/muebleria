@@ -1,7 +1,5 @@
 <?php
-session_start();
-
-require 'mysql/connection.php';
+require '../../mysql/connection.php';
 
 if (isset($_COOKIE['timezone'])) {
     date_default_timezone_set($_COOKIE['timezone']);
@@ -16,13 +14,6 @@ if ($hour >= 5 && $hour < 12) {
     $greeting = 'Buenas Noches';
 }
 
-$title = "Muebleria ┃ Dashboard";
-
-$sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.tamaño, p.capacidad, p.precio
-        FROM productos p
-        JOIN categorias c ON p.id_categoria = c.id_categoria
-        JOIN marcas m ON p.id_marca = m.id_marca";
-$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -34,13 +25,12 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?php echo $title; ?></title>
 
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -48,7 +38,7 @@ $result = $conn->query($sql);
 
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index_customers.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-couch"></i>
                 </div>
@@ -57,7 +47,7 @@ $result = $conn->query($sql);
 
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="index_customers.php">
                     <i class="fas fa-home"></i>
                     <span>Inicio</span></a>
             </li>
@@ -72,40 +62,37 @@ $result = $conn->query($sql);
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/rooms.php')">
+                        <a class="collapse-item" href="rooms.php">
                             <i class="fas fa-couch"></i> Salas
                         </a>
-                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/canteens.php')">
+                        <a class="collapse-item" href="canteens.php">
                             <i class="fas fa-utensils"></i> Comedores
                         </a>
-                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/bedrooms.php')">
+                        <a class="collapse-item" href="bedrooms.php">
                             <i class="fas fa-bed"></i> Recámaras
                         </a>
-                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/office.php')">
+                        <a class="collapse-item" href="office.php">
                             <i class="fas fa-briefcase"></i> Oficina
                         </a>
-                        <a class="collapse-item" href="#"
-                            onclick="loadContent('src/customers/products/appliances.php')">
+                        <a class="collapse-item" href="appliances.php">
                             <i class="fas fa-tv"></i> Electrodomésticos
                         </a>
-                        <a class="collapse-item" href="#"
-                            onclick="loadContent('src/customers/products/decoration.php')">
+                        <a class="collapse-item" href="decoration.php">
                             <i class="fas fa-paint-brush"></i> Decoración
                         </a>
-                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/beds.php')">
+                        <a class="collapse-item" href="beds.php">
                             <i class="fas fa-layer-group"></i> Camas y colchones
                         </a>
-                        <a class="collapse-item" href="#"
-                            onclick="loadContent('src/customers/products/accesories.php')">
+                        <a class="collapse-item" href="accesories.php">
                             <i class="fas fa-tags"></i> Accesorios
                         </a>
-                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/furniture.php')">
+                        <a class="collapse-item" href="furniture.php">
                             <i class="fas fa-tree"></i> Muebles de exterior
                         </a>
-                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/cupboards.php')">
+                        <a class="collapse-item" href="cupboards.php">
                             <i class="fas fa-warehouse"></i> Alacenas y gabinetes
                         </a>
-                        <a class="collapse-item" href="#" onclick="loadContent('src/customers/products/chairs.php')">
+                        <a class="collapse-item" href="chairs.php">
                             <i class="fas fa-chair"></i> Sillas
                         </a>
                     </div>
@@ -121,8 +108,7 @@ $result = $conn->query($sql);
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#"
-                            onclick="loadContent('src/admin/shopping_cart/shopping_cart.php')">
+                        <a class="collapse-item" href="shopping_cart.php">
                             <i class="fas fa-fw fa-shopping-cart"></i> Mi carrito
                         </a>
                     </div>
@@ -224,7 +210,7 @@ $result = $conn->query($sql);
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                 </span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="../../img/undraw_profile.svg">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -242,67 +228,16 @@ $result = $conn->query($sql);
                     </ul>
                 </nav>
 
-                <div id="main-content" class="container-fluid">
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../../js/sb-admin-2.min.js"></script>
+    <script src="../../vendor/chart.js/Chart.min.js"></script>
+    <script src="../../js/demo/chart-area-demo.js"></script>
+    <script src="../../js/demo/chart-pie-demo.js"></script>
 
-                    <div class="container mt-5">
-                        <div class="row">
-                            <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <p class="card-title">Categoría: ' . $row["categoria"] . '</p>
-                                    <p class="card-text">Marca: ' . $row["marca"] . '</p>
-                                    <p class="card-text">Descripción: ' . $row["descripcion"] . '</p>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Color: ' . $row["color"] . '</li>
-                                        <li class="list-group-item">Tamaño: ' . $row["tamaño"] . '</li>
-                                        <li class="list-group-item">Capacidad: ' . $row["capacidad"] . '</li>
-                                    </ul>
-                                    <p class="mt-3 text-success text-center"><strong>Precio: $' . $row["precio"] . '</strong></p>
-                                    <button class="btn btn-primary w-100">Añadir al carrito</button>
-                                </div>
-                            </div>
-                        </div>';
-                }            
-            } else {
-                echo "<p>No hay productos disponibles.</p>";
-            }
-            $conn->close();
-            ?>
-                        </div>
-                    </div>
-
-                    <script src="vendor/jquery/jquery.min.js"></script>
-                    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-                    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-                    <script src="js/sb-admin-2.min.js"></script>
-                    <script src="vendor/chart.js/Chart.min.js"></script>
-                    <script src="js/demo/chart-area-demo.js"></script>
-                    <script src="js/demo/chart-pie-demo.js"></script>
-
-                    <script>
-                    function loadContent(url) {
-                        $.ajax({
-                            url: url,
-                            method: 'GET',
-                            success: function(data) {
-                                $('#main-content').html(data);
-
-                                let pageTitle = $('#main-content title').text();
-                                $('title').text("Mueblería ┃ " + pageTitle);
-                            },
-                            error: function() {
-                                alert('Error al cargar el contenido');
-                            }
-                        });
-                    }
-
-                    document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
-                    </script>
-
+ <script>
+     document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
+</script>
 </body>
-
 </html>

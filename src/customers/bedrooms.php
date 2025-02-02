@@ -1,12 +1,12 @@
 <?php
-require '../../../mysql/connection.php';
-
-$title = "Oficina";
+require '../../mysql/connection.php';
+require 'slidebar.php';
+$title = "Muebleria ┃ Recámaras";
 $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.tamaño, p.capacidad, p.precio
         FROM productos p
         JOIN categorias c ON p.id_categoria = c.id_categoria
         JOIN marcas m ON p.id_marca = m.id_marca
-        WHERE c.nombre = 'oficina'";
+        WHERE c.nombre = 'recamaras'";
 $result = $conn->query($sql);
 ?>
 <title><?php echo $title; ?></title>

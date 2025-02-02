@@ -1,18 +1,19 @@
 <?php
-require '../../../mysql/connection.php';
-
-$title = "Camas y Colchones";
+session_start();
+require 'slidebar.php';
+require '../../mysql/connection.php';
+$title = "Muebleria ┃ Dashboard";
 $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.tamaño, p.capacidad, p.precio
         FROM productos p
         JOIN categorias c ON p.id_categoria = c.id_categoria
-        JOIN marcas m ON p.id_marca = m.id_marca
-        WHERE c.nombre = 'camas' OR c.nombre = 'colchones'";
+        JOIN marcas m ON p.id_marca = m.id_marca";
 $result = $conn->query($sql);
 ?>
 <title><?php echo $title; ?></title>
 
-<div class="container mt-5">
-        <div class="row">
+<div id="main-content" class="container-fluid">
+    <div class="container mt-5">
+         <div class="row">
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
@@ -39,5 +40,7 @@ $result = $conn->query($sql);
             }
             $conn->close();
             ?>
-        </div>
     </div>
+</div>
+</body>
+</html>
