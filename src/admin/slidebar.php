@@ -1,8 +1,5 @@
 <?php
 session_start();
-
-require '../../mysql/connection.php';
-
 if (isset($_COOKIE['timezone'])) {
     date_default_timezone_set($_COOKIE['timezone']);
 }
@@ -15,8 +12,6 @@ if ($hour >= 5 && $hour < 12) {
 } else {
     $greeting = 'Buenas Noches';
 }
-
-$title = "Muebleria ┃ Dashboard Admin";
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +22,6 @@ $title = "Muebleria ┃ Dashboard Admin";
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?php echo $title; ?></title>
 
     <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -67,7 +61,7 @@ $title = "Muebleria ┃ Dashboard Admin";
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="categories/categories.php">
+                    <a class="collapse-item" href="categories.php">
                         <i class="fas fa-layer-group"></i>Categorias
                     </a>
                 </div>
@@ -82,7 +76,7 @@ $title = "Muebleria ┃ Dashboard Admin";
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="brands/brands.php">
+                    <a class="collapse-item" href="brands.php">
                         <i class="fas fa-globe"></i> Marcas
                     </a>
                 </div>
@@ -98,7 +92,7 @@ $title = "Muebleria ┃ Dashboard Admin";
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="'products/products.php">
+                        <a class="collapse-item" href="products.php">
                         <i class="fas fa-box"></i> Productos
                     </a>
                     </div>

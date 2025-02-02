@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $stmt->close();
-    header("Location: brands.php");
+    header("Location: ../brands.php");
     exit();
 }
 
