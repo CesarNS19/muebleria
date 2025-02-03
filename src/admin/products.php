@@ -78,14 +78,6 @@ $title = "Muebleria ┃ Admin Products";
                         <input type="text" name="color" class="form-control" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="">Tamaño</label>
-                        <input type="text" name="tamaño" class="form-control" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="">Capacidad</label>
-                        <input type="text" name="capacidad" class="form-control" required>
-                    </div>
-                    <div class="form-group mb-3">
                         <input type="file" name="imagen_producto" class="form-control" placeholder="Imágen del producto">
                     </div>
                 </div>
@@ -163,16 +155,6 @@ $title = "Muebleria ┃ Admin Products";
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="edit_tamaño">Tamaño</label>
-                        <input type="text" name="tamaño" id="edit_tamaño" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="edit_capacidad">Capacidad</label>
-                        <input type="text" name="capacidad" id="edit_capacidad" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mb-3">
                         <label>Imágen Actual</label>
                         <div>
                             <img id="current_image" src="" width="100" alt="Imágen del producto">
@@ -206,8 +188,6 @@ $title = "Muebleria ┃ Admin Products";
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Color</th>
-                    <th>Tamaño</th>
-                    <th>Capacidad</th>
                     <th>Imágen</th>
                     <th>Acciones</th>
                 </tr>
@@ -225,8 +205,6 @@ $title = "Muebleria ┃ Admin Products";
                             echo "<td>". htmlspecialchars($row['precio']). "</td>";
                             echo "<td>". htmlspecialchars($row['stock']). "</td>";
                             echo "<td>". htmlspecialchars($row['color']). "</td>";
-                            echo "<td>". htmlspecialchars($row['tamaño']). "</td>";
-                            echo "<td>". htmlspecialchars($row['capacidad']). "</td>";
                             echo "<td><img src='img/" . htmlspecialchars($row['imagen']) . "' width='100px' height='60px' alt='Imágen Producto'></td>";
                             echo "<td>";
                             echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar Producto'>
@@ -258,8 +236,6 @@ $title = "Muebleria ┃ Admin Products";
         $('#edit_precio').val(productsData.precio);
         $('#edit_stock').val(productsData.stock);
         $('#edit_color').val(productsData.color);
-        $('#edit_tamaño').val(productsData.tamaño);
-        $('#edit_capacidad').val(productsData.capacidad);  
         $('#current_image').attr('src', 'img/' + productsData.imagen);
         $('#editProductsModal').modal('show');
     }
