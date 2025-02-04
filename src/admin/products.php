@@ -17,8 +17,8 @@ $title = "Muebleria ┃ Admin Products";
 <section class="company-header">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductsModal" style="float: right; margin: 10px;">
             Agregar Producto
-        </button><br/>
-    </section><br/>
+        </button>
+    </section>
 
 <!-- Modal para añadir productos -->
 <div class="modal fade" id="addProductsModal" tabindex="-1" role="dialog" aria-labelledby="addProductsModalLabel" aria-hidden="true">

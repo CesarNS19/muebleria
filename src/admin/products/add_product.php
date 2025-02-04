@@ -10,8 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $precio = $_POST['precio'];
     $stock = $_POST['stock'];
     $color = $_POST['color'];
-    $tamaño = $_POST['tamaño'];
-    $capacidad = $_POST['capacidad'];
 
     if (isset($_FILES['imagen_producto']) && $_FILES['imagen_producto']['error'] === UPLOAD_ERR_OK) {
 
@@ -24,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (move_uploaded_file($_FILES["imagen_producto"]["tmp_name"], $target_file)) {
                 $relative_path = "../../../img/" . basename($_FILES["imagen_producto"]["name"]);
                 
-                $sql = "INSERT INTO productos (id_categoria, id_marca, nombre, descripcion, precio, stock, color, tamaño, capacidad, imagen) 
-                        VALUES ('$id_categoria', '$id_marca', '$nombre_producto', '$descripcion', '$precio', '$stock', '$color', '$tamaño', '$capacidad', '$relative_path')";
+                $sql = "INSERT INTO productos (id_categoria, id_marca, nombre, descripcion, precio, stock, color, imagen) 
+                        VALUES ('$id_categoria', '$id_marca', '$nombre_producto', '$descripcion', '$precio', '$stock', '$color', '$relative_path')";
 
                 if ($conn->query($sql) === TRUE) {
                     $_SESSION['status_message'] = "Producto agregado exitosamente";

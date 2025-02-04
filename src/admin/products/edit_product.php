@@ -11,8 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $precio = $_POST['precio'];
     $stock = $_POST['stock'];
     $color = $_POST['color'];
-    $tamaño = $_POST['tamaño'];
-    $capacidad = $_POST['capacidad'];
 
     $target_dir = "../../../img/";
 
@@ -45,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($imagen_ruta) {
-        $sql = "UPDATE productos SET id_categoria='$id_categoria', id_marca='$id_marca', nombre='$nombre', descripcion='$descripcion', precio='$precio', stock='$stock', color='$color', tamaño='$tamaño', capacidad='$capacidad', imagen='$imagen_ruta' WHERE id_producto='$id_producto'";
+        $sql = "UPDATE productos SET id_categoria='$id_categoria', id_marca='$id_marca', nombre='$nombre', descripcion='$descripcion', precio='$precio', stock='$stock', color='$color', imagen='$imagen_ruta' WHERE id_producto='$id_producto'";
     } else {
-        $sql = "UPDATE productos SET id_categoria='$id_categoria', id_marca='$id_marca', nombre='$nombre', descripcion='$descripcion', precio='$precio', stock='$stock', color='$color', tamaño='$tamaño', capacidad='$capacidad'  WHERE id_producto='$id_producto'";
+        $sql = "UPDATE productos SET id_categoria='$id_categoria', id_marca='$id_marca', nombre='$nombre', descripcion='$descripcion', precio='$precio', stock='$stock', color='$color'  WHERE id_producto='$id_producto'";
     }
 
     if ($conn->query($sql) === TRUE) {

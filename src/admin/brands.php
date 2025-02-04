@@ -17,8 +17,8 @@ $title = "Muebleria ┃ Admin Brands";
 <section class="company-header">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBrandModal" style="float: right; margin: 10px;">
             Agregar Marca
-        </button><br/>
-    </section><br/>
+        </button>
+    </section>
 
 <!-- Modal para añadir Marcas -->
 <div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog" aria-labelledby="addBrandModalLabel" aria-hidden="true">

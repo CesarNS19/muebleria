@@ -11,13 +11,15 @@ $title = "Muebleria ┃ Admin Categories";
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <title><?php echo $title; ?></title>
 
+<div id="content">
+
 <div id="Alert"></div>
 
 <section class="company-header">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoriesModal" style="float: right; margin: 10px;">
             Agregar Categoria
-        </button><br/>
-    </section><br/>
+        </button>
+    </section>
 
 <!-- Modal para añadir categoria -->
 <div class="modal fade" id="addCategoriesModal" tabindex="-1" role="dialog" aria-labelledby="addCategoriesModalLabel" aria-hidden="true">
@@ -77,11 +79,11 @@ $title = "Muebleria ┃ Admin Categories";
 </div>
 
  <!-- Tabla de Categorias -->
- <section class="services-table container my-4">
-    <h2 class="text-center mb-4">Administrar Categorías</h2>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
-            <thead class="thead-dark">
+ <section class="services-table container my-2">
+<div class="table-responsive">
+    <table class="table table-bordered table-hover text-center">
+        <thead class="thead-dark">
+            <h2 class="text-center">Administrar Categorías</h2><br/>
                 <tr>
                     <th>Nombre de la categoría</th>
                     <th>Descripción de la categoría</th>
@@ -116,7 +118,7 @@ $title = "Muebleria ┃ Admin Categories";
         </table>
     </div>
 </section>
-
+</div>
 <script>
     function openEditModal(categoriesData) {
         $('#edit_id_categoria').val(categoriesData.id_categoria);

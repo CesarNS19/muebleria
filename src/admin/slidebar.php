@@ -13,6 +13,22 @@ if ($hour >= 5 && $hour < 12) {
 }
 ?>
 
+<style>
+    #accordionSidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1030;
+    overflow-y: auto;
+}
+
+#content-wrapper {
+    margin-left: 220px;
+}
+
+</style>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -140,8 +156,6 @@ if ($hour >= 5 && $hour < 12) {
         </ul>
 
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <div id="content">
 
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
