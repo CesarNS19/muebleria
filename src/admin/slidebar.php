@@ -48,7 +48,6 @@ if ($hour >= 5 && $hour < 12) {
 
 <body id="page-top">
 
-    <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index_admin.php">
                 <div class="sidebar-brand-icon rotate-n-15">
@@ -139,7 +138,10 @@ if ($hour >= 5 && $hour < 12) {
                     </div>
                 </div>
             </li>
-
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                Usuarios
+            </div>
             <li class="nav-item">
                 <a class="nav-link" href="employees.php">
                     <i class="fas fa-users"></i>
@@ -147,9 +149,9 @@ if ($hour >= 5 && $hour < 12) {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                <a class="nav-link" href="customers.php">
+                    <i class="fas fa-user"></i>
+                    <span>Clientes</span></a>
             </li>
 
             <hr class="sidebar-divider d-none d-md-block">

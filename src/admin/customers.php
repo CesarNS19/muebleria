@@ -2,7 +2,7 @@
 session_start();
 require '../../mysql/connection.php';
 require 'slidebar.php';
-$title = "Muebleria ┃ Admin Employees";
+$title = "Muebleria ┃ Admin Customers";
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -14,20 +14,22 @@ $title = "Muebleria ┃ Admin Employees";
 <div id="Alert"></div>
 
 <section class="company-header">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeesModal" style="float: right; margin: 10px;">
-            Agregar Empleado
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCustomerModal" style="float: right; margin: 10px;">
+            Agregar Cliente
         </button>
     </section>
-    <div class="modal fade" id="addEmployeesModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeesModalLabel" aria-hidden="true">
+
+<!-- Modal para añadir cliente -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEmployeesModalLabel">Add Employee</h5>
+                <h5 class="modal-title" id="addCustomerLabel">Add New Customer</h5>
             </div>
-            <form action="employees/add_employee.php" method="POST">
+            <form action="customers/add_customer.php" method="POST">
                 <div class="modal-body">
                     <div class="form-group mb-3">
-                        <label>Nombre del Empleado</label>
+                        <label>Nombre del Cliente</label>
                         <input type="text" name="nombre" class="form-control" required>
                     </div>
                     <div class="form-group mb-3">
@@ -60,22 +62,22 @@ $title = "Muebleria ┃ Admin Employees";
     </div>
 </div>
 
-<!-- Modal para editar empleado -->
-<div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+<!-- Modal para editar cliente -->
+<div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editEmployeeLabel">Editar Empleado</h5>
+                <h5 class="modal-title" id="editCustomerModalLabel">Editar Cliente</h5>
             </div>
-            <form action="employees/edit_employee.php" method="POST">
+            <form action="customers/edit_customer.php" method="POST">
                 <div class="modal-body">
-                    <input type="hidden" name="id_empleado" id="edit_id_empleado">
+                    <input type="hidden" name="id_cliente" id="edit_id_cliente">
                     
                     <div class="form-group mb-3">
-                        <label for="edit_nombre">Nombre del Empleado</label>
+                        <label for="edit_nombre">Nombre del Cliente</label>
                         <input type="text" name="nombre" id="edit_nombre" class="form-control" required>
                     </div>
-                    
+
                     <div class="form-group mb-3">
                         <label for="edit_apellido_paterno">Apellido Paterno</label>
                         <input type="text" name="apellido_paterno" id="edit_apellido_paterno" class="form-control" required>
@@ -106,14 +108,14 @@ $title = "Muebleria ┃ Admin Employees";
     </div>
 </div>
 
-<!-- Tabla de Empleados -->
+<!-- Tabla de clientes -->
 <section class="services-table container my-1">
 <div class="table-responsive">
     <table class="table table-bordered table-hover text-center">
         <thead class="thead-dark">
+        <h2 class="text-center">Administrar Clientes</h2><br/>
             <tr>
-                <h2 class="text-center">Administrar Empleados</h2><br/>
-                <th>Empleado</th>
+                <th>Nombre del Cliente</th>
                 <th>Telefono</th>
                 <th>Email</th>
                 <th>Rol</th>
@@ -123,7 +125,7 @@ $title = "Muebleria ┃ Admin Employees";
         </thead>
         <tbody>
             <?php
-            $sql = "SELECT * FROM empleados";
+            $sql = "SELECT * FROM clientes WHERE rol = 'usuario'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -136,44 +138,52 @@ $title = "Muebleria ┃ Admin Employees";
                     echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['estatus']) . "</td>";
                     echo "<td>";
-                
+                    
                     if ($row['estatus'] === 'activo') {
-                        echo "<a href='employees/status_employee.php?id=" . $row['id_empleado'] . "&estatus=inactivo' class='btn btn-warning btn-sm me-2' title='Desactivar Empleado'>
+                        echo "<a href='customers/status_customer.php?id=" . $row['id_cliente'] . "&estatus=inactivo' class='btn btn-warning btn-sm me-2' title='Desactivar Cliente'>
                                 <i class='fas fa-ban'></i>
                             </a>";
                     } else {
-                        echo "<a href='employees/status_employee.php?id=" . $row['id_empleado'] . "&estatus=activo' class='btn btn-success btn-sm me-2' title='Activar Empleado'>
+                        echo "<a href='customers/status_customer.php?id=" . $row['id_cliente'] . "&estatus=activo' class='btn btn-success btn-sm me-2' title='Activar Cliente'>
                                 <i class='fas fa-check-circle'></i>
                             </a>";
                     }
-
-                    echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar Empleado'>
+                    echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar Cliente'>
                             <i class='fas fa-edit'></i>
                         </button>
-                        <a href='employees/delete_employee.php?id=" . $row['id_empleado'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar a este empleado?\")' title='Eliminar empleado'>
+                        <a href='customers/delete_customer.php?id=" . $row['id_cliente'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de eliminar este cliente?\")' title='Eliminar Cliente'>
                             <i class='fas fa-trash'></i>
                         </a>
-                    </td>";
-                    echo "</tr>";
+                        </td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='11'>No hay clientes</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='11'>No hay empleados</td></tr>";
-            }
             ?>
         </tbody>
     </table>
 </div>
 </section>
+
 <script>
 
-    function openEditModal(employeesData) {
-        $('#edit_id_empleado').val(employeesData.id_empleado);
-        $('#edit_nombre').val(employeesData.nombre);
-        $('#edit_apellido_paterno').val(employeesData.apellido_paterno);
-        $('#edit_apellido_materno').val(employeesData.apellido_materno);
-        $('#edit_telefono').val(employeesData.telefono);
-        $('#edit_email').val(employeesData.email);
-        $('#editEmployeeModal').modal('show');
+    function openEditModal(customerData) {
+        $('#edit_id_cliente').val(customerData.id_cliente);
+        $('#edit_nombre').val(customerData.nombre);
+        $('#edit_apellido_paterno').val(customerData.apellido_paterno);
+        $('#edit_apellido_materno').val(customerData.apellido_materno);
+        $('#edit_telefono').val(customerData.telefono);
+        $('#edit_email').val(customerData.email);
+        $('#editCustomerModal').modal('show');
+    }
+
+    function openAddAddressModal(cliente) {
+        document.getElementById('id_cliente_modal').value = cliente.id_cliente;
+        
+        document.getElementById('nombre_cliente_modal').value = cliente.nombre_cliente + ' ' + cliente.apellido_paterno + ' ' + cliente.apellido_materno;
+    
+        $('#addCustomerAddressModal').modal('show');
     }
 
     function mostrarToast(titulo, mensaje, tipo) {
@@ -231,4 +241,5 @@ $title = "Muebleria ┃ Admin Employees";
                 <?php unset($_SESSION['status_message'], $_SESSION['status_type']); ?>
             <?php endif; ?>
         });
-</script>
+
+    </script>
