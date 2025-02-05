@@ -13,6 +13,13 @@ if ($hour >= 5 && $hour < 12) {
 } else {
     $greeting = 'Buenas Noches';
 }
+
+$totalProductos = 0;
+if (!empty($_SESSION["carrito"])) {
+    foreach ($_SESSION["carrito"] as $producto) {
+        $totalProductos += $producto["cantidad"];
+    }
+}
 ?>
 
 <style>
@@ -119,8 +126,7 @@ if ($hour >= 5 && $hour < 12) {
                     <i class="fas fa-fw fa-shopping-cart"></i>
                     <span>Mi Carrito</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="shopping_cart.php">
                             <i class="fas fa-fw fa-shopping-cart"></i> Mi carrito
@@ -189,6 +195,16 @@ if ($hour >= 5 && $hour < 12) {
                 </form>
 
                 <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="shopping_cart.php">
+                        <i class="fas fa-fw fa-shopping-cart"></i>
+                        <?php if ($totalProductos > 0): ?>
+                            <span class="badge badge-danger ml-2"><?php echo $totalProductos; ?></span>
+                        <?php endif; ?>
+                    </a>
+                </li>
+
                     <?php
                     if (isset($_SESSION['nombre'], $_SESSION['apellido_paterno'], $_SESSION['apellido_materno'])) {
                         $fullName = $_SESSION['nombre'] . ' ' . $_SESSION['apellido_paterno'] . ' ' . $_SESSION['apellido_materno'];
@@ -221,10 +237,6 @@ if ($hour >= 5 && $hour < 12) {
                     </li>
                 </ul>
             </nav>
-            <div id="content">
-            </div>
-        </div>
-    </div>
 
     <script src="../../vendor/jquery/jquery.min.js"></script>
     <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

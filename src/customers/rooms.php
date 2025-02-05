@@ -3,6 +3,39 @@ session_start();
 require '../../mysql/connection.php';
 require 'slidebar.php';
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_producto"])) {
+    $id_producto = $_POST["id_producto"];
+    $nombre = $_POST["nombre"];
+    $descripcion = $_POST["descripcion"];
+    $precio = $_POST["precio"];
+    $imagen = $_POST["imagen"];
+    $cantidad = 1;
+
+    if (!isset($_SESSION["carrito"])) {
+        $_SESSION["carrito"] = [];
+    }
+
+    $existe = false;
+    foreach ($_SESSION["carrito"] as &$item) {
+        if ($item["id_producto"] == $id_producto) {
+            $item["cantidad"] += 1;
+            $existe = true;
+            break;
+        }
+    }
+
+    if (!$existe) {
+        $_SESSION["carrito"][] = [
+            "id_producto" => $id_producto,
+            "nombre" => $nombre,
+            "descripcion" => $descripcion,
+            "precio" => $precio,
+            "imagen" => $imagen,
+            "cantidad" => $cantidad
+        ];
+    }
+}
+
 $title = "Muebleria ┃ Salas";
 
 $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.precio, p.imagen
@@ -32,11 +65,18 @@ $result = $conn->query($sql);
                                     <li class="list-group-item">Color: ' . $row["color"] . '</li>
                                 </ul>
                                 <p class="mt-2 text-success text-center"><strong>Precio: $' . $row["precio"] . '</strong></p>
-                                <button class="btn btn-primary w-100">Añadir al carrito</button>
+                                <form method="POST" action="">
+                                    <input type="hidden" name="id_producto" value="' . $row["id_producto"] . '">
+                                    <input type="hidden" name="nombre" value="' . $row["nombre"] . '">
+                                    <input type="hidden" name="descripcion" value="' . $row["descripcion"] . '">
+                                    <input type="hidden" name="imagen" value="' . $row["imagen"] . '">
+                                    <input type="hidden" name="precio" value="' . $row["precio"] . '">
+                                    <button class="btn btn-primary w-100">Añadir al carrito</button>
+                                </form>
                             </div>
                         </div>
                     </div>';
-            }            
+            }
         } else {
             echo "<p>No hay productos disponibles.</p>";
         }
@@ -44,5 +84,13 @@ $result = $conn->query($sql);
         ?>
     </div>
 </div>
-</body>
-</html>
+
+<script>
+    window.onload = () => {
+        const productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
+        const badge = document.querySelector(".nav-item .badge");
+        if (badge) {
+            badge.textContent = productCount > 0 ? productCount : "";
+        }
+    }
+</script>
