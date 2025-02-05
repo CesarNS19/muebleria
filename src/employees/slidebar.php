@@ -50,7 +50,7 @@ if ($hour >= 5 && $hour < 12) {
 
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index_admin.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index_employee.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-couch"></i>
                 </div>
@@ -59,7 +59,7 @@ if ($hour >= 5 && $hour < 12) {
 
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="index_admin.php">
+                <a class="nav-link" href="index_employee.php">
                     <i class="fas fa-home"></i>
                     <span>Inicio</span></a>
             </li>
@@ -141,15 +141,9 @@ if ($hour >= 5 && $hour < 12) {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="employees.php">
+                <a class="nav-link" href="users.php">
                     <i class="fas fa-users"></i>
-                    <span>Empleados</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Usuarios</span></a>
             </li>
 
             <hr class="sidebar-divider d-none d-md-block">

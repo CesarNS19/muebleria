@@ -2,7 +2,7 @@
 session_start();
 require '../../mysql/connection.php';
 require 'slidebar.php';
-$title = "Muebleria ┃ Admin Categories";
+$title = "Muebleria ┃ Admin Employees";
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -14,109 +14,110 @@ $title = "Muebleria ┃ Admin Categories";
 <div id="Alert"></div>
 
 <section class="company-header">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoriesModal" style="float: right; margin: 10px;">
-            Agregar Categoria
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeesModal" style="float: right; margin: 10px;">
+            Agregar Empleado
         </button>
     </section>
-
-<!-- Modal para añadir categoria -->
-<div class="modal fade" id="addCategoriesModal" tabindex="-1" role="dialog" aria-labelledby="addCategoriesModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addEmployeesModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeesModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCategoriesModalLabel">Agregar Nueva Categoría</h5>
+                <h5 class="modal-title" id="addEmployeesModalLabel">Add Employee</h5>
             </div>
-            <form action="categories/add_categories.php" method="POST">
+            <form action="employees/add_employee.php" method="POST">
                 <div class="modal-body">
                     <div class="form-group mb-3">
-                        <label for="">Categoría</label>
+                        <label>Nombre del Empleado</label>
                         <input type="text" name="nombre" class="form-control" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="">Descripción</label>
-                        <textarea name="descripcion" class="form-control" required></textarea>
+                        <label>Apellido Paterno</label>
+                        <input type="text" name="apellido_paterno" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Apellido Materno</label>
+                        <input type="text" name="apellido_materno" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Telefono</label>
+                        <input type="text" name="telefono" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Password</label>
+                        <input type="password" name="contrasena" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Agregar Categoría</button>
+                    <button type="submit" class="btn btn-primary">Agregar Empleado</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Modal para editar categorias -->
-<div class="modal fade" id="editCategoriesModal" tabindex="-1" role="dialog" aria-labelledby="editCategoriesLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editCategoriesLabel">Editar Categoría</h5>
-            </div>
-            <form action="categories/edit_categories.php" method="POST">
-                <div class="modal-body">
-                    <input type="hidden" name="id_categoria" id="edit_id_categoria">
-
-                    <div class="form-group mb-3">
-                        <label for="edit_nombre">Nombre de la Categoría</label>
-                        <input type="text" name="nombre" id="edit_nombre" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="edit_descripcion">Descripción</label>
-                        <input type="text" name="descripcion" id="edit_descripcion" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
- <!-- Tabla de Categorias -->
- <section class="services-table container my-2">
+<!-- Tabla de Empleados -->
+<section class="my-4">
 <div class="table-responsive">
     <table class="table table-bordered table-hover text-center">
         <thead class="thead-dark">
-            <h2 class="text-center">Administrar Categorías</h2><br/>
-                <tr>
-                    <th>Nombre de la categoría</th>
-                    <th>Descripción de la categoría</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT * FROM categorias";
-                    $result = $conn->query($sql);
-                    
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['descripcion']) . "</td>";
-                            echo "<td>";
-                            echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar categoría'>
-                                    <i class='fas fa-edit'></i>
-                                </button>
-                                <a href='categories/delete_categories.php?id=" . $row['id_categoria'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta categoría?\")' title='Eliminar categoría'>
-                                    <i class='fas fa-trash'></i>
-                                </a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
+            <tr>
+                <h2 class="text-center">Administrar Empleados</h2><br/>
+                <th>Empleado</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $sql = "SELECT * FROM empleados";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $nombre_completo = htmlspecialchars($row['nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
+                    echo "<tr>";
+                    echo "<td>" . $nombre_completo . "</td>";
+                    echo "<td>" . htmlspecialchars($row['telefono']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['estatus']) . "</td>";
+                    echo "<td>";
+                
+                    if ($row['estatus'] === 'activo') {
+                        echo "<a href='status_employee.php?id=" . $row['id_empleado'] . "&estatus=inactivo' class='btn btn-warning btn-sm me-2' title='Deactivate Employee'>
+                                <i class='fas fa-ban'></i>
+                            </a>";
                     } else {
-                        echo "<tr><td colspan='6'>No se encontrarón categorías</td></tr>";
+                        echo "<a href='status_employee.php?id=" . $row['id_empleado'] . "&estatus=activo' class='btn btn-success btn-sm me-2' title='Activate Employee'>
+                                <i class='fas fa-check-circle'></i>
+                            </a>";
                     }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</section>
+
+                    echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Edit Employee'>
+                            <i class='fas fa-edit'></i>
+                        </button>
+                        <a href='employees/delete_employee.php?id=" . $row['id_empleado'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar a este empleado?\")' title='Eliminar empleado'>
+                            <i class='fas fa-trash'></i>
+                        </a>
+                    </td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='11'>No hay empleados</td></tr>";
+            }
+            ?>
+        </tbody>
+    </table>
 </div>
+</section>
 <script>
     function openEditModal(categoriesData) {
         $('#edit_id_categoria').val(categoriesData.id_categoria);
