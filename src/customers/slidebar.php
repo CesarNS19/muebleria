@@ -14,7 +14,7 @@ if ($hour >= 5 && $hour < 12) {
     $greeting = 'Buenas Noches';
 }
 
-$totalProductos = 0;
+$totalProductos = 1;
 if (!empty($_SESSION["carrito"])) {
     foreach ($_SESSION["carrito"] as $producto) {
         $totalProductos += $producto["cantidad"];
@@ -182,18 +182,6 @@ if (!empty($_SESSION["carrito"])) {
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                            aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
                 <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">
@@ -215,7 +203,9 @@ if (!empty($_SESSION["carrito"])) {
                             </a>
                         </div>";
                     } else {
-                        echo "<a class='nav-link' href='../../login/login.php' style='color: black; font-size: 18px; text-decoration: none; font-weight: 600;'>Log In</a>";
+                        echo "<div class='nav-item' style='display: flex; align-items: center; margin-left: auto;'>
+                                <a class='nav-link' href='../../login/login.php' style='color: black; font-size: 15px; text-decoration: none; font-weight: normal;'>Log In</a>
+                                 </div>";
                     }
                     ?>
                     <li class="nav-item dropdown no-arrow">

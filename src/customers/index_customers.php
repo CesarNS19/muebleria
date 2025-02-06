@@ -54,7 +54,7 @@ $result = $conn->query($sql);
                 echo '
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
-                            <img src="' . $imagePath . '" class="card-img-top" alt="Imagen del Producto" style="height: 270px; object-fit: cover;">
+                            <img src="' . $imagePath . '"  alt="Imagen del Producto" style="height: 150px; width: 70%;">
                             <div class="card-body">
                                 <h5 class="card-title text-center">' . $row["nombre"] . '</h5>
                                 <p class="card-text">Marca: ' . $row["marca"] . '</p>
@@ -69,7 +69,7 @@ $result = $conn->query($sql);
                                     <input type="hidden" name="descripcion" value="' . $row["descripcion"] . '">
                                     <input type="hidden" name="imagen" value="' . $row["imagen"] . '">
                                     <input type="hidden" name="precio" value="' . $row["precio"] . '">
-                                    <button class="btn btn-primary w-100" name="update_quantity">Añadir al carrito</button>
+                                    <button class="btn btn-primary w-100">Añadir al carrito</button>
                                 </form>
                             </div>
                         </div>
