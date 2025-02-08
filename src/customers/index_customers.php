@@ -51,14 +51,15 @@ $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre
         JOIN marcas m ON p.id_marca = m.id_marca";
 $result = $conn->query($sql);
 ?>
-<title><?php echo $title; ?></title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<title><?php echo $title; ?></title>
 
-<div id="Alert"></div>
+<div id="Alert" class="container mt-3"></div>
 
-<div class="container mt-5">
+<div class="container mt-2">
     <div class="row">
         <?php
         if ($result->num_rows > 0) {

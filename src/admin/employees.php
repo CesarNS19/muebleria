@@ -11,7 +11,7 @@ $title = "Muebleria ┃ Admin Employees";
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <title><?php echo $title; ?></title>
 
-<div id="Alert"></div>
+<div id="Alert" class="container"></div>
 
 <section class="company-header">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeesModal" style="float: right; margin: 10px;">

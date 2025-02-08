@@ -10,7 +10,7 @@ $title = "Muebleria ┃ Mis Compras";
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div id="Alert"></div>
+<div id="Alert" class="container mt-3"></div>
 
 <!-- Tabla de Compras -->
 <section class="services-table container my-4">
@@ -34,7 +34,8 @@ $title = "Muebleria ┃ Mis Compras";
                         FROM productos p
                         JOIN detalle_venta d ON p.id_producto = d.id_producto
                         JOIN ventas v ON d.id_venta = v.id_venta
-                        WHERE v.id_cliente = '". $_SESSION['id_cliente'] ."';";
+                        WHERE v.id_cliente = '". $_SESSION['id_cliente'] ."'
+                        ORDER BY v.fecha DESC;";
                 $result = $conn->query($sql);
                 
                 if ($result->num_rows > 0) {
@@ -57,7 +58,6 @@ $title = "Muebleria ┃ Mis Compras";
         </table>
     </div>
 </section>
-
 
 <script>
 
