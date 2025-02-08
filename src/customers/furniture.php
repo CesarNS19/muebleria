@@ -55,7 +55,9 @@ $result = $conn->query($sql);
                 echo '
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
-                            <img src="' . $imagePath . '"  alt="Imagen del Producto" style="height: 150px; width: 70%;">
+                            <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+                                <img src="' . $imagePath . '" alt="Imagen del Producto" style="max-height: 100%; max-width: 100%;">
+                            </div>
                             <div class="card-body">
                                 <h5 class="card-title text-center">' . $row["nombre"] . '</h5>
                                 <p class="card-text">Marca: ' . $row["marca"] . '</p>
