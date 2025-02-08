@@ -173,16 +173,11 @@ if ($hour >= 5 && $hour < 12) {
                                 </a>
                             </div>";
                         } else {
-                            echo "<a class='nav-link' href='../login/login.php' style='color: black; font-size: 18px; text-decoration: none; font-weight: 600;'>Log In</a>";
+                            echo "<div class='nav-item' style='display: flex; align-items: center; margin-left: auto;'>
+                            <a class='nav-link' href='../../login/login.php' style='color: black; font-size: 15px; text-decoration: none; font-weight: normal;'>Iniciar Sesión</a>
+                             </div>";
                         }
                     ?>
-
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                        </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 

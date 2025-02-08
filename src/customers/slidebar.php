@@ -199,13 +199,17 @@ if (!empty($_SESSION["carrito"])) {
                         </div>";
                     } else {
                         echo "<div class='nav-item' style='display: flex; align-items: center; margin-left: auto;'>
-                                <a class='nav-link' href='../../login/login.php' style='color: black; font-size: 15px; text-decoration: none; font-weight: normal;'>Log In</a>
+                                <a class='nav-link' href='../../login/login.php' style='color: black; font-size: 15px; text-decoration: none; font-weight: normal;'>Iniciar Sesión</a>
                                  </div>";
                     }
                     ?>
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
                     <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">   
+                            </span>
                             <img class="img-profile rounded-circle" src="../../img/undraw_profile.svg">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
