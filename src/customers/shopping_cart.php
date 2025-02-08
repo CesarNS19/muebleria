@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <tr>
                 <th>Producto</th>
                 <th>Descripción</th>
-                <th>Imagen</th>
+                <th>Imágen</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
                 <th>Subtotal</th>
@@ -76,14 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </tr>";
                 }
             } else {
-                echo "<tr><td colspan='7' class='text-center'>El carrito está vacío.</td></tr>";
+                echo "<tr><td colspan='7' class='text-center'>No hay productos en el carrito.</td></tr>";
             }
             ?>
         </tbody>
     </table>
 
     <div class="text-end">
-        <p style="margin-left: 90%;">Total: $<?php echo $total; ?></p>
+        <p>Total: $<?php echo $total; ?></p>
     </div>
 
     <div class="text-end mt-4">
