@@ -24,7 +24,7 @@ $title = "Muebleria ┃ Admin Brands";
 <div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog" aria-labelledby="addBrandModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="addBrandModalLabel">Agregar Nueva Marca</h5>
             </div>
             <form action="brands/add_brands.php" method="POST">
@@ -51,7 +51,7 @@ $title = "Muebleria ┃ Admin Brands";
 <div class="modal fade" id="editBrandsModal" tabindex="-1" role="dialog" aria-labelledby="editBrandsLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="editBrandsLabel">Editar Marca</h5>
             </div>
             <form action="brands/edit_brands.php" method="POST">
@@ -78,40 +78,41 @@ $title = "Muebleria ┃ Admin Brands";
 </div>
 
  <!-- Tabla de Marcas -->
- <section class="services-table container my-4">
-    <h2 class="text-center mb-4">Administrar Marcas</h2>
+ <section class="container my-2">
+        <h2 class="fw-bold text-primary text-center">Administrar Marcas</h2>
+
     <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
-            <thead class="thead-dark">
+        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
+            <thead class="bg-primary text-white">
                 <tr>
-                    <th>Nombre de la Marca</th>
-                    <th>Descripción de la Marca</th>
-                    <th>Acciones</th>
+                    <th class="text-start">Nombre de la Marca</th>
+                    <th class="text-start">Descripción</th>
+                    <th class="text-middle">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $sql = "SELECT * FROM marcas";
-                    $result = $conn->query($sql);
-                    
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['descripcion']) . "</td>";
-                            echo "<td>";
-                            echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar marca'>
-                                    <i class='fas fa-edit'></i>
-                                </button>
-                                <a href='brands/delete_brands.php?id=" . $row['id_marca'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta marca?\")' title='Eliminar Marca'>
-                                    <i class='fas fa-trash'></i>
-                                </a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='6'>No se encontrarón marcas</td></tr>";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td class='text-start'>" . htmlspecialchars($row['nombre']) . "</td>";
+                        echo "<td class='text-start text-muted'>" . htmlspecialchars($row['descripcion']) . "</td>";
+                        echo "<td class='text-middle'>
+                            <button class='btn btn-sm btn-outline-primary me-2 rounded-pill shadow-sm' onclick='openEditModal(" . json_encode($row) . ")'>
+                                <i class='fas fa-edit'></i> Editar
+                            </button>
+                            <a href='brands/delete_brands.php?id=" . $row['id_marca'] . "' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm' onclick='return confirm(\"¿Estás seguro de eliminar esta marca?\")'>
+                                <i class='fas fa-trash-alt'></i> Eliminar
+                            </a>
+                        </td>";
+                        echo "</tr>";
                     }
+                } else {
+                    echo "<tr><td colspan='3' class='text-center text-muted'>No hay marcas disponibles</td></tr>";
+                }
                 ?>
             </tbody>
         </table>

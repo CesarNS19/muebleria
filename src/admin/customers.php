@@ -23,8 +23,8 @@ $title = "Muebleria ┃ Admin Customers";
 <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCustomerLabel">Add New Customer</h5>
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="addCustomerLabel">Agregar Cliente</h5>
             </div>
             <form action="customers/add_customer.php" method="POST">
                 <div class="modal-body">
@@ -55,7 +55,7 @@ $title = "Muebleria ┃ Admin Customers";
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Agregar Empleado</button>
+                    <button type="submit" class="btn btn-primary">Agregar Cliente</button>
                 </div>
             </form>
         </div>
@@ -66,7 +66,7 @@ $title = "Muebleria ┃ Admin Customers";
 <div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="editCustomerModalLabel">Editar Cliente</h5>
             </div>
             <form action="customers/edit_customer.php" method="POST">
@@ -108,63 +108,64 @@ $title = "Muebleria ┃ Admin Customers";
     </div>
 </div>
 
-<!-- Tabla de clientes -->
-<section class="services-table container my-1">
-<div class="table-responsive">
-    <table class="table table-bordered table-hover text-center">
-        <thead class="thead-dark">
-        <h2 class="text-center">Administrar Clientes</h2><br/>
-            <tr>
-                <th>Nombre del Cliente</th>
-                <th>Telefono</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Estatus</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $sql = "SELECT * FROM clientes WHERE rol = 'usuario'";
-            $result = $conn->query($sql);
+<section class="services-table container my-4">
+    <h2 class="fw-bold text-primary text-center">Administrar Clientes</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Nombre del Cliente</th>
+                    <th>Telefono</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql = "SELECT * FROM clientes WHERE rol = 'usuario'";
+                $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $nombre_completo = htmlspecialchars($row['nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
-                    echo "<tr>";
-                    echo "<td>" . $nombre_completo . "</td>";
-                    echo "<td>" . htmlspecialchars($row['telefono']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['estatus']) . "</td>";
-                    echo "<td>";
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $nombre_completo = htmlspecialchars($row['nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
+                        echo "<tr>";
+                        echo "<td>" . $nombre_completo . "</td>";
+                        echo "<td>" . htmlspecialchars($row['telefono']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['estatus']) . "</td>";
+                        echo "<td>";
                     
-                    if ($row['estatus'] === 'activo') {
-                        echo "<a href='customers/status_customer.php?id=" . $row['id_cliente'] . "&estatus=inactivo' class='btn btn-warning btn-sm me-2' title='Desactivar Cliente'>
-                                <i class='fas fa-ban'></i>
-                            </a>";
-                    } else {
-                        echo "<a href='customers/status_customer.php?id=" . $row['id_cliente'] . "&estatus=activo' class='btn btn-success btn-sm me-2' title='Activar Cliente'>
-                                <i class='fas fa-check-circle'></i>
-                            </a>";
-                    }
-                    echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar Cliente'>
-                            <i class='fas fa-edit'></i>
-                        </button>
-                        <a href='customers/delete_customer.php?id=" . $row['id_cliente'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de eliminar este cliente?\")' title='Eliminar Cliente'>
-                            <i class='fas fa-trash'></i>
-                        </a>
+                        if ($row['estatus'] === 'activo') {
+                            echo "<a href='customers/status_customer.php?id=" . $row['id_cliente'] . "&estatus=inactivo' class='btn btn-warning btn-sm me-2 rounded-pill shadow-sm'>
+                                    <i class='fas fa-ban'></i> Desactivar
+                                  </a>";
+                        } else {
+                            echo "<a href='customers/status_customer.php?id=" . $row['id_cliente'] . "&estatus=activo' class='btn btn-success btn-sm me-2 rounded-pill shadow-sm'>
+                                    <i class='fas fa-check-circle'></i> Activar
+                                  </a>";
+                        }
+
+                        echo "<button class='btn btn-sm btn-outline-primary me-2 rounded-pill shadow-sm' onclick='openEditModal(" . json_encode($row) . ")'>
+                                <i class='fas fa-edit'></i> Editar
+                              </button>
+                              <a href='customers/delete_customer.php?id=" . $row['id_cliente'] . "' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm' onclick='return confirm(\"¿Estás seguro de eliminar a este cliente?\")'>
+                                <i class='fas fa-trash-alt'></i> Eliminar
+                              </a>
                         </td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='11'>No hay clientes</td></tr>";
+                    echo "<tr><td colspan='6' class='text-center text-muted'>No hay clientes disponibles</td></tr>";
                 }
-            ?>
-        </tbody>
-    </table>
-</div>
+                ?>
+            </tbody>
+        </table>
+    </div>
 </section>
+
 
 <script>
 

@@ -24,7 +24,7 @@ $title = "Muebleria ┃ Admin Products";
 <div class="modal fade" id="addProductsModal" tabindex="-1" role="dialog" aria-labelledby="addProductsModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="addProductsModalLabel">Agregar Nuevo Producto</h5>
             </div>
             <form action="products/add_product.php" method="POST" enctype="multipart/form-data">
@@ -94,7 +94,7 @@ $title = "Muebleria ┃ Admin Products";
 <div class="modal fade" id="editProductsModal" tabindex="-1" role="dialog" aria-labelledby="editProductsLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="editProductsLabel">Editar Producto</h5>
             </div>
             <form action="products/edit_product.php" method="POST" enctype="multipart/form-data">
@@ -176,49 +176,48 @@ $title = "Muebleria ┃ Admin Products";
     </div>
 </div>
 
-<!-- Tabla de Productos -->
-<section class="products-table container my-4">
-    <h2 class="text-center mb-4">Administrar Productos</h2>
+<section class="products-table container my-2">
+        <h2 class="fw-bold text-primary text-center">Administrar Productos</h2>
     <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
-            <thead class="thead-dark">
+        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
+            <thead class="bg-primary text-white">
                 <tr>
-                    <th>Producto</th>
-                    <th>Descripción</th>
+                    <th class="text-start">Producto</th>
+                    <th class="text-start">Descripción</th>
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Color</th>
-                    <th>Imágen</th>
+                    <th>Imagen</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $sql = "SELECT * FROM productos";
-                    $result = $conn->query($sql);
-                    
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['descripcion']) . "</td>";
-                            echo "<td>". htmlspecialchars($row['precio']). "</td>";
-                            echo "<td>". htmlspecialchars($row['stock']). "</td>";
-                            echo "<td>". htmlspecialchars($row['color']). "</td>";
-                            echo "<td><img src='img/" . htmlspecialchars($row['imagen']) . "' width='100px' height='60px' alt='Imágen Producto'></td>";
-                            echo "<td>";
-                            echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar Producto'>
-                                    <i class='fas fa-edit'></i>
-                                </button>
-                                <a href='products/delete_product.php?id=" . $row['id_producto'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este producto?\")' title='Eliminar Producto'>
-                                    <i class='fas fa-trash'></i>
-                                </a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='6'>No se encontrarón productos</td></tr>";
+                $result = $conn->query($sql);
+                
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td class='text-start'>" . htmlspecialchars($row['nombre']) . "</td>";
+                        echo "<td class='text-start text-muted'>" . htmlspecialchars($row['descripcion']) . "</td>";
+                        echo "<td class='text-success fw-bold'>$" . htmlspecialchars($row['precio']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['stock']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['color']) . "</td>";
+                        echo "<td><img src='img/" . htmlspecialchars($row['imagen']) . "' class='rounded' width='100px' height='60px' alt='Imágen Producto'></td>";
+                        echo "<td>
+                            <button class='btn btn-sm btn-outline-primary me-2 rounded-pill shadow-sm' onclick='openEditModal(" . json_encode($row) . ")'>
+                                <i class='fas fa-edit'></i> Editar
+                            </button>
+                            <a href='products/delete_product.php?id=" . $row['id_producto'] . "' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este producto?\")'>
+                                <i class='fas fa-trash-alt'></i> Eliminar
+                            </a>
+                        </td>";
+                        echo "</tr>";
                     }
+                } else {
+                    echo "<tr><td colspan='7' class='text-center text-muted'>No se encontraron productos</td></tr>";
+                }
                 ?>
             </tbody>
         </table>

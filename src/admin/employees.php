@@ -21,7 +21,7 @@ $title = "Muebleria ┃ Admin Employees";
     <div class="modal fade" id="addEmployeesModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeesModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="addEmployeesModalLabel">Add Employee</h5>
             </div>
             <form action="employees/add_employee.php" method="POST">
@@ -64,7 +64,7 @@ $title = "Muebleria ┃ Admin Employees";
 <div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="editEmployeeLabel">Editar Empleado</h5>
             </div>
             <form action="employees/edit_employee.php" method="POST">
@@ -107,63 +107,64 @@ $title = "Muebleria ┃ Admin Employees";
 </div>
 
 <!-- Tabla de Empleados -->
-<section class="services-table container my-1">
-<div class="table-responsive">
-    <table class="table table-bordered table-hover text-center">
-        <thead class="thead-dark">
-            <tr>
-                <h2 class="text-center">Administrar Empleados</h2><br/>
-                <th>Empleado</th>
-                <th>Telefono</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Estatus</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $sql = "SELECT * FROM empleados";
-            $result = $conn->query($sql);
+<section class="services-table container my-4">
+    <h2 class="fw-bold text-primary text-center">Administrar Empleados</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Empleado</th>
+                    <th>Telefono</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql = "SELECT * FROM empleados";
+                $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $nombre_completo = htmlspecialchars($row['nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
-                    echo "<tr>";
-                    echo "<td>" . $nombre_completo . "</td>";
-                    echo "<td>" . htmlspecialchars($row['telefono']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['estatus']) . "</td>";
-                    echo "<td>";
-                
-                    if ($row['estatus'] === 'activo') {
-                        echo "<a href='employees/status_employee.php?id=" . $row['id_empleado'] . "&estatus=inactivo' class='btn btn-warning btn-sm me-2' title='Desactivar Empleado'>
-                                <i class='fas fa-ban'></i>
-                            </a>";
-                    } else {
-                        echo "<a href='employees/status_employee.php?id=" . $row['id_empleado'] . "&estatus=activo' class='btn btn-success btn-sm me-2' title='Activar Empleado'>
-                                <i class='fas fa-check-circle'></i>
-                            </a>";
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $nombre_completo = htmlspecialchars($row['nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
+                        echo "<tr>";
+                        echo "<td>" . $nombre_completo . "</td>";
+                        echo "<td>" . htmlspecialchars($row['telefono']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['estatus']) . "</td>";
+                        echo "<td>";
+                    
+                        if ($row['estatus'] === 'activo') {
+                            echo "<a href='employees/status_employee.php?id=" . $row['id_empleado'] . "&estatus=inactivo' class='btn btn-warning btn-sm me-2 rounded-pill shadow-sm'>
+                                    <i class='fas fa-ban'></i> Desactivar
+                                  </a>";
+                        } else {
+                            echo "<a href='employees/status_employee.php?id=" . $row['id_empleado'] . "&estatus=activo' class='btn btn-success btn-sm me-2 rounded-pill shadow-sm'>
+                                    <i class='fas fa-check-circle'></i> Activar
+                                  </a>";
+                        }
+
+                        echo "<button class='btn btn-sm btn-outline-primary me-2 rounded-pill shadow-sm' onclick='openEditModal(" . json_encode($row) . ")'>
+                                <i class='fas fa-edit'></i> Editar
+                              </button>
+                              <a href='employees/delete_employee.php?id=" . $row['id_empleado'] . "' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm' onclick='return confirm(\"¿Estás seguro de eliminar a este empleado?\")'>
+                                <i class='fas fa-trash-alt'></i> Eliminar
+                              </a>
+                        </td>";
+                        echo "</tr>";
                     }
-
-                    echo "<button class='btn btn-info btn-sm me-1' onclick='openEditModal(" . json_encode($row) . ")' title='Editar Empleado'>
-                            <i class='fas fa-edit'></i>
-                        </button>
-                        <a href='employees/delete_employee.php?id=" . $row['id_empleado'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de que deseas eliminar a este empleado?\")' title='Eliminar empleado'>
-                            <i class='fas fa-trash'></i>
-                        </a>
-                    </td>";
-                    echo "</tr>";
+                } else {
+                    echo "<tr><td colspan='6' class='text-center text-muted'>No hay empleados disponibles</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='11'>No hay empleados</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
+                ?>
+            </tbody>
+        </table>
+    </div>
 </section>
+
 <script>
 
     function openEditModal(employeesData) {
