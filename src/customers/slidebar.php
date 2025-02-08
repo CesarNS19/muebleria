@@ -213,14 +213,14 @@ if (!empty($_SESSION["carrito"])) {
                             <img class="img-profile rounded-circle" src="../../img/undraw_profile.svg">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="profile.php">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                                Perfil
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../../login/login.php">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
+                                Cerrar Sesión
                             </a>
                         </div>
                     </li>
