@@ -1,6 +1,7 @@
 <?php
 session_start();
 require '../../mysql/connection.php';
+include 'slidebar.php';
 $title = "Muebleria ┃ Dashboard";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_producto"])) {
@@ -42,9 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_producto"])) {
         $_SESSION['status_message'] = "Debe iniciar sesión para agregar productos al carrito.";
         $_SESSION['status_type'] = "warning";
     }
-
-    header("Location: canteens.php");
-    exit();
 }
 
 $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.precio, p.imagen
@@ -54,8 +52,7 @@ $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre
         WHERE c.nombre = 'comedores'";
 $result = $conn->query($sql);
 ?>
-?>
-<?php include 'slidebar.php'; ?>
+
 <title><?php echo $title; ?></title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
