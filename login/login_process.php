@@ -5,6 +5,7 @@ include '../mysql/connection.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
+    $remember = isset($_POST['remember']);
 
     $stmt = $conn->prepare("
         SELECT id, email, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus
@@ -26,13 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (password_verify($password, $row['contrasena'])) {
             if ($row['estatus'] === 'inactivo') {
-                echo "Tu cuenta está inactiva. Por favor, contacta con el administrador.";
+                $_SESSION['status_message'] = "Tu cuenta está inactiva. Por favor, contacta con el administrador.";
+                $_SESSION['status_type'] = "warning";
             } else {
                 $_SESSION['user'] = $row['email'];
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['nombre'] = $row['nombre'];
                 $_SESSION['apellido_paterno'] = $row['apellido_paterno'];
                 $_SESSION['apellido_materno'] = $row['apellido_materno'];
+
+                if ($remember) {
+                    setcookie("email", $email, time() + (86400 * 30), "/");
+                    setcookie("password", base64_encode($password), time() + (86400 * 30), "/");
+                } else {
+                    setcookie("email", "", time() - 3600, "/");
+                    setcookie("password", "", time() - 3600, "/");
+                }
 
                 $rol = strtolower(trim($row['rol']));
 
@@ -53,13 +63,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
             }
         } else {
-            echo "Credenciales incorrectas.";
+            $_SESSION['status_message'] = "Credenciales incorrectas.";
+            $_SESSION['status_type'] = "error";
         }
     } else {
-        echo "Credenciales incorrectas.";
+        $_SESSION['status_message'] = "Credenciales incorrectas.";
+        $_SESSION['status_type'] = "error";
     }
 
     $stmt->close();
+    header("Location: login.php");
+    exit();
 }
+
 $conn->close();
 ?>

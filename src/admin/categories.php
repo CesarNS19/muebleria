@@ -170,7 +170,7 @@ $title = "Muebleria ┃ Admin Categories";
             <?php if (isset($_SESSION['status_message']) && isset($_SESSION['status_type'])): ?>
                 <?php if ($_SESSION["status_type"] === "warning"): ?>
                     mostrarToast("Advertencia", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php elseif ($_SESSION["status_type"] === "error"): ?>
+                <?php elseif ($_SESSION["status_type"] === "danger"): ?>
                     mostrarToast("Error", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
                 <?php elseif ($_SESSION["status_type"] === "info"): ?>
                     mostrarToast("Info", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
