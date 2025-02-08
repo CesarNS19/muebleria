@@ -22,9 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $total_venta = 0;
     $productos_vendidos = [];
 
-    $fecha = date('Y-m-d');
-    $hora = date('H:i:s');
-
     foreach ($_SESSION['carrito'] as $producto) {
         $subtotal = $producto['precio'] * $producto['cantidad'];
         $total_venta += $subtotal;
@@ -38,9 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->begin_transaction();
 
     try {
-        $sql_venta = "INSERT INTO ventas (id_cliente, fecha, hora, total) VALUES (?, ?, ?, ?)";
+        $sql_venta = "INSERT INTO ventas (id_cliente, fecha, hora, total) 
+                      VALUES (?, CURRENT_DATE(), CURRENT_TIME(), ?)";
         $stmt_venta = $conn->prepare($sql_venta);
-        $stmt_venta->bind_param("issd", $id_cliente, $fecha, $hora, $total_venta);
+        $stmt_venta->bind_param("id", $id_cliente, $total_venta);
 
         if (!$stmt_venta->execute()) {
             throw new Exception("Error al registrar la venta principal: " . $stmt_venta->error);
@@ -49,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_venta = $stmt_venta->insert_id;
         $stmt_venta->close();
 
-        $sql_detalle = "INSERT INTO detalle_venta (id_producto, id_venta, cantidad, subtotal) VALUES (?, ?, ?, ?)";
+        $sql_detalle = "INSERT INTO detalle_venta (id_producto, id_venta, cantidad, subtotal) 
+                        VALUES (?, ?, ?, ?)";
         $stmt_detalle = $conn->prepare($sql_detalle);
 
         foreach ($productos_vendidos as $producto) {
