@@ -60,36 +60,36 @@ $result = $conn->query($sql);
 <div id="Alert" class="container mt-3"></div>
 
 <div class="container mt-2">
-    <div class="row">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $imagePath = !empty($row['imagen']) ? "img/" . $row['imagen'] : "";
                 echo '
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
-                                <img src="' . $imagePath . '" alt="Imagen del Producto" style="max-height: 100%; max-width: 100%;">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title text-center">' . $row["nombre"] . '</h5>
-                                <p class="card-text">Marca: ' . $row["marca"] . '</p>
-                                <p class="card-text">Descripción: ' . $row["descripcion"] . '</p>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Color: ' . $row["color"] . '</li>
-                                </ul>
-                                <p class="mt-2 text-success text-center"><strong>Precio: $' . $row["precio"] . '</strong></p>
-                                <form method="POST" action="">
-                                    <input type="hidden" name="id_producto" value="' . $row["id_producto"] . '">
-                                    <input type="hidden" name="nombre" value="' . $row["nombre"] . '">
-                                    <input type="hidden" name="descripcion" value="' . $row["descripcion"] . '">
-                                    <input type="hidden" name="imagen" value="' . $row["imagen"] . '">
-                                    <input type="hidden" name="precio" value="' . $row["precio"] . '">
-                                    <button class="btn btn-primary w-100">Añadir al carrito</button>
-                                </form>
-                            </div>
+                <div class="col">
+                    <div class="card h-100 shadow-lg rounded-3 text-center">
+                    <h5 class="card-title fw-bold mt-2">' . $row["nombre"] . '</h5>
+                        <div class="position-relative overflow-hidden d-flex justify-content-center align-items-center" style="height: 200px;">
+                            <img src="' . $imagePath . '" alt="Imagen del Producto" style="height: 80%; width: 60%;">
                         </div>
-                    </div>';
+                        <div class="card-body text-center">
+                            <p class="card-text text-muted">Descripción: <strong>' . $row["descripcion"] . '</strong></p>
+                            <span>Marca: <strong>' . $row["marca"] . '</strong></span>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item">Color: <strong>' . $row["color"] . '</strong></li>
+                            </ul>
+                            <p class="text-success fs-5 fw-bold">Precio: $' . $row["precio"] . '</p>
+                            <form method="POST" action="">
+                                <input type="hidden" name="id_producto" value="' . $row["id_producto"] . '">
+                                <input type="hidden" name="nombre" value="' . $row["nombre"] . '">
+                                <input type="hidden" name="descripcion" value="' . $row["descripcion"] . '">
+                                <input type="hidden" name="imagen" value="' . $row["imagen"] . '">
+                                <input type="hidden" name="precio" value="' . $row["precio"] . '">
+                                <button class="btn btn-primary w-100 rounded-pill">Añadir al carrito <i class="fas fa-cart-plus"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>';
             }
         } else {
             echo "<p>No hay productos disponibles.</p>";
