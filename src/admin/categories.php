@@ -79,8 +79,7 @@ $title = "Muebleria ┃ Admin Categories";
  <!-- Tabla de Categorias -->
  <section class="container my-2">
         <h2 class="fw-bold text-primary text-center">Administrar Categorías</h2>
-
-    <div class="table-responsive">
+        <div class="table-responsive">
         <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
             <thead class="bg-primary text-white">
                 <tr>

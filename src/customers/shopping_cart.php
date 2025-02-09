@@ -49,15 +49,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <h1 class="mb-4 text-center">Mi Carrito de Compras</h1>
     <div class="text-end mt-4">
         <form method="POST">
-            <button type="submit" name="vaciar_carrito" class="btn btn-warning">Vaciar Carrito</button>
+            <button type="submit" name="vaciar_carrito" class="btn btn-sm btn-warning rounded-pill shadow-sm">
+                <i class="fa-solid fa-trash"></i> Vaciar Carrito
+            </button>
         </form>
     </div>
 </div>
 
 <section class="services-table container my-2">
 <div class="table-responsive">
-<table class="table table-bordered table-hover text-center">
-<thead class="thead-dark">
+        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
+            <thead class="bg-primary text-white">
             <tr>
                 <th>Producto</th>
                 <th>Descripción</th>
@@ -81,14 +83,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <td>{$producto["nombre"]}</td>
                         <td>{$producto["descripcion"]}</td>
                         <td>
-                            <img src='{$imagePath}' alt='Imagen del Producto' style='width: 80px; height: 80px; object-fit: cover;' />
+                            <img src='{$imagePath}' alt='Imagen del Producto' class='rounded' style='width: 80px; height: 80px; object-fit: cover;' />
                         </td>
                         <td>\${$producto["precio"]}</td>
                         <td>
                             <form method='POST' class='d-inline'>
                                 <input type='hidden' name='id_producto' value='{$id_producto}' />
                                 <input type='number' name='cantidad' value='{$producto["cantidad"]}' min='0' class='form-control d-inline' style='width: 80px;' />
-                                <button type='submit' name='update_quantity' class='btn btn-primary btn-sm'>Actualizar</button>
+                                <button type='submit' name='update_quantity' class='btn btn-sm btn-outline-primary rounded-pill shadow-sm'>
+                                <i class='fas fa-edit'></i> Actualizar
+                                </button>
                             </form>
                         </td>
                         <td>\${$subtotal}</td>
@@ -96,7 +100,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <form method='POST' style='display:inline;'>
                                 <input type='hidden' name='id_producto' value='{$id_producto}' />
                                 <input type='hidden' name='cantidad' value='0' />
-                                <button type='submit' name='update_quantity' class='btn btn-danger btn-sm'>Eliminar</button>
+                                <button type='submit' name='update_quantity' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm'>
+                                <i class='fas fa-trash-alt'></i> Eliminar
+                                </button>
                             </form>
                         </td>
                     </tr>";
@@ -116,7 +122,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <div class="text-end mt-4 container">
         <form method="POST" action="shopping_cart/add_shopping_cart.php">
-            <button type="submit" name="buy_now" class="btn btn-success">Comprar</button>
+            <button type="submit" name="buy_now" class="btn btn-sm btn-success rounded-pill shadow-sm ">
+            <i class="fa-solid fa-cart-arrow-down"></i> Comprar
+            </button>
         </form>
     </div>
 

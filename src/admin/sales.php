@@ -13,6 +13,57 @@ $title = "Muebleria ┃ Admin sales";
 
 <div id="Alert" class="container"></div>
 
+<!-- Tabla de Ventas -->
+<section class="services-table container my-4">
+    <h2 class="text-center mb-4">Ventas</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Nombre del Cliente</th>
+                    <th>Nombre del producto</th>
+                    <th>Descripción</th>
+                    <th>Imagen</th>
+                    <th>Cantidad</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql = "SELECT d.cantidad, d.subtotal, p.nombre AS nombre_producto, v.fecha, v.hora, 
+                               p.imagen, p.descripcion, 
+                               CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS nombre_cliente
+                        FROM ventas v
+                        JOIN detalle_venta d ON v.id_venta = d.id_venta
+                        JOIN productos p ON d.id_producto = p.id_producto
+                        JOIN clientes c ON v.id_cliente = c.id_cliente";
+
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['nombre_cliente']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['nombre_producto']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['descripcion']) . "</td>";
+                        echo "<td><img src='img/" . htmlspecialchars($row['imagen']) . "' class='rounded' width='100px' height='60px' alt='Imagen Producto'></td>";
+                        echo "<td>" . htmlspecialchars($row['cantidad']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['hora']) . "</td>";
+                        echo "<td>" . htmlspecialchars(number_format($row['subtotal'], 2)) . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='8'>No se han realizado ventas</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
 <script>
     function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';

@@ -49,9 +49,8 @@ $userData = $result->fetch_assoc();
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="profile/edit_profile.php" method="POST">
-                <div class="modal-header">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">

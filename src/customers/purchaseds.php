@@ -16,8 +16,8 @@ $title = "Muebleria ┃ Mis Compras";
 <section class="services-table container my-4">
     <h2 class="text-center mb-4">Mis Compras</h2>
     <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
-            <thead class="thead-dark">
+        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
+            <thead class="bg-primary text-white">
                 <tr>
                     <th>Nombre del producto</th>
                     <th>Descripción</th>
@@ -43,7 +43,7 @@ $title = "Muebleria ┃ Mis Compras";
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['descripcion']) . "</td>";
-                        echo "<td><img src='img/". htmlspecialchars($row['imagen']). "' width='100px' height='60px' alt='Imagen Producto'></td>";
+                        echo "<td><img src='img/". htmlspecialchars($row['imagen']). "' class='rounded' width='100px' height='60px' alt='Imagen Producto'></td>";
                         echo "<td>" . htmlspecialchars($row['cantidad']) . "</td>";
                         echo "<td>". htmlspecialchars($row['fecha']). "</td>";
                         echo "<td>". htmlspecialchars($row['hora']). "</td>";
