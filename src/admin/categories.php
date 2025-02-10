@@ -76,6 +76,27 @@ $title = "Muebleria ┃ Admin Categories";
     </div>
 </div>
 
+<!-- Modal para eliminar categorias -->
+<div class="modal fade" id="deleteCategoriesModal" tabindex="-1" aria-labelledby="deleteCategoriesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteCategoriesModalLabel">Confirmar Eliminación</h5>
+      </div>
+      <form action="categories/delete_categories.php" method="POST">
+      <div class="modal-body">
+      <input type="hidden" name="id_categoria" id="delete_id_categoria">
+        <p>¿Estás seguro de que deseas eliminar esta categoría?, Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
  <!-- Tabla de Categorias -->
  <section class="container my-2">
         <h2 class="fw-bold text-primary text-center">Administrar Categorías</h2>
@@ -102,9 +123,9 @@ $title = "Muebleria ┃ Admin Categories";
                             <button class='btn btn-sm btn-outline-primary me-2 rounded-pill shadow-sm' onclick='openEditModal(" . json_encode($row) . ")'>
                                 <i class='fas fa-edit'></i> Editar
                             </button>
-                            <a href='categories/delete_categories.php?id=" . $row['id_categoria'] . "' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm' onclick='return confirm(\"¿Estás seguro de eliminar esta categoría?\")'>
+                            <button class='btn btn-sm btn-outline-danger me-2 rounded-pill shadow-sm' onclick='openDeleteModal(" . json_encode($row) . ")'>
                                 <i class='fas fa-trash-alt'></i> Eliminar
-                            </a>
+                              </button>
                         </td>";
                         echo "</tr>";
                     }
@@ -122,6 +143,11 @@ $title = "Muebleria ┃ Admin Categories";
         $('#edit_nombre').val(categoriesData.nombre);
         $('#edit_descripcion').val(categoriesData.descripcion);    
         $('#editCategoriesModal').modal('show');
+    }
+
+    function openDeleteModal(Data) {
+        $('#delete_id_categories').val(Data.id_categoria);
+        $('#deleteCategoriesModal').modal('show');
     }
 
     function mostrarToast(titulo, mensaje, tipo) {

@@ -2,8 +2,8 @@
 require '../../../mysql/connection.php';
 session_start();
 
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_POST['id_cliente'])) {
+    $id = intval($_POST['id_cliente']);
 
     $sql = "DELETE FROM clientes WHERE id_cliente = ?";
     $stmt = $conn->prepare($sql);
@@ -27,4 +27,5 @@ header('Location: ../customers.php');
 exit();
 
 $conn->close();
+
 ?>

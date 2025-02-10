@@ -2,8 +2,8 @@
 require '../../../mysql/connection.php';
 session_start();
 
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_POST['id_marca'])) {
+    $id = intval($_POST['id_marca']);
 
     $sql = "DELETE FROM marcas WHERE id_marca = ?";
     $stmt = $conn->prepare($sql);

@@ -77,6 +77,27 @@ $title = "Muebleria ┃ Admin Brands";
     </div>
 </div>
 
+<!-- Modal para eliminar marcas -->
+<div class="modal fade" id="deleteBrandsModal" tabindex="-1" aria-labelledby="deleteBrandsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteBrandsModalLabel">Confirmar Eliminación</h5>
+      </div>
+      <form action="brands/delete_brands.php" method="POST">
+      <div class="modal-body">
+      <input type="hidden" name="id_marca" id="delete_id_marca">
+        <p>¿Estás seguro de que deseas eliminar esta marca?, Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
  <!-- Tabla de Marcas -->
  <section class="container my-2">
         <h2 class="fw-bold text-primary text-center">Administrar Marcas</h2>
@@ -104,9 +125,9 @@ $title = "Muebleria ┃ Admin Brands";
                             <button class='btn btn-sm btn-outline-primary me-2 rounded-pill shadow-sm' onclick='openEditModal(" . json_encode($row) . ")'>
                                 <i class='fas fa-edit'></i> Editar
                             </button>
-                            <a href='brands/delete_brands.php?id=" . $row['id_marca'] . "' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm' onclick='return confirm(\"¿Estás seguro de eliminar esta marca?\")'>
+                            <button class='btn btn-sm btn-outline-danger me-2 rounded-pill shadow-sm' onclick='openDeleteModal(" . json_encode($row) . ")'>
                                 <i class='fas fa-trash-alt'></i> Eliminar
-                            </a>
+                              </button>
                         </td>";
                         echo "</tr>";
                     }
@@ -126,6 +147,11 @@ $title = "Muebleria ┃ Admin Brands";
         $('#edit_nombre').val(categoriesData.nombre);
         $('#edit_descripcion').val(categoriesData.descripcion);    
         $('#editBrandsModal').modal('show');
+    }
+
+    function openDeleteModal(Data) {
+        $('#delete_id_marca').val(Data.id_marca);
+        $('#deleteBrandsModal').modal('show');
     }
 
     function mostrarToast(titulo, mensaje, tipo) {

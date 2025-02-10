@@ -108,6 +108,27 @@ $title = "Muebleria ┃ Admin Customers";
     </div>
 </div>
 
+<!-- Modal para eliminar cliente -->
+<div class="modal fade" id="deleteCustomerModal" tabindex="-1" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteCustomerModalLabel">Confirmar Eliminación</h5>
+      </div>
+      <form action="customers/delete_customer.php" method="POST">
+      <div class="modal-body">
+      <input type="hidden" name="id_cliente" id="delete_id_cliente">
+        <p>¿Estás seguro de que deseas eliminar al cliente?, Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <section class="services-table container my-4">
     <h2 class="fw-bold text-primary text-center">Administrar Clientes</h2>
     <div class="table-responsive">
@@ -151,9 +172,9 @@ $title = "Muebleria ┃ Admin Customers";
                         echo "<button class='btn btn-sm btn-outline-primary me-2 rounded-pill shadow-sm' onclick='openEditModal(" . json_encode($row) . ")'>
                                 <i class='fas fa-edit'></i> Editar
                               </button>
-                              <a href='customers/delete_customer.php?id=" . $row['id_cliente'] . "' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm' onclick='return confirm(\"¿Estás seguro de eliminar a este cliente?\")'>
+                              <button class='btn btn-sm btn-outline-danger me-2 rounded-pill shadow-sm' onclick='openDeleteModal(" . json_encode($row) . ")'>
                                 <i class='fas fa-trash-alt'></i> Eliminar
-                              </a>
+                              </button>
                         </td>";
                         echo "</tr>";
                     }
@@ -166,7 +187,6 @@ $title = "Muebleria ┃ Admin Customers";
     </div>
 </section>
 
-
 <script>
 
     function openEditModal(customerData) {
@@ -178,13 +198,10 @@ $title = "Muebleria ┃ Admin Customers";
         $('#edit_email').val(customerData.email);
         $('#editCustomerModal').modal('show');
     }
-
-    function openAddAddressModal(cliente) {
-        document.getElementById('id_cliente_modal').value = cliente.id_cliente;
-        
-        document.getElementById('nombre_cliente_modal').value = cliente.nombre_cliente + ' ' + cliente.apellido_paterno + ' ' + cliente.apellido_materno;
     
-        $('#addCustomerAddressModal').modal('show');
+    function openDeleteModal(Data) {
+        $('#delete_id_cliente').val(Data.id_cliente);
+        $('#deleteCustomerModal').modal('show');
     }
 
     function mostrarToast(titulo, mensaje, tipo) {

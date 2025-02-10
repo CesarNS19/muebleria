@@ -2,8 +2,8 @@
 require '../../../mysql/connection.php';
 session_start();
 
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_POST['id_empleado'])) {
+    $id = intval($_POST['id_empleado']);
 
     $sql = "DELETE FROM empleados WHERE id_empleado = ?";
     $stmt = $conn->prepare($sql);

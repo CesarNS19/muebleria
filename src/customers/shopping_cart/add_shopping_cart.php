@@ -4,7 +4,7 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
-        $_SESSION['status_message'] = "El carrito está vacío. No se puede realizar la venta.";
+        $_SESSION['status_message'] = "El carrito está vacío. No se puede realizar la compra.";
         $_SESSION['status_type'] = "warning";
         header("Location: ../shopping_cart.php");
         exit();
