@@ -69,8 +69,8 @@ $result = $conn->query($sql);
                 <div class="col">
                     <div class="card h-100 shadow-lg rounded-3 text-center">
                     <h5 class="card-title fw-bold mt-2">' . $row["nombre"] . '</h5>
-                        <div class="position-relative overflow-hidden d-flex justify-content-center align-items-center" style="height: 200px;">
-                            <img src="' . $imagePath . '" alt="Imagen del Producto" style="height: 80%; width: 60%;">
+                        <div class="position-relative overflow-hidden d-flex justify-content-center align-items-center" style="height: 100px;">
+                            <img src="' . $imagePath . '" alt="Imagen del Producto" style="height: 80%; width: 30%;">
                         </div>
                         <div class="card-body text-center">
                             <p class="card-text text-muted">Descripción: <strong>' . $row["descripcion"] . '</strong></p>
