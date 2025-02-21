@@ -1,7 +1,7 @@
 <?php
 session_start();
-require '../../mysql/connection.php';
 include 'slidebar.php';
+require '../../mysql/connection.php';
 $title = "Muebleria ┃ Dashboard";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_producto"])) {
@@ -45,11 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_producto"])) {
     }
 }
 
+$searchQuery = "";
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $searchTerm = $_GET['search'];
+    $searchQuery = " WHERE p.nombre LIKE '%" . $conn->real_escape_string($searchTerm) . "%' ";
+}
+
 $sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.precio, p.imagen
         FROM productos p
         JOIN categorias c ON p.id_categoria = c.id_categoria
         JOIN marcas m ON p.id_marca = m.id_marca
-        WHERE c.nombre = 'recamaras'";
+        WHERE c.nombre = 'recamaras'" . $searchQuery;
 $result = $conn->query($sql);
 ?>
 
@@ -60,8 +66,8 @@ $result = $conn->query($sql);
 
 <div id="Alert" class="container mt-3"></div>
 
-<div class="container mt-2">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="container">
+    <div id="products-container" class="row row-cols-1 row-cols-md-3 g-4">
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -93,7 +99,7 @@ $result = $conn->query($sql);
                 </div>';
             }
         } else {
-            echo "<p>No hay productos disponibles.</p>";
+            echo "<p>No se encontraron productos para tu búsqueda.</p>";
         }
         $conn->close();
         ?>
@@ -101,6 +107,21 @@ $result = $conn->query($sql);
 </div>
 
 <script>
+     $(document).ready(function() {
+        $('#search').on('input', function() {
+            let searchTerm = $(this).val();
+            
+            $.ajax({
+                url: "products/search_bedrooms.php",
+                type: "GET",
+                data: { search: searchTerm },
+                success: function(response) {
+                    $('#products-container').html(response);
+                }
+            });
+        });
+     });
+
     window.onload = () => {
         const productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
         const badge = document.querySelector(".nav-item .badge");

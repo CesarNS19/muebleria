@@ -162,9 +162,12 @@ if (!empty($_SESSION["carrito"])) {
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
-
+               
+                    <div class="col-4">
+                            <input class="form-control me-2" type="search" id="search" placeholder="Buscar producto" aria-label="Buscar">
+                    </div>
+                
                 <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item">
                     <a class="nav-link" href="shopping_cart.php">
                         <i class="fas fa-fw fa-shopping-cart"></i>

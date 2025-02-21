@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <td>{$producto["nombre"]}</td>
                         <td>{$producto["descripcion"]}</td>
                         <td>
-                            <img src='{$imagePath}' alt='Imagen del Producto' class='rounded' style='width: 80px; height: 80px; object-fit: cover;' />
+                            <img src='{$imagePath}' alt='Imagen del Producto' class='rounded' style='width: 80px; height: 50px; object-fit: cover;' />
                         </td>
                         <td>\${$producto["precio"]}</td>
                         <td>
