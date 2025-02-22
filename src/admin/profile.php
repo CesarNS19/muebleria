@@ -2,7 +2,7 @@
 session_start();
 include "../../mysql/connection.php";
 include "slidebar.php";
-$title = "Muebleria ┃ Perfil Admin";
+$title = "Muebleria ┃ Perfil Cliente";
 $id_cliente = $_SESSION['id_cliente'];
 
 $sql = "SELECT nombre, apellido_paterno, apellido_materno, telefono, email, estatus, rol 
@@ -14,6 +14,12 @@ $result = $stmt->get_result();
 $userData = $result->fetch_assoc();
 ?>
 
+<style>
+    .container{
+        background-color: white;
+    }
+</style>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,7 +27,7 @@ $userData = $result->fetch_assoc();
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <title><?php echo $title; ?></title>
 
-<!-- Card para mostrar información del admin-->
+<!-- Card para mostrar información del cliente-->
 <div class="container mt-5">
     <div class="card mx-auto shadow-lg" style="max-width: 500px; border-radius: 15px;">
         <div class="card-body text-center">
@@ -29,7 +35,7 @@ $userData = $result->fetch_assoc();
             <div class="mb-4">
                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil Admin" class="rounded-circle" width="120">
             </div>
-            <h3 class="card-title text-primary fw-bold">Perfil del Administrador</h3>
+            <h3 class="card-title text-primary fw-bold">Mi Perfil</h3>
             <ul class="list-group list-group-flush text-start">
                 <li class="list-group-item"><strong>Nombre:</strong> <?php echo $userData['nombre']; ?></li>
                 <li class="list-group-item"><strong>Apellido Paterno:</strong> <?php echo $userData['apellido_paterno']; ?></li>
@@ -73,17 +79,37 @@ $userData = $result->fetch_assoc();
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" value="<?php echo $userData['email']; ?>" required>
                     </div>
+
+                    <h6 class="text-primary">Cambiar Contraseña</h6>
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirmar Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary"><i></i> Guardar Cambios</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+
 <script>
+    window.onload = () => {
+        const productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
+        const badge = document.querySelector(".nav-item .badge");
+        if (badge) {
+            badge.textContent = productCount > 0 ? productCount : "";
+        }
+    }
+
     function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';
             let alertClass = '';

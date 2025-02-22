@@ -219,7 +219,10 @@ if ($hour >= 5 && $hour < 12) {
     <script src="../../js/demo/chart-pie-demo.js"></script>
 
     <script>
+         if (!document.cookie.includes("timezone")) {
         document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
+        location.reload();
+    }
     </script>
 </body>
 </html>

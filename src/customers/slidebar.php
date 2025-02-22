@@ -235,7 +235,10 @@ if (!empty($_SESSION["carrito"])) {
     <script src="../../js/demo/chart-pie-demo.js"></script>
 
  <script>
-     document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
+     if (!document.cookie.includes("timezone")) {
+        document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
+        location.reload();
+    }
 
      $(document).ready(function() {
         
