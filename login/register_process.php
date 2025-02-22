@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../mysql/connection.php';
 
 $nombre_cliente = $_POST['nombre'];
@@ -12,7 +13,10 @@ $estatus = 'activo';
 $rol = 'usuario';
 
 if ($contrasena !== $confirmar_contrasena) {
-    die("Las contraseñas no coinciden.");
+    $_SESSION['status_message'] = "Las contraseñas no coinciden.";
+    $_SESSION['status_type'] = "error";
+    header("Location: login.php");
+    exit();
 }
 
 $sql_check_email = "SELECT id_cliente FROM clientes WHERE email = ?";
@@ -22,7 +26,10 @@ $stmt_check_email->execute();
 $stmt_check_email->store_result();
 
 if ($stmt_check_email->num_rows > 0) {
-    die("El correo electrónico ya está registrado. Por favor, elija otro.");
+    $_SESSION['status_message'] = "El correo electrónico ya está registrado. Por favor, elija otro.";
+    $_SESSION['status_type'] = "warning";
+    header("Location: login.php");
+    exit();
 }
 
 $hashed_password = password_hash($contrasena, PASSWORD_DEFAULT);
@@ -34,10 +41,15 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssssssss", $nombre_cliente, $apellido_paterno, $apellido_materno, $telefono_personal, $correo_electronico, $hashed_password, $rol, $estatus);
 
 if ($stmt->execute()) {
+    $_SESSION['status_message'] = "Registro exitoso";
+    $_SESSION['status_type'] = "success";
     header("Location: login.php");
     exit();
 } else {
-    echo "Error al registrar al usuario: " . $stmt->error;
+    $_SESSION['status_message'] = "Error al registrar al usuario: " . $stmt->error;
+    $_SESSION['status_type'] = "error";
+    header("Location: login.php");
+    exit();
 }
 
 $stmt->close();

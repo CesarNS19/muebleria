@@ -20,7 +20,7 @@ if (isset($_SESSION['status_message'])) {
 
     <style>
         body {
-            background-color: #f0f8ff;
+            background-color: #f8f9fa;
             font-family: 'Nunito', sans-serif;
         }
 
@@ -29,40 +29,45 @@ if (isset($_SESSION['status_message'])) {
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             border-radius: 15px;
             overflow: hidden;
+            height: 600px;
         }
 
-        .bg-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 15px 0 0 15px;
+        .animation-container {
+            color: white;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .furniture-icon {
+            font-size: 4rem;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        .furniture-icon:nth-child(1) { animation-delay: 0.3s; }
+        .furniture-icon:nth-child(2) { animation-delay: 0.6s; }
+        .furniture-icon:nth-child(3) { animation-delay: 0.9s; }
+        .furniture-icon:nth-child(4) { animation-delay: 1.2s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .form-label {
-            color: #0056b3;
-        }
-
-        .btn-primary {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        .btn-primary:hover {
-            background-color: #004494;
-            border-color: #004494;
-        }
-
-        a.link-secondary {
-            color: #007bff;
-        }
-
-        a.link-secondary:hover {
-            color: #0056b3;
+            color: #6c757d;
         }
 
         .login-title {
-            color: #0056b3;
-            font-weight: 600;
+            font-weight: 700;
+        }
+
+        .texto {
+            font-weight: bold;
+            font-size: 36px;
         }
     </style>
 </head>
@@ -72,27 +77,33 @@ if (isset($_SESSION['status_message'])) {
         <div class="row w-100">
             <div class="col-md-8 mx-auto">
                 <div class="row login-container">
-                    <div class="col-md-6 d-none d-md-block bg-image">
-                        <img src="../img/login.jpeg" alt="Mueblería">
+
+                    <div class="col-md-6 d-none d-md-flex animation-container bg-primary">
+                        <h3 class="mb-3 texto">MUEBLERÍA PARÍS</h3>
+                        <div class="d-flex justify-content-around w-100 mt-5">
+                            <i class="fas fa-couch furniture-icon"></i>
+                            <i class="fas fa-bed furniture-icon"></i>
+                            <i class="fas fa-chair furniture-icon"></i>
+                            <i class="fas fa-toilet furniture-icon"></i>
+                        </div>
                     </div>
-                    <div class="col-md-6 p-5">
-                        <h2 class="text-center login-title mb-4">Iniciar Sesión</h2>
+
+                    <div class="col-md-6 p-5" id="form-container">
+                        <h2 class="text-center login-title mb-4 text-primary mt-5">Iniciar Sesión</h2>
                         <form action="login_process.php" method="POST">
-                        <div id="Alert"></div>
+                            <div id="Alert"></div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo" 
-                                value="<?php echo isset($_COOKIE['user_email']) ? $_COOKIE['user_email'] : ''; ?>" required>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo">
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
                             </div>
 
                             <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" id="remember" name="remember"
-                                <?php echo isset($_COOKIE['user_email']) ? 'checked' : ''; ?>>
+                                <input class="form-check-input" type="checkbox" id="remember" name="remember">
                                 <label class="form-check-label" for="remember">
                                     Recordarme
                                 </label>
@@ -104,7 +115,7 @@ if (isset($_SESSION['status_message'])) {
                                 <a href="forgot-password.html" class="link-secondary text-decoration-none">¿Olvidaste tu contraseña?</a>
                             </div>
                             <div class="text-center mt-2">
-                                <a href="register.php" class="link-secondary text-decoration-none">¿No tienes una cuenta? Regístrate aquí</a>
+                                <a href="#" class="link-secondary text-decoration-none" onclick="mostrarRegistro()">¿No tienes una cuenta? Regístrate aquí</a>
                             </div>
                         </form>
                     </div>
@@ -112,23 +123,58 @@ if (isset($_SESSION['status_message'])) {
             </div>
         </div>
     </div>
-</body>
-</html>
+
 <script>
-    window.onload = function() {
-        if (document.cookie) {
-            const cookies = document.cookie.split(';');
-            cookies.forEach(cookie => {
-                const [name, value] = cookie.split('=');
-                if (name.trim() === "email") {
-                    document.getElementById('email').value = decodeURIComponent(value);
-                }
-                if (name.trim() === "password") {
-                    document.getElementById('password').value = atob(decodeURIComponent(value));
-                }
-            });
-        }
+    function mostrarRegistro() {
+        document.getElementById('form-container').innerHTML = `
+            <h2 class="text-center login-title mb-4 text-primary">Registro</h2>
+            <form action="register_process.php" method="POST">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" id="nombre" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="apellido_paterno" class="form-label">Apellido Paterno</label>
+                        <input type="text" name="apellido_paterno" class="form-control" id="apellido_paterno" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="apellido_materno" class="form-label">Apellido Materno</label>
+                        <input type="text" name="apellido_materno" class="form-control" id="apellido_materno" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" class="form-control" id="telefono" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" name="email" class="form-control" id="email" required>
+                </div>
+                <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="contrasena" class="form-label">Contraseña</label>
+                    <input type="password" name="contrasena" class="form-control" id="contrasena" required>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="confirmar_contrasena" class="form-label">Confirmar</label>
+                    <input type="password" name="confirmar_contrasena" class="form-control" id="confirmar_contrasena" required placeholder="Confirmar contraseña">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mb-3">Registrar</button>
+                <div class="text-center mt-2">
+                    <a href="#" class="link-secondary text-decoration-none" onclick="mostrarLogin()">¿Ya tienes una cuenta? Inicia sesión aquí</a>
+                </div>
+            </form>
+        `;
     }
+
+    function mostrarLogin() {
+        location.reload();
+    }
+
     function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';
             let alertClass = '';
@@ -184,4 +230,22 @@ if (isset($_SESSION['status_message'])) {
                 <?php unset($_SESSION['status_message'], $_SESSION['status_type']); ?>
             <?php endif; ?>
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("rememberEmail")) {
+                document.getElementById("email").value = localStorage.getItem("rememberEmail");
+                document.getElementById("remember").checked = true;
+            }
+            
+            document.querySelector("form").addEventListener("submit", function() {
+                if (document.getElementById("remember").checked) {
+                    localStorage.setItem("rememberEmail", document.getElementById("email").value);
+                } else {
+                    localStorage.removeItem("rememberEmail");
+                }
+            });
+        });
 </script>
+
+</body>
+</html>
