@@ -89,7 +89,7 @@ if (isset($_SESSION['status_message'])) {
                     </div>
 
                     <div class="col-md-6 p-5" id="form-container">
-                        <h2 class="text-center login-title mb-4 text-primary mt-5">Iniciar Sesión</h2>
+                        <h2 class="text-center login-title mb-4 text-primary mt-4">Iniciar Sesión</h2>
                         <form action="login_process.php" method="POST">
                             <div id="Alert"></div>
                             <div class="mb-3">
@@ -132,35 +132,35 @@ if (isset($_SESSION['status_message'])) {
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" name="nombre" class="form-control" id="nombre" required>
+                        <input type="text" name="nombre" class="form-control" id="nombre">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="apellido_paterno" class="form-label">Apellido Paterno</label>
-                        <input type="text" name="apellido_paterno" class="form-control" id="apellido_paterno" required>
+                        <input type="text" name="apellido_paterno" class="form-control" id="apellido_paterno">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="apellido_materno" class="form-label">Apellido Materno</label>
-                        <input type="text" name="apellido_materno" class="form-control" id="apellido_materno" required>
+                        <input type="text" name="apellido_materno" class="form-control" id="apellido_materno">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" name="telefono" class="form-control" id="telefono" required>
+                        <input type="text" name="telefono" class="form-control" id="telefono">
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" name="email" class="form-control" id="email" required>
+                    <input type="email" name="email" class="form-control" id="email">
                 </div>
                 <div class="row">
                 <div class="mb-3 col-md-6">
                     <label for="contrasena" class="form-label">Contraseña</label>
-                    <input type="password" name="contrasena" class="form-control" id="contrasena" required>
+                    <input type="password" name="contrasena" class="form-control" id="contrasena" placeholder="Contraseña">
                 </div>
                 <div class="mb-3 col-md-6">
                     <label for="confirmar_contrasena" class="form-label">Confirmar</label>
-                    <input type="password" name="confirmar_contrasena" class="form-control" id="confirmar_contrasena" required placeholder="Confirmar contraseña">
+                    <input type="password" name="confirmar_contrasena" class="form-control" id="confirmar_contrasena" placeholder="Confirmar contraseña">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100 mb-3">Registrar</button>
@@ -218,7 +218,7 @@ if (isset($_SESSION['status_message'])) {
 
         document.addEventListener('DOMContentLoaded', function() {
             <?php if (isset($_SESSION['status_message']) && isset($_SESSION['status_type'])): ?>
-                <?php if ($_SESSION["status_type"] === "warning"): ?>
+                <?php if ($_SESSION["status_type"] === "warning"):?>
                     mostrarToast("Advertencia", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
                 <?php elseif ($_SESSION["status_type"] === "error"): ?>
                     mostrarToast("Error", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');

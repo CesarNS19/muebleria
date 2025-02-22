@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (password_verify($password, $row['contrasena'])) {
             if ($row['estatus'] === 'inactivo') {
-                $_SESSION['status_message'] = "Tu cuenta está inactiva. Por favor, contacta con el administrador.";
+                $_SESSION['status_message'] = "Cuenta inactiva, contacta con el administrador.";
                 $_SESSION['status_type'] = "warning";
             } else {
                 $_SESSION['user'] = $row['email'];
@@ -63,11 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
             }
         } else {
-            $_SESSION['status_message'] = "Credenciales incorrectas.";
+            $_SESSION['status_message'] = "Correo o contraseña incorrectos";
             $_SESSION['status_type'] = "error";
         }
     } else {
-        $_SESSION['status_message'] = "Credenciales incorrectas.";
+        $_SESSION['status_message'] = "Correo o contraseña incorrectos";
         $_SESSION['status_type'] = "error";
     }
 
