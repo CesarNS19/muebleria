@@ -97,6 +97,7 @@ $title = "Muebleria ┃ Admin Categories";
   </div>
 </div>
 
+<div id ="main-content" class="container-fluid">
  <!-- Tabla de Categorias -->
  <section class="container my-2">
         <h2 class="fw-bold text-primary text-center">Administrar Categorías</h2>
@@ -137,6 +138,8 @@ $title = "Muebleria ┃ Admin Categories";
         </table>
     </div>
 </section>
+</div>
+
 <script>
     function openEditModal(categoriesData) {
         $('#edit_id_categoria').val(categoriesData.id_categoria);

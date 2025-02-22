@@ -25,7 +25,7 @@ $result = $conn->query($sql);
 
 <div id="Alert" class="container mt-3"></div>
 
-<div class="container">
+<div id ="main-content" class="container-fluid">
     <div id="products-container" class="row row-cols-1 row-cols-md-3 g-4">
         <?php
         if ($result->num_rows > 0) {
@@ -45,14 +45,14 @@ $result = $conn->query($sql);
                                 <li class="list-group-item">Color: <strong>' . $row["color"] . '</strong></li>
                             </ul>
                             <p class="text-success fs-5 fw-bold">Precio: $' . $row["precio"] . '</p>
-                            <button class="btn btn-primary w-100 rounded-pill add-to-cart"
+                                <button class="btn btn-primary w-100 rounded-pill add-to-cart"
                                     data-id="'.$row["id_producto"].'"
                                     data-nombre="'.$row["nombre"].'"
                                     data-descripcion="'.$row["descripcion"].'"
                                     data-imagen="'.$row["imagen"].'"
                                     data-precio="'.$row["precio"].'">
                                     Añadir al carrito <i class="fas fa-cart-plus"></i>
-                            </button>
+                                </button>
                         </div>
                     </div>
                 </div>';

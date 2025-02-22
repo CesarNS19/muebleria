@@ -12,6 +12,7 @@ $title = "Muebleria ┃ Mis Compras";
 
 <div id="Alert" class="container mt-3"></div>
 
+<div id ="main" class="container-fluid">
 <!-- Tabla de Compras -->
 <section class="services-table container my-4">
     <h2 class="text-center mb-4">Mis Compras</h2>
@@ -58,6 +59,7 @@ $title = "Muebleria ┃ Mis Compras";
         </table>
     </div>
 </section>
+</div>
 
 <script>
 

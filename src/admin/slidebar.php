@@ -15,17 +15,24 @@ if ($hour >= 5 && $hour < 12) {
 
 <style>
     #accordionSidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 1030;
-    overflow-y: auto;
-}
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1030;
+        overflow-y: auto;
+    }
 
-#content-wrapper {
-    margin-left: 220px;
-}
+    #content-wrapper {
+        margin-left: 220px;
+    }
+
+    #main-content {
+        margin-top: 1px;
+        overflow-y: auto;
+        max-height: calc(100vh - 150px);
+        background-color: white;
+    }
 
 </style>
 
@@ -48,7 +55,7 @@ if ($hour >= 5 && $hour < 12) {
 
 <body id="page-top">
 
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index_admin.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-couch"></i>
@@ -202,9 +209,6 @@ if ($hour >= 5 && $hour < 12) {
                     </li>
                 </ul>
             </nav>
-
-    <div id="main-content" class="container-fluid">
-    </div>
 
     <script src="../../vendor/jquery/jquery.min.js"></script>
     <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

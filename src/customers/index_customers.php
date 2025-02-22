@@ -63,7 +63,6 @@ $result = $conn->query($sql);
         ?>
     </div>
 </div>
-</div>
 
 <script>
     $(document).ready(function() {

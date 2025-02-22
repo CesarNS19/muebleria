@@ -13,6 +13,7 @@ $title = "Muebleria ┃ Admin sales";
 
 <div id="Alert" class="container"></div>
 
+<div id ="main-content" class="container-fluid">
 <!-- Tabla de Ventas -->
 <section class="services-table container my-4">
     <h2 class="text-center mb-4">Ventas</h2>
@@ -63,6 +64,7 @@ $title = "Muebleria ┃ Admin sales";
         </table>
     </div>
 </section>
+</div>
 
 <script>
     function mostrarToast(titulo, mensaje, tipo) {

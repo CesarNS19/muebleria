@@ -127,6 +127,7 @@ $title = "Muebleria ┃ Admin Employees";
   </div>
 </div>
 
+<div id ="main-content" class="container-fluid">
 <!-- Tabla de Empleados -->
 <section class="services-table container my-4">
     <h2 class="fw-bold text-primary text-center">Administrar Empleados</h2>
@@ -185,6 +186,7 @@ $title = "Muebleria ┃ Admin Employees";
         </table>
     </div>
 </section>
+</div>
 
 <script>
 

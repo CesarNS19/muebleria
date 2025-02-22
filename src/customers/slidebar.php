@@ -24,18 +24,24 @@ if (!empty($_SESSION["carrito"])) {
 
 <style>
     #accordionSidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 1030;
-    overflow-y: auto;
-}
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1030;
+        overflow-y: auto;
+    }
 
-#content-wrapper {
-    margin-left: 220px;
-}
+    #content-wrapper {
+        margin-left: 225px;
+    }
 
+    #main-content {
+        margin-top: 1px;
+        overflow-y: auto;
+        max-height: calc(100vh - 150px);
+        background-color: white;
+    }
 </style>
 
 <!DOCTYPE html>
@@ -59,7 +65,7 @@ if (!empty($_SESSION["carrito"])) {
 <body id="page-top">
 
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index_customers.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-couch"></i>
@@ -83,7 +89,7 @@ if (!empty($_SESSION["carrito"])) {
                     <span>Categorías</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="bg-light py-2 collapse-inner rounded">
                         <a class="collapse-item" href="rooms.php">
                             <i class="fas fa-couch"></i> Salas
                         </a>
@@ -220,8 +226,6 @@ if (!empty($_SESSION["carrito"])) {
                     </li>
                 </ul>
             </nav>
-            <div id="main-content" class="container-fluid">
-    </div>
     <script src="../../vendor/jquery/jquery.min.js"></script>
     <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>

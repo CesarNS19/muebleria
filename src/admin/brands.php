@@ -98,6 +98,7 @@ $title = "Muebleria ┃ Admin Brands";
   </div>
 </div>
 
+<div id ="main-content" class="container-fluid">
  <!-- Tabla de Marcas -->
  <section class="container my-2">
         <h2 class="fw-bold text-primary text-center">Administrar Marcas</h2>
@@ -139,6 +140,8 @@ $title = "Muebleria ┃ Admin Brands";
         </table>
     </div>
 </section>
+</div>
+
 
 <script>
 

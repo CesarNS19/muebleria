@@ -129,6 +129,7 @@ $title = "Muebleria ┃ Admin Customers";
   </div>
 </div>
 
+<div id ="main-content" class="container-fluid">
 <section class="services-table container my-4">
     <h2 class="fw-bold text-primary text-center">Administrar Clientes</h2>
     <div class="table-responsive">
@@ -186,6 +187,7 @@ $title = "Muebleria ┃ Admin Customers";
         </table>
     </div>
 </section>
+</div>
 
 <script>
 

@@ -6,6 +6,15 @@ require 'slidebar.php';
 $title = "Muebleria ┃ Carrito";
 ?>
 
+<style>
+    #main {
+        margin-top: 1px;
+        overflow-y: auto;
+        max-height: calc(100vh - 150px);
+        background-color: white;
+    }
+</style>
+
 <title><?php echo $title; ?></title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -14,17 +23,10 @@ $title = "Muebleria ┃ Carrito";
 
 <div id="Alert" class="container mt-3"></div>
 
+<div id ="main" class="container-fluid">
 <div class="container mt-3">
     <h1 class="mb-4 text-center">Mi Carrito de Compras</h1>
-    <div class="text-end mt-4">
-        <form method="POST" action="shopping_cart/update_shopping_cart.php">
-            <button type="submit" name="vaciar_carrito" class="btn btn-sm btn-warning rounded-pill shadow-sm">
-                <i class="fa-solid fa-trash"></i> Vaciar Carrito
-            </button>
-        </form>
-    </div>
 </div>
-
 <section class="services-table container my-2">
 <div class="table-responsive">
         <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
@@ -89,13 +91,23 @@ $title = "Muebleria ┃ Carrito";
         <p>Total: $<?php echo $total; ?></p>
     </div>
 
-    <div class="text-end mt-4 container">
-        <form method="POST" action="shopping_cart/add_shopping_cart.php">
-            <button type="submit" name="buy_now" class="btn btn-sm btn-success rounded-pill shadow-sm ">
-            <i class="fa-solid fa-cart-arrow-down"></i> Comprar
-            </button>
-        </form>
+    <div class="text-end mt-4 container row">
+        <div class="col-6">
+            <form method="POST" action="shopping_cart/add_shopping_cart.php">
+                <button type="submit" name="buy_now" class="btn btn-sm btn-success rounded-pill shadow-sm ">
+                <i class="fa-solid fa-cart-arrow-down"></i> Comprar
+                </button>
+            </form>
+        </div>
+        <div class="col-6">
+            <form method="POST" action="shopping_cart/update_shopping_cart.php">
+                <button type="submit" name="vaciar_carrito" class="btn btn-sm btn-warning rounded-pill shadow-sm">
+                    <i class="fa-solid fa-trash"></i> Vaciar Carrito
+                </button>
+            </form>
+        </div>
     </div>
+</div>
 
 <script>
     function mostrarToast(titulo, mensaje, tipo) {
