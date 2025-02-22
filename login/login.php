@@ -251,6 +251,21 @@ if (isset($_SESSION['status_message'])) {
                 <?php unset($_SESSION['status_message'], $_SESSION['status_type']); ?>
             <?php endif; ?>
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("rememberEmail")) {
+                document.getElementById("email").value = localStorage.getItem("rememberEmail");
+                document.getElementById("remember").checked = true;
+            }
+            
+            document.querySelector("form").addEventListener("submit", function() {
+                if (document.getElementById("remember").checked) {
+                    localStorage.setItem("rememberEmail", document.getElementById("email").value);
+                } else {
+                    localStorage.removeItem("rememberEmail");
+                }
+            });
+        });
 </script>
 
 </body>
