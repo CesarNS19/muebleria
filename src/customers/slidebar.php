@@ -163,10 +163,15 @@ if (!empty($_SESSION["carrito"])) {
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
-               
-                    <div class="col-4">
-                            <input class="form-control me-2" type="search" id="search" placeholder="Buscar producto" aria-label="Buscar">
+
+                <div class="input-group col-4">
+                    <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Buscar Producto" aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <span class="input-group-text bg-primary border-0 text-white">
+                            <i class="fas fa-search fa-sm"></i>
+                        </span>
                     </div>
+                </div>
                 
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
