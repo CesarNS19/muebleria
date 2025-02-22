@@ -4,47 +4,6 @@ include 'slidebar.php';
 require '../../mysql/connection.php';
 $title = "Muebleria ┃ Dashboard";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_producto"])) {
-    if (isset($_SESSION["id_cliente"])) {
-        $id_producto = $_POST["id_producto"];
-        $nombre = $_POST["nombre"];
-        $descripcion = $_POST["descripcion"];
-        $precio = $_POST["precio"];
-        $imagen = $_POST["imagen"];
-        $cantidad = 1;
-
-        if (!isset($_SESSION["carrito"])) {
-            $_SESSION["carrito"] = [];
-        }
-
-        $existe = false;
-        foreach ($_SESSION["carrito"] as &$item) {
-            if ($item["id_producto"] == $id_producto) {
-                $item["cantidad"] += 1;
-                $existe = true;
-                break;
-            }
-        }
-
-        if (!$existe) {
-            $_SESSION["carrito"][] = [
-                "id_producto" => $id_producto,
-                "nombre" => $nombre,
-                "descripcion" => $descripcion,
-                "precio" => $precio,
-                "imagen" => $imagen,
-                "cantidad" => $cantidad
-            ];
-        }
-
-        $_SESSION['status_message'] = "Producto agregado al carrito.";
-        $_SESSION['status_type'] = "success";
-    } else {
-        $_SESSION['status_message'] = "Debe iniciar sesión para agregar productos al carrito.";
-        $_SESSION['status_type'] = "warning";
-    }
-}
-
 $searchQuery = "";
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $searchTerm = $_GET['search'];
@@ -86,14 +45,14 @@ $result = $conn->query($sql);
                                 <li class="list-group-item">Color: <strong>' . $row["color"] . '</strong></li>
                             </ul>
                             <p class="text-success fs-5 fw-bold">Precio: $' . $row["precio"] . '</p>
-                            <form method="POST" action="">
-                                <input type="hidden" name="id_producto" value="' . $row["id_producto"] . '">
-                                <input type="hidden" name="nombre" value="' . $row["nombre"] . '">
-                                <input type="hidden" name="descripcion" value="' . $row["descripcion"] . '">
-                                <input type="hidden" name="imagen" value="' . $row["imagen"] . '">
-                                <input type="hidden" name="precio" value="' . $row["precio"] . '">
-                                <button class="btn btn-primary w-100 rounded-pill">Añadir al carrito <i class="fas fa-cart-plus"></i></button>
-                            </form>
+                            <button class="btn btn-primary w-100 rounded-pill add-to-cart"
+                                    data-id="'.$row["id_producto"].'"
+                                    data-nombre="'.$row["nombre"].'"
+                                    data-descripcion="'.$row["descripcion"].'"
+                                    data-imagen="'.$row["imagen"].'"
+                                    data-precio="'.$row["precio"].'">
+                                    Añadir al carrito <i class="fas fa-cart-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>';
@@ -121,14 +80,6 @@ $result = $conn->query($sql);
             });
         });
     });
-
-    window.onload = () => {
-        const productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
-        const badge = document.querySelector(".nav-item .badge");
-        if (badge) {
-            badge.textContent = productCount > 0 ? productCount : "";
-        }
-    }
 
     function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';

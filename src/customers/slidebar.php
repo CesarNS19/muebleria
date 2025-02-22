@@ -37,6 +37,7 @@ if (!empty($_SESSION["carrito"])) {
 }
 
 </style>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -171,9 +172,8 @@ if (!empty($_SESSION["carrito"])) {
                 <li class="nav-item">
                     <a class="nav-link" href="shopping_cart.php">
                         <i class="fas fa-fw fa-shopping-cart"></i>
-                        <?php if ($totalProductos > 0): ?>
-                            <span class="badge badge-danger ml-2"><?php echo $totalProductos; ?></span>
-                        <?php endif; ?>
+                        <span class="badge badge-danger ml-2">
+                        </span>
                     </a>
                 </li>
 
@@ -215,7 +215,8 @@ if (!empty($_SESSION["carrito"])) {
                     </li>
                 </ul>
             </nav>
-
+            <div id="main-content" class="container-fluid">
+    </div>
     <script src="../../vendor/jquery/jquery.min.js"></script>
     <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -226,6 +227,49 @@ if (!empty($_SESSION["carrito"])) {
 
  <script>
      document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+     $(document).ready(function() {
+        
+        let productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
+        let badge = $(".nav-item .badge");
+        
+        if (badge.length) {
+            badge.text(productCount > 0 ? productCount : "");
+        }
+
+        $(".add-to-cart").click(function () {
+            let button = $(this);
+            let id_producto = button.data("id");
+            let nombre = button.data("nombre");
+            let descripcion = button.data("descripcion");
+            let precio = button.data("precio");
+            let imagen = button.data("imagen");
+
+            $.ajax({
+                url: "shopping_cart/add_to_cart.php",
+                type: "POST",
+                data: {
+                    id_producto: id_producto,
+                    nombre: nombre,
+                    descripcion: descripcion,
+                    precio: precio,
+                    imagen: imagen
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.status === "success") {
+                        mostrarToast("Éxito", response.message, "success");
+                        $(".nav-item .badge").text(response.total > 0 ? response.total : "");
+                    } else {
+                        mostrarToast("Advertencia", response.message, "warning");
+                    }
+                },
+                error: function () {
+                    mostrarToast("Error", "Hubo un problema al agregar el producto.", "error");
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>

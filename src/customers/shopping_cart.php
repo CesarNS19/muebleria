@@ -4,37 +4,6 @@ require '../../mysql/connection.php';
 require 'slidebar.php';
 
 $title = "Muebleria ┃ Carrito";
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_POST["update_quantity"])) {
-        $id_producto = $_POST["id_producto"];
-        $cantidad = intval($_POST["cantidad"]);
-        
-        if (isset($_SESSION["carrito"][$id_producto])) {
-            if ($cantidad > 0) {
-                $_SESSION["carrito"][$id_producto]["cantidad"] = $cantidad;
-                $_SESSION['status_message'] = 'Cantidad actualizada correctamente.';
-                $_SESSION['status_type'] = 'success';
-            } else {
-                unset($_SESSION["carrito"][$id_producto]);
-                $_SESSION['status_message'] = 'Producto eliminado del carrito.';
-                $_SESSION['status_type'] = 'success';
-            }
-        }
-    }
-
-    if (isset($_POST["vaciar_carrito"])) {
-        if (empty($_SESSION["carrito"])) {
-            $_SESSION['status_message'] = "El carrito ya está vacío y no se puede vaciar.";
-            $_SESSION['status_type'] = "warning";
-        } else {
-            unset($_SESSION["carrito"]);
-            $_SESSION['status_message'] = "El carrito ha sido vaciado con éxito.";
-            $_SESSION['status_type'] = "success";
-        }
-    }
-}
-
 ?>
 
 <title><?php echo $title; ?></title>
@@ -48,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="container mt-3">
     <h1 class="mb-4 text-center">Mi Carrito de Compras</h1>
     <div class="text-end mt-4">
-        <form method="POST">
+        <form method="POST" action="shopping_cart/update_shopping_cart.php">
             <button type="submit" name="vaciar_carrito" class="btn btn-sm btn-warning rounded-pill shadow-sm">
                 <i class="fa-solid fa-trash"></i> Vaciar Carrito
             </button>
@@ -87,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </td>
                         <td>\${$producto["precio"]}</td>
                         <td>
-                            <form method='POST' class='d-inline'>
+                            <form method='POST' class='d-inline' action='shopping_cart/update_shopping_cart.php'>
                                 <input type='hidden' name='id_producto' value='{$id_producto}' />
                                 <input type='number' name='cantidad' value='{$producto["cantidad"]}' min='0' class='form-control d-inline' style='width: 80px;' />
                                 <button type='submit' name='update_quantity' class='btn btn-sm btn-outline-primary rounded-pill shadow-sm'>
@@ -97,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </td>
                         <td>\${$subtotal}</td>
                         <td>
-                            <form method='POST' style='display:inline;'>
+                            <form method='POST' style='display:inline;' action='shopping_cart/update_shopping_cart.php'>
                                 <input type='hidden' name='id_producto' value='{$id_producto}' />
                                 <input type='hidden' name='cantidad' value='0' />
                                 <button type='submit' name='update_quantity' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm'>
@@ -129,14 +98,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
 <script>
-    window.onload = () => {
-        const productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
-        const badge = document.querySelector(".nav-item .badge");
-        if (badge) {
-            badge.textContent = productCount > 0 ? productCount : "";
-        }
-    }
-
     function mostrarToast(titulo, mensaje, tipo) {
         let icon = '';
         let alertClass = '';
