@@ -73,57 +73,47 @@ if (isset($_SESSION['status_message'])) {
 </head>
 
 <body>
-    <div class="container d-flex align-items-center justify-content-center min-vh-100">
-        <div class="row w-100">
-            <div class="col-md-8 mx-auto">
-                <div class="row login-container">
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="row w-100">
+        <div class="col-md-8 mx-auto">
+            <div class="row login-container">
 
-                    <div class="col-md-6 d-none d-md-flex animation-container bg-primary">
-                        <h3 class="mb-3 texto">MUEBLERÍA PARÍS</h3>
-                        <div class="d-flex justify-content-around w-100 mt-5">
-                            <i class="fas fa-couch furniture-icon"></i>
-                            <i class="fas fa-bed furniture-icon"></i>
-                            <i class="fas fa-chair furniture-icon"></i>
-                            <i class="fas fa-toilet furniture-icon"></i>
+                <div class="col-md-6 d-none d-md-flex animation-container bg-primary">
+                    <h3 class="mb-3 texto">MUEBLERÍA PARÍS</h3>
+                    <div class="d-flex justify-content-around w-100 mt-5">
+                        <i class="fas fa-couch furniture-icon"></i>
+                        <i class="fas fa-bed furniture-icon"></i>
+                        <i class="fas fa-chair furniture-icon"></i>
+                        <i class="fas fa-toilet furniture-icon"></i>
+                    </div>
+                </div>
+
+                <div class="col-md-6 p-5" id="form-container">
+                    <h2 class="text-center login-title mb-4 text-primary mt-4">Reestablecer Contraseña</h2>
+                    <form action="reset_password.php?code=<?php echo $_GET['code']; ?>" method="POST" onsubmit="return confirmSubmit()">
+                        <div id="Alert"></div>
+                        <div class="mb-3">
+                            <label for="code" class="form-label">Código de Recuperación</label>
+                            <input id="code" type="text" name="code" class="form-control" placeholder="Ingrese el código" required>
                         </div>
-                    </div>
-
-                    <div class="col-md-6 p-5" id="form-container">
-                        <h2 class="text-center login-title mb-4 text-primary mt-4">Iniciar Sesión</h2>
-                        <form action="login_process.php" method="POST">
-                            <div id="Alert"></div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Correo Electrónico</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
-                            </div>
-
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" id="remember" name="remember">
-                                <label class="form-check-label" for="remember">
-                                    Recordarme
-                                </label>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
-
-                            <div class="text-center mt-2">
-                                <a href="?form=forgot_password" class="link-secondary text-decoration-none">¿Olvidaste tu contraseña?</a>
-                            </div>
-
-                            <div class="text-center mt-2">
-                                <a href="?form=register" class="link-secondary text-decoration-none">¿No tienes una cuenta? Regístrate aquí</a>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Nueva Contraseña</label>
+                            <input id="password" type="password" name="password" class="form-control" placeholder="Nueva Contraseña" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
+                            <input id="confirm_password" type="password" name="confirm_password" class="form-control" placeholder="Confirmar Contraseña" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Restablecer Contraseña</button>
+                        <div class="text-center mt-2">
+                            <a href="login.php" class="link-secondary text-decoration-none">¿Ya tienes una cuenta? Inicia sesión aquí</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <script>
     function mostrarFormulario(formType) {
@@ -194,9 +184,7 @@ if (isset($_SESSION['status_message'])) {
         if (formType) {
             mostrarFormulario(formType);
         }
-    });
-
-    function mostrarToast(titulo, mensaje, tipo) {
+    });function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';
             let alertClass = '';
 
