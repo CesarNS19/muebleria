@@ -30,7 +30,7 @@ if ($hour >= 5 && $hour < 12) {
     #main-content {
         margin-top: 1px;
         overflow-y: auto;
-        max-height: calc(100vh - 150px);
+        max-height: calc(100vh - 90px);
         background-color: white;
     }
 

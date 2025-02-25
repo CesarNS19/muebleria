@@ -2,9 +2,8 @@
 session_start();
 require '../../mysql/connection.php';
 require 'slidebar.php';
-$title = "Muebleria ┃ Admin Brands";
+$title = "Muebleria ┃ Admin Categories";
 ?>
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -14,17 +13,23 @@ $title = "Muebleria ┃ Admin Brands";
 
 <div id="Alert" class="container"></div>
 
-<!-- Modal para añadir Marcas -->
-<div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog" aria-labelledby="addBrandModalLabel" aria-hidden="true">
+<section class="company-header">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoriesModal" style="float: right; margin: 10px;">
+            Agregar Categoria
+        </button>
+    </section>
+
+<!-- Modal para añadir categoria -->
+<div class="modal fade" id="addCategoriesModal" tabindex="-1" role="dialog" aria-labelledby="addCategoriesModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="addBrandModalLabel">Agregar Nueva Marca</h5>
+                <h5 class="modal-title" id="addCategoriesModalLabel">Agregar Nueva Categoría</h5>
             </div>
-            <form action="brands/add_brands.php" method="POST">
+            <form action="categories/add_categories.php" method="POST">
                 <div class="modal-body">
                     <div class="form-group mb-3">
-                        <label for="">Marca</label>
+                        <label for="">Categoría</label>
                         <input type="text" name="nombre" class="form-control" required>
                     </div>
                     <div class="form-group mb-3">
@@ -34,26 +39,26 @@ $title = "Muebleria ┃ Admin Brands";
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Agregar Marca</button>
+                    <button type="submit" class="btn btn-primary">Agregar Categoría</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Modal para editar Marcas -->
-<div class="modal fade" id="editBrandsModal" tabindex="-1" role="dialog" aria-labelledby="editBrandsLabel" aria-hidden="true">
+<!-- Modal para editar categorias -->
+<div class="modal fade" id="editCategoriesModal" tabindex="-1" role="dialog" aria-labelledby="editCategoriesLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="editBrandsLabel">Editar Marca</h5>
+                <h5 class="modal-title" id="editCategoriesLabel">Editar Categoría</h5>
             </div>
-            <form action="brands/edit_brands.php" method="POST">
+            <form action="categories/edit_categories.php" method="POST">
                 <div class="modal-body">
-                    <input type="hidden" name="id_marca" id="edit_id_marca">
+                    <input type="hidden" name="id_categoria" id="edit_id_categoria">
 
                     <div class="form-group mb-3">
-                        <label for="edit_nombre">Nombre de la Marca</label>
+                        <label for="edit_nombre">Nombre de la Categoría</label>
                         <input type="text" name="nombre" id="edit_nombre" class="form-control" required>
                     </div>
 
@@ -71,17 +76,17 @@ $title = "Muebleria ┃ Admin Brands";
     </div>
 </div>
 
-<!-- Modal para eliminar marcas -->
-<div class="modal fade" id="deleteBrandsModal" tabindex="-1" aria-labelledby="deleteBrandsModalLabel" aria-hidden="true">
+<!-- Modal para eliminar categorias -->
+<div class="modal fade" id="deleteCategoriesModal" tabindex="-1" aria-labelledby="deleteCategoriesModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="deleteBrandsModalLabel">Confirmar Eliminación</h5>
+        <h5 class="modal-title" id="deleteCategoriesModalLabel">Confirmar Eliminación</h5>
       </div>
-      <form action="brands/delete_brands.php" method="POST">
+      <form action="categories/delete_categories.php" method="POST">
       <div class="modal-body">
-      <input type="hidden" name="id_marca" id="delete_id_marca">
-        <p>¿Estás seguro de que deseas eliminar esta marca?, Esta acción no se puede deshacer.</p>
+      <input type="hidden" name="id_categoria" id="delete_id_categoria">
+        <p>¿Estás seguro de que deseas eliminar esta categoría?, Esta acción no se puede deshacer.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -93,25 +98,21 @@ $title = "Muebleria ┃ Admin Brands";
 </div>
 
 <div id ="main-content" class="container-fluid">
-<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBrandModal" style="float: right; margin: 10px;">
-            Agregar Marca
-        </button>
- <!-- Tabla de Marcas -->
+ <!-- Tabla de Categorias -->
  <section class="container my-2">
-        <h2 class="fw-bold text-primary text-center">Administrar Marcas</h2>
-
-    <div class="table-responsive">
+        <h2 class="fw-bold text-primary text-center">Administrar Categorías</h2>
+        <div class="table-responsive">
         <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
             <thead class="bg-primary text-white">
                 <tr>
-                    <th class="text-start">Nombre de la Marca</th>
+                    <th class="text-start">Nombre de Categoría</th>
                     <th class="text-start">Descripción</th>
                     <th class="text-middle">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM marcas";
+                $sql = "SELECT * FROM categorias";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -130,7 +131,7 @@ $title = "Muebleria ┃ Admin Brands";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='3' class='text-center text-muted'>No hay marcas disponibles</td></tr>";
+                    echo "<tr><td colspan='3' class='text-center text-muted'>No hay categorías disponibles</td></tr>";
                 }
                 ?>
             </tbody>
@@ -139,19 +140,17 @@ $title = "Muebleria ┃ Admin Brands";
 </section>
 </div>
 
-
 <script>
-
     function openEditModal(categoriesData) {
-        $('#edit_id_marca').val(categoriesData.id_marca);
+        $('#edit_id_categoria').val(categoriesData.id_categoria);
         $('#edit_nombre').val(categoriesData.nombre);
         $('#edit_descripcion').val(categoriesData.descripcion);    
-        $('#editBrandsModal').modal('show');
+        $('#editCategoriesModal').modal('show');
     }
 
     function openDeleteModal(Data) {
-        $('#delete_id_marca').val(Data.id_marca);
-        $('#deleteBrandsModal').modal('show');
+        $('#delete_id_categories').val(Data.id_categoria);
+        $('#deleteCategoriesModal').modal('show');
     }
 
     function mostrarToast(titulo, mensaje, tipo) {
@@ -199,7 +198,7 @@ $title = "Muebleria ┃ Admin Brands";
             <?php if (isset($_SESSION['status_message']) && isset($_SESSION['status_type'])): ?>
                 <?php if ($_SESSION["status_type"] === "warning"): ?>
                     mostrarToast("Advertencia", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php elseif ($_SESSION["status_type"] === "error"): ?>
+                <?php elseif ($_SESSION["status_type"] === "danger"): ?>
                     mostrarToast("Error", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
                 <?php elseif ($_SESSION["status_type"] === "info"): ?>
                     mostrarToast("Info", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
