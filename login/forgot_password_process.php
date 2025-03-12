@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result && $result->num_rows > 0) {
-        $verification_code = bin2hex(random_bytes(16));
+        $verification_code = bin2hex(random_bytes(32));
 
         $user = $result->fetch_assoc();
         $user_id = $user['id_cliente'] ?? $user['id_empleado'];
@@ -65,13 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $mail->isHTML(true);
             $mail->Subject = 'Recuperación de Contraseña';
-            $mail->Body = 'Hola, has solicitado recuperar tu contraseña. Usa el siguiente código para restablecerla: <strong>' . $verification_code . '</strong><br>Además, puedes hacer clic en el siguiente enlace para restablecer tu contraseña: <a href="http://localhost/muebleria/login/recover_password.php?code=' . $verification_code . '">Restablecer Contraseña</a>';
+            $mail->Body = "Tu código para reestablecer tu contraseña es: $verification_code";
 
             $mail->send();
 
-            $_SESSION['status_message'] = "Te hemos enviado un correo con el código de verificación.";
+            $_SESSION['status_message'] = "Te hemos enviado un correo con el código para reestablecer la contraseña.";
             $_SESSION['status_type'] = "success";
-            header("Location: login.php");
+            header("Location: recover_password.php");
             exit();
         } catch (Exception $e) {
             $_SESSION['status_message'] = "Error al enviar el correo: {$mail->ErrorInfo}";

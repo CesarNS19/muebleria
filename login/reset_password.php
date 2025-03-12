@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['password'], $_POST['co
             $stmt2->execute();
 
             if ($stmt1->affected_rows > 0 || $stmt2->affected_rows > 0) {
-                $_SESSION['status_message'] = "Contraseña restablecida con éxito.";
+                $_SESSION['status_message'] = "Contraseña restablecida con éxito, ahora puede iniciar sesión.";
                 $_SESSION['status_type'] = "success";
                 header("Location: login.php");
                 exit();

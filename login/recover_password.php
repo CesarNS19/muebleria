@@ -90,7 +90,7 @@ if (isset($_SESSION['status_message'])) {
 
                 <div class="col-md-6 p-5" id="form-container">
                     <h2 class="text-center login-title mb-4 text-primary mt-4">Reestablecer Contraseña</h2>
-                    <form action="reset_password.php?code=<?php echo $_GET['code']; ?>" method="POST" onsubmit="return confirmSubmit()">
+                    <form action="reset_password.php" method="POST" onsubmit="return confirmSubmit()">
                         <div id="Alert"></div>
                         <div class="mb-3">
                             <label for="code" class="form-label">Código de Recuperación</label>
