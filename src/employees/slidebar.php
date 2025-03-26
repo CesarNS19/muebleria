@@ -11,6 +11,15 @@ if ($hour >= 5 && $hour < 12) {
 } else {
     $greeting = 'Buenas Noches';
 }
+
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $_SESSION['expire_time']) {
+    session_unset();
+    session_destroy();
+    header("Location: ../../login/login.php");
+    exit();
+}
+
+$_SESSION['last_activity'] = time();
 ?>
 
 <style>

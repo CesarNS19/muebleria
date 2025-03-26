@@ -44,7 +44,7 @@ $result = $conn->query($sql);
                                 <li class="list-group-item">Color: <strong>' . $row["color"] . '</strong></li>
                             </ul>
                             <p class="text-success fs-5 fw-bold">Precio: $' . $row["precio"] . '</p>
-                                <button class="btn btn-primary w-100 rounded-pill add-to-cart"
+                                <button class="btn btn-primary w-100 add-to-cart"
                                     data-id="'.$row["id_producto"].'"
                                     data-nombre="'.$row["nombre"].'"
                                     data-descripcion="'.$row["descripcion"].'"

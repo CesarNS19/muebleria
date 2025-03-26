@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['nombre'] = $row['nombre'];
                 $_SESSION['apellido_paterno'] = $row['apellido_paterno'];
                 $_SESSION['apellido_materno'] = $row['apellido_materno'];
+                $_SESSION['last_activity'] = time();
+                $_SESSION['expire_time'] = 180;
 
                 if ($remember) {
                     setcookie("email", $email, time() + (86400 * 30), "/");

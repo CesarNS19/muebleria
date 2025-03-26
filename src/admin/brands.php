@@ -25,11 +25,11 @@ $title = "Muebleria ┃ Admin Brands";
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="">Marca</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <input type="text" name="nombre" class="form-control" required placeholder="Nombre de la Marca">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Descripción</label>
-                        <textarea name="descripcion" class="form-control" required></textarea>
+                        <textarea name="descripcion" class="form-control" required placeholder="Descripción de la Marca"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result && $result->num_rows > 0) {
-        $verification_code = bin2hex(random_bytes(32));
+        $verification_code = bin2hex(random_bytes(4));
 
         $user = $result->fetch_assoc();
         $user_id = $user['id_cliente'] ?? $user['id_empleado'];

@@ -153,7 +153,7 @@ if (isset($_SESSION['status_message'])) {
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" name="email" class="form-control" id="email">
+                        <input type="email" name="email" class="form-control">
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
@@ -177,7 +177,7 @@ if (isset($_SESSION['status_message'])) {
                 <form action="forgot_password_process.php" method="POST">
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo">
+                        <input type="email" name="email" class="form-control" placeholder="Ingrese su correo">
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mb-3">Enviar Correo</button>
                     <div class="text-center mt-2">

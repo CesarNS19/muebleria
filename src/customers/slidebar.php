@@ -20,6 +20,15 @@ if (!empty($_SESSION["carrito"])) {
         $totalProductos += $producto["cantidad"];
     }
 }
+
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $_SESSION['expire_time']) {
+    session_unset();
+    session_destroy();
+    header("Location: ../../login/login.php");
+    exit();
+}
+
+$_SESSION['last_activity'] = time();
 ?>
 
 <style>
