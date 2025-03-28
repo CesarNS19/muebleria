@@ -92,12 +92,12 @@ if (isset($_SESSION['status_message'])) {
                         <h2 class="text-center login-title mb-4 text-primary mt-4">Iniciar Sesión</h2>
                         <form action="send_token.php" method="POST">
                             <div id="Alert"></div>
-                            <div class="mb-3">
+                            <div class="mb-3 mt-4">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo">
                             </div>
 
-                            <div class="form-check mb-4">
+                            <div class="form-check mb-4 mt-4">
                                 <input class="form-check-input" type="checkbox" id="remember" name="remember">
                                 <label class="form-check-label" for="remember">
                                     Recordarme
@@ -197,14 +197,6 @@ if (isset($_SESSION['status_message'])) {
 
 
                             <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
-
-                            <div class="text-center mt-2">
-                                <a href="?form=forgot_password" class="link-secondary text-decoration-none">¿Olvidaste tu contraseña?</a>
-                            </div>
-
-                            <div class="text-center mt-2">
-                                <a href="?form=register" class="link-secondary text-decoration-none">¿No tienes una cuenta? Regístrate aquí</a>
-                            </div>
                         </form>
                         `;
         }
