@@ -90,16 +90,11 @@ if (isset($_SESSION['status_message'])) {
 
                     <div class="col-md-6 p-5" id="form-container">
                         <h2 class="text-center login-title mb-4 text-primary mt-4">Iniciar Sesión</h2>
-                        <form action="login_process.php" method="POST">
+                        <form action="send_token.php" method="POST">
                             <div id="Alert"></div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
                             </div>
 
                             <div class="form-check mb-4">
@@ -109,7 +104,7 @@ if (isset($_SESSION['status_message'])) {
                                 </label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+                            <button type="submit" class="btn btn-primary w-100 mb-3">Enviar Correo</button>
 
                             <div class="text-center mt-2">
                                 <a href="?form=forgot_password" class="link-secondary text-decoration-none">¿Olvidaste tu contraseña?</a>
@@ -185,6 +180,33 @@ if (isset($_SESSION['status_message'])) {
                     </div>
                 </form>
             `;
+        } else if (formType === "code"){
+            document.getElementById('form-container').innerHTML = `
+            <h2 class="text-center login-title mb-4 text-primary mt-4">Iniciar Sesión</h2>
+            <form action="login_process.php" method="POST">
+                            <div id="Alert"></div>
+                            <div class="mb-3">
+                                <label for="code" class="form-label">Codigo de acceso</label>
+                                <input type="text" name="code" class="form-control" id="code" placeholder="Ingrese su código de acceso">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+
+                            <div class="text-center mt-2">
+                                <a href="?form=forgot_password" class="link-secondary text-decoration-none">¿Olvidaste tu contraseña?</a>
+                            </div>
+
+                            <div class="text-center mt-2">
+                                <a href="?form=register" class="link-secondary text-decoration-none">¿No tienes una cuenta? Regístrate aquí</a>
+                            </div>
+                        </form>
+                        `;
         }
     }
 
@@ -266,6 +288,8 @@ if (isset($_SESSION['status_message'])) {
                 }
             });
         });
+
+        
 </script>
 
 </body>
