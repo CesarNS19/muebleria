@@ -7,13 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
     $remember = isset($_POST['remember']);
 
-    $stmt = $conn->prepare("
-        SELECT id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus
+    $stmt = $conn->prepare("        
+        SELECT id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus, timestamp
         FROM (
-            SELECT id_cliente AS id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus
+            SELECT id_cliente AS id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus, timestamp
             FROM clientes
             UNION
-            SELECT id_empleado AS id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus
+            SELECT id_empleado AS id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus, timestamp
             FROM empleados
         ) AS usuarios
         WHERE codigo_inicio = ?
@@ -24,8 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-
-        if (password_verify($password, $row['contrasena'])) {
+        
+        $timestamp = strtotime($row['timestamp']);
+        if (time() - $timestamp > 60) {
+            $_SESSION['status_message'] = "Código expirado. Solicite uno nuevo.";
+            $_SESSION['status_type'] = "warning";
+        } elseif (password_verify($password, $row['contrasena'])) {
             if ($row['estatus'] === 'inactivo') {
                 $_SESSION['status_message'] = "Cuenta inactiva, contacta con el administrador.";
                 $_SESSION['status_type'] = "warning";
@@ -47,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
 
                 $rol = strtolower(trim($row['rol']));
-
+                
                 switch ($rol) {
                     case 'admin':
                         $_SESSION['id_cliente'] = $row['id'];

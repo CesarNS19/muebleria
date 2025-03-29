@@ -33,19 +33,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result && $result->num_rows > 0) {
         $verification_code = bin2hex(random_bytes(4));
+        $timestamp = date("Y-m-d H:i:s");
 
         $user = $result->fetch_assoc();
         $user_id = $user['id_cliente'] ?? $user['id_empleado'];
         
         if (isset($user['id_cliente'])) {
-            $sql = "UPDATE clientes SET codigo_inicio = ? WHERE id_cliente = ?";
+            $sql = "UPDATE clientes SET codigo_inicio = ?, timestamp = ? WHERE id_cliente = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $verification_code, $user_id);
+            $stmt->bind_param("ssi", $verification_code, $timestamp, $user_id);
             $stmt->execute();
         } else {
-            $sql = "UPDATE empleados SET codigo_inicio = ? WHERE id_empleado = ?";
+            $sql = "UPDATE empleados SET codigo_inicio = ?, timestamp = ? WHERE id_empleado = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $verification_code, $user_id);
+            $stmt->bind_param("ssi", $verification_code, $timestamp, $user_id);
             $stmt->execute();
         }
 
