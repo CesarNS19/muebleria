@@ -5,111 +5,101 @@ require 'slidebar.php';
 
 $title = "Muebleria ┃ Carrito";
 ?>
-
-<style>
-    #main {
-        margin-top: 1px;
-        overflow-y: auto;
-        max-height: calc(100vh - 150px);
-        background-color: white;
-    }
-</style>
-
 <title><?php echo $title; ?></title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+
 <div id="Alert" class="container mt-3"></div>
-
-<div id ="main" class="container-fluid">
-<div class="container mt-3">
-    <h1 class="mb-4 text-center">Mi Carrito de Compras</h1>
-</div>
-<section class="services-table container my-2">
-<div class="table-responsive">
-        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
-            <thead class="bg-primary text-white">
-            <tr>
-                <th>Producto</th>
-                <th>Descripción</th>
-                <th>Imágen</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Subtotal</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $total = 0;
-            if (!empty($_SESSION["carrito"])) {
-                foreach ($_SESSION["carrito"] as $id_producto => $producto) {
-                    $subtotal = $producto["precio"] * $producto["cantidad"];
-                    $total += $subtotal;
-                    $imagePath = !empty($producto["imagen"]) ? "img/" . $producto["imagen"] : "img/default.jpg";
-
-                    echo "<tr>
-                        <td>{$producto["nombre"]}</td>
-                        <td>{$producto["descripcion"]}</td>
-                        <td>
-                            <img src='{$imagePath}' alt='Imagen del Producto' class='rounded' style='width: 80px; height: 50px; object-fit: cover;' />
-                        </td>
-                        <td>\${$producto["precio"]}</td>
-                        <td>
-                            <form method='POST' class='d-inline' action='shopping_cart/update_shopping_cart.php'>
-                                <input type='hidden' name='id_producto' value='{$id_producto}' />
-                                <input type='number' name='cantidad' value='{$producto["cantidad"]}' min='0' class='form-control d-inline' style='width: 80px;' />
-                                <button type='submit' name='update_quantity' class='btn btn-sm btn-outline-primary rounded-pill shadow-sm'>
-                                <i class='fas fa-edit'></i> Actualizar
-                                </button>
-                            </form>
-                        </td>
-                        <td>\${$subtotal}</td>
-                        <td>
-                            <form method='POST' style='display:inline;' action='shopping_cart/update_shopping_cart.php'>
-                                <input type='hidden' name='id_producto' value='{$id_producto}' />
-                                <input type='hidden' name='cantidad' value='0' />
-                                <button type='submit' name='update_quantity' class='btn btn-sm btn-outline-danger rounded-pill shadow-sm'>
-                                <i class='fas fa-trash-alt'></i> Eliminar
-                                </button>
-                            </form>
-                        </td>
-                    </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='7' class='text-center'>No hay productos en el carrito.</td></tr>";
-            }
-            ?>
-        </tbody>
-        </table>
-    </div>
-</section>
-
-    <div class="text-end container">
-        <p>Total: $<?php echo $total; ?></p>
-    </div>
-
-    <div class="text-end mt-4 container row">
-        <div class="col-6">
-            <form method="POST" action="shopping_cart/add_shopping_cart.php">
-                <button type="submit" name="buy_now" class="btn btn-sm btn-success rounded-pill shadow-sm ">
-                <i class="fa-solid fa-cart-arrow-down"></i> Comprar
-                </button>
-            </form>
-        </div>
-        <div class="col-6">
-            <form method="POST" action="shopping_cart/update_shopping_cart.php">
-                <button type="submit" name="vaciar_carrito" class="btn btn-sm btn-warning rounded-pill shadow-sm">
-                    <i class="fa-solid fa-trash"></i> Vaciar Carrito
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
+<h1 class="mb-3 text-center mt-3">Mi Carrito de Compras</h1>
+<div id="cartTableContainer" class="container mt-4"></div>
 
 <script>
+    $(document).ready(function () {
+        cargarCart();
+    });
+
+    function cargarCart() {
+        $.ajax({
+            url: "shopping_cart/list_cart.php",
+            type: "POST",
+            success: function (res) {
+                console.log(res);
+                if (res) {
+                    $("#cartTableContainer").html(res);
+                } 
+            },
+            error: function () {
+                alert("Ocurrió un error interno, por favor inténtalo más tarde");
+            }
+        });
+    }
+
+    function sumCant(id) {
+        const sum = { id: id }; 
+        $.ajax({
+            url: "shopping_cart/sum_cant.php",
+            type: "POST",
+            data: sum,
+            success: function (res) {
+                res = JSON.parse(res);
+                if (res.ok) {
+                    mostrarToast("Éxito", res.message, "success");
+                    cargarCart();
+                } else {
+                    mostrarToast("Error", res.message, "error");
+                }
+            },
+            error: function () {
+                alert("Ocurrió un error interno, inténtalo más tarde");
+            }
+        });
+    }
+
+    function resCant(id) {
+        const res = { id: id };
+        $.ajax({
+            url: "shopping_cart/res_cant.php",
+            type: "POST",
+            data: res,
+            success: function (res) {
+                res = JSON.parse(res);
+                if (res.ok) {
+                    mostrarToast("Éxito", res.message, "success");
+                    cargarCart();
+                } else {
+                    mostrarToast("Error", res.message, "error");
+                }
+            },
+            error: function () {
+                alert("Ocurrió un error interno, por favor inténtalo más tarde");
+            }
+        });
+    }
+
+    function deleteCart(id) {
+        const del = { id: id };
+        $.ajax({
+            url: "shopping_cart/delete_cant.php",
+            type: "POST",
+            data: del,
+            success: function (res) {
+                res = JSON.parse(res);
+                if (res.ok) {
+                    mostrarToast("Éxito", res.message, "success");
+                    cargarCart();
+                } else {
+                    mostrarToast("Error", res.message, "error");
+                }
+            },
+            error: function () {
+                alert("Ocurrió un error interno, por favor inténtalo más tarde");
+            }
+        });
+    }
+
     function mostrarToast(titulo, mensaje, tipo) {
         let icon = '';
         let alertClass = '';
@@ -148,7 +138,7 @@ $title = "Muebleria ┃ Carrito";
 
         setTimeout(() => {
             $(".alert").alert('close');
-        }, 4000);
+        }, 2000);
     }
 
     document.addEventListener('DOMContentLoaded', function() {

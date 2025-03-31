@@ -10,7 +10,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
     $searchQuery = " WHERE p.nombre LIKE '%" . $conn->real_escape_string($searchTerm) . "%' ";
 }
 
-$sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.precio, p.imagen
+$sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.precio, p.imagen, p.stock
         FROM productos p
         JOIN categorias c ON p.id_categoria = c.id_categoria
         JOIN marcas m ON p.id_marca = m.id_marca
@@ -43,6 +43,7 @@ $result = $conn->query($sql);
                             <span>Marca: <strong>' . $row["marca"] . '</strong></span>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item">Color: <strong>' . $row["color"] . '</strong></li>
+                                <li class="list-group-item">Existencia: <strong>' . $row["stock"] . '</strong></li>
                             </ul>
                             <p class="text-success fs-5 fw-bold">Precio: $' . $row["precio"] . '</p>
                                 <button class="btn btn-primary w-100 rounded-pill add-to-cart"

@@ -12,58 +12,51 @@ $title = "Muebleria ┃ Mis Compras";
 
 <div id="Alert" class="container mt-3"></div>
 
-<div id="main" class="container-fluid">
-    <!-- Tabla de Compras -->
-    <section class="services-table container my-4">
-        <h2 class="text-center mb-4">Mis Compras</h2>
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
-                <thead class="bg-primary text-white">
-                    <tr>
-                        <th>Nombre del producto</th>
-                        <th>Descripción</th>
-                        <th>Imagen</th>
-                        <th>Cantidad</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if (!isset($_SESSION['id_cliente'])) {
-                        echo "<tr><td colspan='7' class='text-danger'>Debes iniciar sesión para ver tus compras.</td></tr>";
-                    } else {
-                        $sql = "SELECT d.cantidad, d.subtotal, p.nombre, v.fecha, v.hora, p.imagen, p.descripcion
-                                FROM productos p
-                                JOIN detalle_venta d ON p.id_producto = d.id_producto
-                                JOIN ventas v ON d.id_venta = v.id_venta
-                                WHERE v.id_cliente = '". $_SESSION['id_cliente'] ."'
-                                ORDER BY v.fecha DESC;";
-                        $result = $conn->query($sql);
-
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['descripcion']) . "</td>";
-                                echo "<td><img src='img/". htmlspecialchars($row['imagen']). "' class='rounded' width='100px' height='60px' alt='Imagen Producto'></td>";
-                                echo "<td>" . htmlspecialchars($row['cantidad']) . "</td>";
-                                echo "<td>". htmlspecialchars($row['fecha']). "</td>";
-                                echo "<td>". htmlspecialchars($row['hora']). "</td>";
-                                echo "<td>". htmlspecialchars($row['subtotal']). "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='7'>No has realizado compras</td></tr>";
-                        }
+<section class="products-table container my-2">
+        <h2 class="fw-bold text-primary text-center">Mis compras</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
+            <thead class="bg-primary text-white">
+            <tr>
+                <th>Nombre del producto</th>
+                <th>Descripción</th>
+                <th>Imagen</th>
+                <th>Cantidad</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql = "SELECT d.cantidad, d.subtotal, p.nombre, v.fecha, v.hora, p.imagen, p.descripcion
+                        FROM productos p
+                        JOIN detalle_venta d ON p.id_producto = d.id_producto
+                        JOIN ventas v ON d.id_venta = v.id_venta
+                        WHERE v.id_cliente  = '". $_SESSION['id_cliente']. "'
+                        ORDER BY v.fecha DESC;";
+                $result = $conn->query($sql);
+                
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td class='text-start'>" . htmlspecialchars($row['nombre']) . "</td>";
+                        echo "<td class='text-start text-muted'>" . htmlspecialchars($row['descripcion']) . "</td>";
+                        echo "<td><img src='img/" . htmlspecialchars($row['imagen']) . "' class='rounded' width='100px' height='60px' alt='Imágen Producto'></td>";
+                        echo "<td>" . htmlspecialchars($row['cantidad']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
+                        echo "<td>". htmlspecialchars($row['hora']). "</td>";
+                        echo "<td>". htmlspecialchars($row['subtotal']). "</td>";
+                        echo "</tr>";
                     }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-    </section>
-</div>
+                } else {
+                    echo "<tr><td colspan='7' class='text-center text-muted'>No se encontraron productos</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</section>
 
 <script>
     window.onload = () => {

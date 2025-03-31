@@ -1,79 +1,98 @@
 <?php
-require '../../../mysql/connection.php';
 session_start();
+require '../../../mysql/connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
-        $_SESSION['status_message'] = "El carrito está vacío. No se puede realizar la compra.";
-        $_SESSION['status_type'] = "warning";
-        header("Location: ../shopping_cart.php");
-        exit();
-    }
+$email = $_SESSION['email'] ?? null;
 
-    $id_cliente = $_SESSION['id_cliente'] ?? null;
-
-    if (!$id_cliente) {
-        $_SESSION['status_message'] = "Debes iniciar sesión para realizar una compra.";
-        $_SESSION['status_type'] = "danger";
-        header("Location: ../shopping_cart.php");
-        exit();
-    }
-
-    $total_venta = 0;
-    $productos_vendidos = [];
-
-    foreach ($_SESSION['carrito'] as $producto) {
-        $subtotal = $producto['precio'] * $producto['cantidad'];
-        $total_venta += $subtotal;
-        $productos_vendidos[] = [
-            'id_producto' => $producto['id_producto'],
-            'cantidad' => $producto['cantidad'],
-            'subtotal' => $subtotal
-        ];
-    }
-
-    $conn->begin_transaction();
-
-    try {
-        $sql_venta = "INSERT INTO ventas (id_cliente, fecha, hora, total) 
-                      VALUES (?, CURRENT_DATE(), CURRENT_TIME(), ?)";
-        $stmt_venta = $conn->prepare($sql_venta);
-        $stmt_venta->bind_param("id", $id_cliente, $total_venta);
-
-        if (!$stmt_venta->execute()) {
-            throw new Exception("Error al registrar la venta principal: " . $stmt_venta->error);
-        }
-
-        $id_venta = $stmt_venta->insert_id;
-        $stmt_venta->close();
-
-        $sql_detalle = "INSERT INTO detalle_venta (id_producto, id_venta, cantidad, subtotal) 
-                        VALUES (?, ?, ?, ?)";
-        $stmt_detalle = $conn->prepare($sql_detalle);
-
-        foreach ($productos_vendidos as $producto) {
-            $stmt_detalle->bind_param("iiid", $producto['id_producto'], $id_venta, $producto['cantidad'], $producto['subtotal']);
-            if (!$stmt_detalle->execute()) {
-                throw new Exception("Error al registrar el detalle de venta: " . $stmt_detalle->error);
-            }
-        }
-
-        $stmt_detalle->close();
-
-        $conn->commit();
-
-        unset($_SESSION['carrito']);
-
-        $_SESSION['status_message'] = "Compra realizada exitosamente.";
-        $_SESSION['status_type'] = "success";
-    } catch (Exception $e) {
-        $conn->rollback();
-        $_SESSION['status_message'] = "Error al procesar la compra: " . $e->getMessage();
-        $_SESSION['status_type'] = "danger";
-    }
-
-    $conn->close();
+if (!$email) {
+    $_SESSION['status_message'] = "No se ha iniciado sesión.";
+    $_SESSION['status_type'] = "error";
     header("Location: ../shopping_cart.php");
     exit();
 }
+
+$sql = "SELECT id_cliente FROM clientes WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows == 0) {
+    $_SESSION['status_message'] = "No se encontró un cliente asociado al email.";
+    $_SESSION['status_type'] = "error";
+    header("Location: ../shopping_cart.php");
+    exit();
+}
+
+$row = $result->fetch_assoc();
+$id_cliente = $row['id_cliente'];
+
+$sql = "SELECT id_producto, cantidad, subtotal FROM cart WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows == 0) {
+    $_SESSION['status_message'] = "No hay productos en el carrito.";
+    $_SESSION['status_type'] = "warning";
+    header("Location: ../shopping_cart.php");
+    exit();
+}
+
+$conn->begin_transaction();
+
+try {
+    $total = 0;
+    $detalle_venta = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $total += $row['subtotal'];
+        $detalle_venta[] = $row;
+    }
+
+    $sql = "INSERT INTO ventas (id_cliente, total, fecha, hora) VALUES (?, ?, NOW(), CURTIME())";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("id", $id_cliente, $total);
+    $stmt->execute();
+    $id_venta = $stmt->insert_id;
+
+    foreach ($detalle_venta as $producto) {
+        $sql = "SELECT id_producto, cantidad FROM detalle_venta WHERE id_venta = ? AND id_producto = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $id_venta, $producto['id_producto']);
+        $stmt->execute();
+        $existing_product = $stmt->get_result()->fetch_assoc();
+
+        if ($existing_product) {
+            $new_quantity = $existing_product['cantidad'] + $producto['cantidad'];
+            $sql = "UPDATE detalle_venta SET cantidad = ?, subtotal = cantidad * (SELECT precio FROM productos WHERE id_producto = ?) WHERE id_venta = ? AND id_producto = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iiii", $new_quantity, $producto['id_producto'], $id_venta, $producto['id_producto']);
+            $stmt->execute();
+        } else {
+            $sql = "INSERT INTO detalle_venta (id_venta, id_producto, cantidad, subtotal) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iiid", $id_venta, $producto['id_producto'], $producto['cantidad'], $producto['subtotal']);
+            $stmt->execute();
+        }
+    }
+
+    $sql = "DELETE FROM cart WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    $conn->commit();
+    $_SESSION['status_message'] = "Compra realizada con éxito.";
+    $_SESSION['status_type'] = "success";
+} catch (Exception $e) {
+    $conn->rollback();
+    $_SESSION['status_message'] = "Error al procesar la compra: " . $e->getMessage();
+    $_SESSION['status_type'] = "error";
+}
+
+header("Location: ../shopping_cart.php");
+exit();
+
 ?>

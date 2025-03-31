@@ -10,7 +10,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
     $searchQuery = " WHERE p.nombre LIKE '%" . $conn->real_escape_string($searchTerm) . "%' ";
 }
 
-$sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.precio, p.imagen
+$sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.precio, p.imagen, p.stock
         FROM productos p
         JOIN categorias c ON p.id_categoria = c.id_categoria
         JOIN marcas m ON p.id_marca = m.id_marca" . $searchQuery;
@@ -24,7 +24,7 @@ $result = $conn->query($sql);
 
 <div id="Alert" class="container mt-3"></div>
 
-<div id ="main-content" class="container-fluid">
+<div id="main-content" class="container-fluid">
     <div id="products-container" class="row row-cols-1 row-cols-md-3 g-4">
         <?php
         if ($result->num_rows > 0) {
@@ -33,7 +33,7 @@ $result = $conn->query($sql);
                 echo '
                 <div class="col">
                     <div class="card h-100 shadow-lg rounded-3 text-center">
-                    <h5 class="card-title fw-bold mt-2">' . $row["nombre"] . '</h5>
+                        <h5 class="card-title fw-bold mt-2">' . $row["nombre"] . '</h5>
                         <div class="position-relative overflow-hidden d-flex justify-content-center align-items-center" style="height: 100px;">
                             <img src="' . $imagePath . '" alt="Imagen del Producto" style="height: 80%; width: 30%;">
                         </div>
@@ -42,16 +42,17 @@ $result = $conn->query($sql);
                             <span>Marca: <strong>' . $row["marca"] . '</strong></span>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item">Color: <strong>' . $row["color"] . '</strong></li>
+                                <li class="list-group-item">Existencia: <strong>' . $row["stock"] . '</strong></li>
                             </ul>
                             <p class="text-success fs-5 fw-bold">Precio: $' . $row["precio"] . '</p>
-                                <button class="btn btn-primary w-100 add-to-cart"
-                                    data-id="'.$row["id_producto"].'"
-                                    data-nombre="'.$row["nombre"].'"
-                                    data-descripcion="'.$row["descripcion"].'"
-                                    data-imagen="'.$row["imagen"].'"
-                                    data-precio="'.$row["precio"].'">
-                                    Añadir al carrito <i class="fas fa-cart-plus"></i>
-                                </button>
+                            <button class="btn btn-primary add-to-cart"
+                                data-id="'.$row["id_producto"].'"
+                                data-nombre="'.$row["nombre"].'"
+                                data-descripcion="'.$row["descripcion"].'"
+                                data-imagen="'.$row["imagen"].'"
+                                data-precio="'.$row["precio"].'">
+                                Añadir al carrito <i class="fas fa-cart-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>';
@@ -79,6 +80,7 @@ $result = $conn->query($sql);
             });
         });
     });
+
 
         function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';

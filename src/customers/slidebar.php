@@ -14,12 +14,6 @@ if ($hour >= 5 && $hour < 12) {
     $greeting = 'Buenas Noches';
 }
 
-$totalProductos = 1;
-if (!empty($_SESSION["carrito"])) {
-    foreach ($_SESSION["carrito"] as $producto) {
-        $totalProductos += $producto["cantidad"];
-    }
-}
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $_SESSION['expire_time']) {
     session_unset();
@@ -249,48 +243,43 @@ $_SESSION['last_activity'] = time();
         location.reload();
     }
 
-     $(document).ready(function() {
-        
-        let productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
-        let badge = $(".nav-item .badge");
-        
-        if (badge.length) {
-            badge.text(productCount > 0 ? productCount : "");
-        }
+    $(document).ready(function () {
+    if (localStorage.getItem("cartMessage")) {
+        mostrarToast("Éxito", localStorage.getItem("cartMessage"), "success");
+        localStorage.removeItem("cartMessage");
+    }
 
-        $(".add-to-cart").click(function () {
-            let button = $(this);
-            let id_producto = button.data("id");
-            let nombre = button.data("nombre");
-            let descripcion = button.data("descripcion");
-            let precio = button.data("precio");
-            let imagen = button.data("imagen");
+    $(".add-to-cart").click(function () {
+        let button = $(this);
+        let productData = {
+            id: button.data("id"),
+            nombre: button.data("nombre"),
+            descripcion: button.data("descripcion"),
+            imagen: button.data("imagen"),
+            precio: button.data("precio")
+        };
 
-            $.ajax({
-                url: "shopping_cart/add_to_cart.php",
-                type: "POST",
-                data: {
-                    id_producto: id_producto,
-                    nombre: nombre,
-                    descripcion: descripcion,
-                    precio: precio,
-                    imagen: imagen
-                },
-                dataType: "json",
-                success: function (response) {
-                    if (response.status === "success") {
-                        mostrarToast("Éxito", response.message, "success");
-                        $(".nav-item .badge").text(response.total > 0 ? response.total : "");
-                    } else {
-                        mostrarToast("Advertencia", response.message, "warning");
-                    }
-                },
-                error: function () {
-                    mostrarToast("Error", "Hubo un problema al agregar el producto.", "error");
+        $.ajax({
+            url: "shopping_cart/add_to_cart.php",
+            type: "POST",
+            data: productData,
+            dataType: "json",
+            success: function (response) {
+                if (response.status === "success") {
+                    localStorage.setItem("cartMessage", response.message);
+                    location.reload();
+                } else {
+                    mostrarToast("Error", response.message, "error");
                 }
-            });
+            },
+            error: function () {
+                mostrarToast("Error", "No se pudo conectar con el servidor", "error");
+            }
         });
     });
+});
+
+
 </script>
 </body>
 </html>

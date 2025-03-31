@@ -8,12 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $remember = isset($_POST['remember']);
 
     $stmt = $conn->prepare("        
-        SELECT id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus, timestamp
+        SELECT id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, email, estatus, timestamp
         FROM (
-            SELECT id_cliente AS id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus, timestamp
+            SELECT id_cliente AS id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, email, estatus, timestamp
             FROM clientes
             UNION
-            SELECT id_empleado AS id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, estatus, timestamp
+            SELECT id_empleado AS id, codigo_inicio, contrasena, rol, nombre, apellido_paterno, apellido_materno, email, estatus, timestamp
             FROM empleados
         ) AS usuarios
         WHERE codigo_inicio = ?
@@ -39,8 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['nombre'] = $row['nombre'];
                 $_SESSION['apellido_paterno'] = $row['apellido_paterno'];
                 $_SESSION['apellido_materno'] = $row['apellido_materno'];
+                $_SESSION['email'] = $row['email'];
                 $_SESSION['last_activity'] = time();
-                $_SESSION['expire_time'] = 180;
+                $_SESSION['expire_time'] = 500;
 
                 if ($remember) {
                     setcookie("codigo", $codigo, time() + (86400 * 30), "/");
