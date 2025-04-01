@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_stock->close();
 
     if ($stock_disponible <= 0) {
-        echo json_encode(["status" => "error", "message" => "No se puede agregar el producto, stock agotado."]);
+        echo json_encode(["status" => "warning", "message" => "No se puede agregar, producto agotado"]);
         exit;
     }
 

@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 "total_cart" => $total_cart
             ]);
         } else {
-            echo json_encode(["status" => "error", "message" => "No hay suficiente stock disponible."]);
+            echo json_encode(["status" => "warning", "message" => "Producto agotado."]);
         }
     } else {
         echo json_encode(["status" => "error", "message" => "Producto no encontrado en el carrito."]);

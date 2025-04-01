@@ -290,7 +290,7 @@ $_SESSION['last_activity'] = time();
                         $('#cart-badge').hide();
                     }
                 } else {
-                    mostrarToast("Error", response.message, "error");
+                    mostrarToast("Alerta", response.message, "warning");
                 }
             },
             error: function () {

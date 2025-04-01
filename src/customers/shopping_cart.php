@@ -56,7 +56,7 @@ $title = "Muebleria ┃ Carrito";
                         $('#cart-badge').hide();
                     }
                 } else {
-                    mostrarToast("Error", res.message, "error");
+                    mostrarToast("Alerta", res.message, "warning");
                 }
             },
             error: function () {
