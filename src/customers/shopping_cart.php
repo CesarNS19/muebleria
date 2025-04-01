@@ -48,6 +48,12 @@ $title = "Muebleria ┃ Carrito";
                 if (res.ok) {
                     mostrarToast("Éxito", res.message, "success");
                     cargarCart();
+                    $('#cart-badge').text(res.total_cart);
+                    if (res.total_cart > 0) {
+                        $('#cart-badge').show();
+                    } else {
+                        $('#cart-badge').hide();
+                    }
                 } else {
                     mostrarToast("Error", res.message, "error");
                 }
@@ -69,6 +75,12 @@ $title = "Muebleria ┃ Carrito";
                 if (res.ok) {
                     mostrarToast("Éxito", res.message, "success");
                     cargarCart();
+                    $('#cart-badge').text(res.total_cart);
+                    if (res.total_cart > 0) {
+                        $('#cart-badge').show();
+                    } else {
+                        $('#cart-badge').hide();
+                    }
                 } else {
                     mostrarToast("Error", res.message, "error");
                 }
@@ -90,6 +102,12 @@ $title = "Muebleria ┃ Carrito";
                 if (res.ok) {
                     mostrarToast("Éxito", res.message, "success");
                     cargarCart();
+                    $('#cart-badge').text(res.total_cart);
+                    if (res.total_cart > 0) {
+                        $('#cart-badge').show();
+                    } else {
+                        $('#cart-badge').hide();
+                    }
                 } else {
                     mostrarToast("Error", res.message, "error");
                 }

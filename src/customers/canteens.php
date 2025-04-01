@@ -25,7 +25,7 @@ $result = $conn->query($sql);
 
 <div id="Alert" class="container mt-3"></div>
 
-<div id ="main-content" class="container-fluid">
+<div id="main-content" class="container-fluid">
     <div id="products-container" class="row row-cols-1 row-cols-md-3 g-4">
         <?php
         if ($result->num_rows > 0) {
@@ -34,7 +34,7 @@ $result = $conn->query($sql);
                 echo '
                 <div class="col">
                     <div class="card h-100 shadow-lg rounded-3 text-center">
-                    <h5 class="card-title fw-bold mt-2">' . $row["nombre"] . '</h5>
+                        <h5 class="card-title fw-bold mt-2">' . $row["nombre"] . '</h5>
                         <div class="position-relative overflow-hidden d-flex justify-content-center align-items-center" style="height: 100px;">
                             <img src="' . $imagePath . '" alt="Imagen del Producto" style="height: 80%; width: 30%;">
                         </div>
@@ -43,17 +43,17 @@ $result = $conn->query($sql);
                             <span>Marca: <strong>' . $row["marca"] . '</strong></span>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item">Color: <strong>' . $row["color"] . '</strong></li>
-                                <li class="list-group-item">Existencia: <strong>' . $row["stock"] . '</strong></li>
+                                <li class="list-group-item">Existencia: <strong id="stock_' . $row["id_producto"] . '">' . $row["stock"] . '</strong></li>
                             </ul>
                             <p class="text-success fs-5 fw-bold">Precio: $' . $row["precio"] . '</p>
-                                <button class="btn btn-primary w-100 rounded-pill add-to-cart"
-                                    data-id="'.$row["id_producto"].'"
-                                    data-nombre="'.$row["nombre"].'"
-                                    data-descripcion="'.$row["descripcion"].'"
-                                    data-imagen="'.$row["imagen"].'"
-                                    data-precio="'.$row["precio"].'">
-                                    Añadir al carrito <i class="fas fa-cart-plus"></i>
-                                </button>
+                            <button class="btn btn-primary w-100 add-to-cart"
+                                data-id="'.$row["id_producto"].'"
+                                data-nombre="'.$row["nombre"].'"
+                                data-descripcion="'.$row["descripcion"].'"
+                                data-imagen="'.$row["imagen"].'"
+                                data-precio="'.$row["precio"].'">
+                                Añadir al carrito <i class="fas fa-cart-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>';
@@ -67,12 +67,12 @@ $result = $conn->query($sql);
 </div>
 
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
         $('#search').on('input', function() {
             let searchTerm = $(this).val();
             
             $.ajax({
-                url: "products/search_canteens.php",
+                url: "products/search_products.php",
                 type: "GET",
                 data: { search: searchTerm },
                 success: function(response) {
@@ -82,7 +82,8 @@ $result = $conn->query($sql);
         });
     });
 
-    function mostrarToast(titulo, mensaje, tipo) {
+
+        function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';
             let alertClass = '';
 
@@ -127,7 +128,7 @@ $result = $conn->query($sql);
             <?php if (isset($_SESSION['status_message']) && isset($_SESSION['status_type'])): ?>
                 <?php if ($_SESSION["status_type"] === "warning"): ?>
                     mostrarToast("Advertencia", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php elseif ($_SESSION["status_type"] === "danger"): ?>
+                <?php elseif ($_SESSION["status_type"] === "error"): ?>
                     mostrarToast("Error", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
                 <?php elseif ($_SESSION["status_type"] === "info"): ?>
                     mostrarToast("Info", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');

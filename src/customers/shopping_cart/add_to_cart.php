@@ -45,8 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_update_stock->bind_param("i", $id_producto);
         $stmt_update_stock->execute();
         $stmt_update_stock->close();
+        
+        $sql_cart_count = "SELECT SUM(cantidad) AS total FROM cart WHERE email = ?";
+        $stmt_cart_count = $conn->prepare($sql_cart_count);
+        $stmt_cart_count->bind_param("s", $email_usuario);
+        $stmt_cart_count->execute();
+        $result_cart_count = $stmt_cart_count->get_result();
+        $row_cart_count = $result_cart_count->fetch_assoc();
+        $total_cart = $row_cart_count['total'] ?? 0;
+        $stmt_cart_count->close();
 
-        echo json_encode(["status" => "success", "message" => "Producto agregado al carrito"]);
+        echo json_encode(["status" => "success", "message" => "Producto agregado al carrito", "total_cart" => $total_cart]);
     } else {
         echo json_encode(["status" => "error", "message" => "Error al agregar el producto"]);
     }

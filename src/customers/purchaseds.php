@@ -10,115 +10,60 @@ $title = "Muebleria ┃ Mis Compras";
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div id="Alert" class="container mt-3"></div>
+<section class="container my-3">
+    <h2 class="fw-bold text-primary text-center mt-2">Mis compras</h2>
 
-<section class="products-table container my-2">
-        <h2 class="fw-bold text-primary text-center">Mis compras</h2>
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
-            <thead class="bg-primary text-white">
-            <tr>
-                <th>Nombre del producto</th>
-                <th>Descripción</th>
-                <th>Imagen</th>
-                <th>Cantidad</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT d.cantidad, d.subtotal, p.nombre, v.fecha, v.hora, p.imagen, p.descripcion
-                        FROM productos p
-                        JOIN detalle_venta d ON p.id_producto = d.id_producto
-                        JOIN ventas v ON d.id_venta = v.id_venta
-                        WHERE v.id_cliente  = '". $_SESSION['id_cliente']. "'
-                        ORDER BY v.fecha DESC;";
-                $result = $conn->query($sql);
-                
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td class='text-start'>" . htmlspecialchars($row['nombre']) . "</td>";
-                        echo "<td class='text-start text-muted'>" . htmlspecialchars($row['descripcion']) . "</td>";
-                        echo "<td><img src='img/" . htmlspecialchars($row['imagen']) . "' class='rounded' width='100px' height='60px' alt='Imágen Producto'></td>";
-                        echo "<td>" . htmlspecialchars($row['cantidad']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
-                        echo "<td>". htmlspecialchars($row['hora']). "</td>";
-                        echo "<td>". htmlspecialchars($row['subtotal']). "</td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='7' class='text-center text-muted'>No se encontraron productos</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
+    <?php
+    $sql = "SELECT v.fecha, v.hora, v.id_venta, 
+                   SUM(d.cantidad) AS total_articulos, 
+                   SUM(d.subtotal) AS total_compra
+            FROM ventas v
+            JOIN detalle_venta d ON v.id_venta = d.id_venta
+            WHERE v.id_cliente = '" . $_SESSION['id_cliente'] . "'
+            GROUP BY v.id_venta
+            ORDER BY v.fecha DESC, v.hora DESC;";
+    $result = $conn->query($sql);
+    $meses = [
+        'January' => 'enero', 'February' => 'febrero', 'March' => 'marzo', 'April' => 'abril',
+        'May' => 'mayo', 'June' => 'junio', 'July' => 'julio', 'August' => 'agosto',
+        'September' => 'septiembre', 'October' => 'octubre', 'November' => 'noviembre', 'December' => 'diciembre'
+    ];
+
+    if ($result->num_rows > 0) {
+        while ($venta = $result->fetch_assoc()) {
+            $fecha = new DateTime($venta['fecha']);
+            $hora = new DateTime($venta['hora']);
+            $fecha_formateada = $fecha->format('d') . " de " . $meses[$fecha->format('F')] . " de " . $fecha->format('Y');
+            $hora_formateada = $hora->format('h:i A');
+
+            $total_color = ($venta['total_compra'] >= 100) ? 'text-primary' : 'text-danger';
+            
+            echo "<div class='card mb-3 shadow-sm mt-3'>";
+            echo "<div class='card-body'>";
+            echo "<h5 class='card-title'>Compra realizada el " . htmlspecialchars($fecha_formateada) . " a las " . htmlspecialchars($hora_formateada) . "</h5>";
+            echo "<p class='card-text'>Cantidad de artículos: " . htmlspecialchars($venta['total_articulos']) . "</p>";
+            echo "<p class='card-text " . $total_color . "'>Total de la compra: $" . number_format($venta['total_compra'], 2) . "</p>";
+            echo "<div class='d-flex justify-content-end'>";
+            echo "<button class='btn btn-primary' onclick='verTicket(" . $venta['id_venta'] . ")' data-bs-toggle='tooltip' data-bs-placement='top' title='Ver los detalles completos de esta compra'>
+            <i class='fas fa-ticket-alt'></i> Ver Ticket</button>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p class='text-center text-muted'>No se encontraron compras.</p>";
+    }
+    ?>
 </section>
 
 <script>
-    window.onload = () => {
-        const productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
-        const badge = document.querySelector(".nav-item .badge");
-        if (badge) {
-            badge.textContent = productCount > 0 ? productCount : "";
-        }
+    function verTicket(idVenta) {
+        window.location.href = 'ticket/view_ticket.php?id_venta=' + idVenta;
     }
-    function mostrarToast(titulo, mensaje, tipo) {
-            let icon = '';
-            let alertClass = '';
-
-            switch (tipo) {
-                case 'success':
-                    icon = '<span class="fas fa-check-circle text-white fs-6"></span>';
-                    alertClass = 'alert-success';
-                    break;
-                case 'error':
-                    icon = '<span class="fas fa-times-circle text-white fs-6"></span>';
-                    alertClass = 'alert-danger';
-                    break;
-                case 'warning':
-                    icon = '<span class="fas fa-exclamation-circle text-white fs-6"></span>';
-                    alertClass = 'alert-warning';
-                    break;
-                case 'info':
-                    icon = '<span class="fas fa-info-circle text-white fs-6"></span>';
-                    alertClass = 'alert-info';
-                    break;
-                default:
-                    icon = '<span class="fas fa-info-circle text-white fs-6"></span>';
-                    alertClass = 'alert-info';
-                    break;
-            }
-
-            const alert = `
-            <div class="alert ${alertClass} d-flex align-items-center alert-dismissible fade show" role="alert">
-                <div class="me-2">${icon}</div>
-                <div>${titulo}: ${mensaje}</div>
-                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>`;
-
-            $("#Alert").html(alert);
-
-            setTimeout(() => {
-                $(".alert").alert('close');
-            }, 4000);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            <?php if (isset($_SESSION['status_message']) && isset($_SESSION['status_type'])): ?>
-                <?php if ($_SESSION["status_type"] === "warning"): ?>
-                    mostrarToast("Advertencia", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php elseif ($_SESSION["status_type"] === "danger"): ?>
-                    mostrarToast("Error", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php elseif ($_SESSION["status_type"] === "info"): ?>
-                    mostrarToast("Info", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php else: ?>
-                    mostrarToast("Éxito", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php endif; ?>
-                <?php unset($_SESSION['status_message'], $_SESSION['status_type']); ?>
-            <?php endif; ?>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
         });
+    });
 </script>

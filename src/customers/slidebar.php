@@ -14,12 +14,25 @@ if ($hour >= 5 && $hour < 12) {
     $greeting = 'Buenas Noches';
 }
 
-
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $_SESSION['expire_time']) {
     session_unset();
     session_destroy();
     header("Location: ../../login/login.php");
     exit();
+}
+
+$total_cart = 0;
+
+if (isset($_SESSION['email'])) {
+    $email_usuario = $_SESSION['email'];
+    $sql_cart_count = "SELECT SUM(cantidad) AS total FROM cart WHERE email = ?";
+    $stmt_cart_count = $conn->prepare($sql_cart_count);
+    $stmt_cart_count->bind_param("s", $email_usuario);
+    $stmt_cart_count->execute();
+    $result_cart_count = $stmt_cart_count->get_result();
+    $row_cart_count = $result_cart_count->fetch_assoc();
+    $total_cart = $row_cart_count['total'] ?? 0;
+    $stmt_cart_count->close();
 }
 
 $_SESSION['last_activity'] = time();
@@ -185,9 +198,13 @@ $_SESSION['last_activity'] = time();
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="shopping_cart.php">
-                        <i class="fas fa-fw fa-shopping-cart"></i>
-                        <span class="badge badge-danger ml-2">
+                    <span class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-badge" class="badge badge-pill badge-primary" 
+                            style="display: <?php echo ($total_cart > 0) ? 'inline-block' : 'none'; ?>;">
+                            <?php echo ($total_cart > 0) ? $total_cart : ''; ?>
                         </span>
+                    </span>
                     </a>
                 </li>
 
@@ -221,7 +238,7 @@ $_SESSION['last_activity'] = time();
                                 Perfil
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="../../login/login.php">
+                            <a class="dropdown-item" href="../../login/logout.php">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Cerrar Sesión
                             </a>
@@ -243,11 +260,7 @@ $_SESSION['last_activity'] = time();
         location.reload();
     }
 
-    $(document).ready(function () {
-    if (localStorage.getItem("cartMessage")) {
-        mostrarToast("Éxito", localStorage.getItem("cartMessage"), "success");
-        localStorage.removeItem("cartMessage");
-    }
+    $(document).ready(function() {
 
     $(".add-to-cart").click(function () {
         let button = $(this);
@@ -266,8 +279,16 @@ $_SESSION['last_activity'] = time();
             dataType: "json",
             success: function (response) {
                 if (response.status === "success") {
-                    localStorage.setItem("cartMessage", response.message);
-                    location.reload();
+                    mostrarToast("Éxito", response.message, "success");
+                    let stockElement = $("#stock_" + productData.id);
+                    let currentStock = parseInt(stockElement.text());
+                    stockElement.text(currentStock - 1);
+                    $('#cart-badge').text(response.total_cart);
+                    if (response.total_cart > 0) {
+                        $('#cart-badge').show();
+                    } else {
+                        $('#cart-badge').hide();
+                    }
                 } else {
                     mostrarToast("Error", response.message, "error");
                 }
@@ -278,7 +299,6 @@ $_SESSION['last_activity'] = time();
         });
     });
 });
-
 
 </script>
 </body>

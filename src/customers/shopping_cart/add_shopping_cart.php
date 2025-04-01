@@ -86,6 +86,9 @@ try {
     $conn->commit();
     $_SESSION['status_message'] = "Compra realizada con éxito.";
     $_SESSION['status_type'] = "success";
+    header("Location: ../ticket/view_ticket.php?id_venta=" . $id_venta);
+exit;
+
 } catch (Exception $e) {
     $conn->rollback();
     $_SESSION['status_message'] = "Error al procesar la compra: " . $e->getMessage();

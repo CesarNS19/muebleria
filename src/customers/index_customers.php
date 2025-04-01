@@ -42,10 +42,10 @@ $result = $conn->query($sql);
                             <span>Marca: <strong>' . $row["marca"] . '</strong></span>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item">Color: <strong>' . $row["color"] . '</strong></li>
-                                <li class="list-group-item">Existencia: <strong>' . $row["stock"] . '</strong></li>
+                                <li class="list-group-item">Existencia: <strong id="stock_' . $row["id_producto"] . '">' . $row["stock"] . '</strong></li>
                             </ul>
                             <p class="text-success fs-5 fw-bold">Precio: $' . $row["precio"] . '</p>
-                            <button class="btn btn-primary add-to-cart"
+                            <button class="btn btn-primary w-100 add-to-cart"
                                 data-id="'.$row["id_producto"].'"
                                 data-nombre="'.$row["nombre"].'"
                                 data-descripcion="'.$row["descripcion"].'"
@@ -80,7 +80,6 @@ $result = $conn->query($sql);
             });
         });
     });
-
 
         function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';
