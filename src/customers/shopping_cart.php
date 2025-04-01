@@ -13,9 +13,10 @@ $title = "Muebleria ┃ Carrito";
 
 
 <div id="Alert" class="container mt-3"></div>
+<div id="main-content" class="container-fluid">
 <h1 class="mb-3 text-center mt-3">Mi Carrito de Compras</h1>
 <div id="cartTableContainer" class="container mt-4"></div>
-
+</div>
 <script>
     $(document).ready(function () {
         cargarCart();
@@ -43,9 +44,9 @@ $title = "Muebleria ┃ Carrito";
             url: "shopping_cart/sum_cant.php",
             type: "POST",
             data: sum,
+            dataType: "json",
             success: function (res) {
-                res = JSON.parse(res);
-                if (res.ok) {
+                if (res.status === "success") {
                     mostrarToast("Éxito", res.message, "success");
                     cargarCart();
                     $('#cart-badge').text(res.total_cart);
@@ -70,9 +71,9 @@ $title = "Muebleria ┃ Carrito";
             url: "shopping_cart/res_cant.php",
             type: "POST",
             data: res,
+            dataType: "json",
             success: function (res) {
-                res = JSON.parse(res);
-                if (res.ok) {
+                if (res.status === "success") {
                     mostrarToast("Éxito", res.message, "success");
                     cargarCart();
                     $('#cart-badge').text(res.total_cart);
@@ -86,7 +87,7 @@ $title = "Muebleria ┃ Carrito";
                 }
             },
             error: function () {
-                alert("Ocurrió un error interno, por favor inténtalo más tarde");
+                alert("Ocurrió un error interno, inténtalo más tarde");
             }
         });
     }
@@ -97,9 +98,9 @@ $title = "Muebleria ┃ Carrito";
             url: "shopping_cart/delete_cant.php",
             type: "POST",
             data: del,
+            dataType: "json",
             success: function (res) {
-                res = JSON.parse(res);
-                if (res.ok) {
+                if (res.status === "success") {
                     mostrarToast("Éxito", res.message, "success");
                     cargarCart();
                     $('#cart-badge').text(res.total_cart);
@@ -113,7 +114,7 @@ $title = "Muebleria ┃ Carrito";
                 }
             },
             error: function () {
-                alert("Ocurrió un error interno, por favor inténtalo más tarde");
+                alert("Ocurrió un error interno, inténtalo más tarde");
             }
         });
     }
@@ -156,7 +157,7 @@ $title = "Muebleria ┃ Carrito";
 
         setTimeout(() => {
             $(".alert").alert('close');
-        }, 2000);
+        }, 4000);
     }
 
     document.addEventListener('DOMContentLoaded', function() {

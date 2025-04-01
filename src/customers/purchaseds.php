@@ -10,9 +10,9 @@ $title = "Muebleria ┃ Mis Compras";
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<div id="main-content" class="container-fluid">
 <section class="container my-3">
     <h2 class="fw-bold text-primary text-center mt-2">Mis compras</h2>
-
     <?php
     $sql = "SELECT v.fecha, v.hora, v.id_venta, 
                    SUM(d.cantidad) AS total_articulos, 
@@ -55,7 +55,7 @@ $title = "Muebleria ┃ Mis Compras";
     }
     ?>
 </section>
-
+</div>
 <script>
     function verTicket(idVenta) {
         window.location.href = 'ticket/view_ticket.php?id_venta=' + idVenta;

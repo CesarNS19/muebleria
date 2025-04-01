@@ -3,7 +3,7 @@ session_start();
 require "../../../mysql/connection.php";
 
 if (!isset($_SESSION['email'])) {
-    echo json_encode(["ok" => false, "message" => "Debes iniciar sesión para continuar."]);
+    echo json_encode(["status" => "error", "message" => "Debes iniciar sesión para continuar."]);
     exit;
 }
 
@@ -44,12 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt_cart_count->close();
 
         echo json_encode([
-            "ok" => true, 
+            "status" => "success", 
             "message" => "Producto eliminado del carrito.", 
             "total_cart" => $total_cart
         ]);
     } else {
-        echo json_encode(["ok" => false, "message" => "Producto no encontrado en el carrito."]);
+        echo json_encode(["status" => "error", "message" => "Producto no encontrado en el carrito."]);
     }
 
     $stmt->close();

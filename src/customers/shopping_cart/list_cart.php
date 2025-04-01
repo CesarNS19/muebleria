@@ -19,7 +19,6 @@ if ($result->num_rows > 0) {
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Descripción</th>
                     <th>Stock</th>
                     <th>Imagen</th>
                     <th>Cantidad</th>
@@ -39,7 +38,6 @@ if ($result->num_rows > 0) {
 
         echo '<tr>
                 <td>' . $row['nombre'] . '</td>
-                <td>' . $row['descripcion'] . '</td>
                 <td>' . $stock . '</td>
                 <td><img src="' . $imagePath . '" class="rounded" width="80px" height="50px" alt="imagen producto"></td>
                 <td>' . $cantidad . '</td>
