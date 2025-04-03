@@ -126,6 +126,7 @@ if (isset($_SESSION['status_message'])) {
             document.getElementById('form-container').innerHTML = `
                 <h2 class="text-center login-title mb-4 text-primary">Registro</h2>
                 <form action="register_process.php" method="POST">
+                <div id="Alert"></div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
@@ -148,7 +149,7 @@ if (isset($_SESSION['status_message'])) {
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" name="email" class="form-control">
+                        <input type="text" name="email" class="form-control">
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">

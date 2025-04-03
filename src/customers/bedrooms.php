@@ -72,7 +72,7 @@ $result = $conn->query($sql);
             let searchTerm = $(this).val();
             
             $.ajax({
-                url: "products/search_products.php",
+                url: "products/search_bedrooms.php",
                 type: "GET",
                 data: { search: searchTerm },
                 success: function(response) {
