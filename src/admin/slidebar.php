@@ -210,7 +210,7 @@ $_SESSION['last_activity'] = time();
                                 Perfil
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="../../login/login.php">
+                            <a class="dropdown-item" href="../../login/logout.php">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Cerrar Sesión
                             </a>
