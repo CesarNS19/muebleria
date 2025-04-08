@@ -3,6 +3,28 @@ session_start();
 include "../../mysql/connection.php";
 include "slidebar.php";
 $title = "Muebleria ┃ Admin Ventas";
+
+$searchQuery = "";
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $searchTerm = $conn->real_escape_string($_GET['search']);
+    $searchQuery = " WHERE 
+        v.fecha LIKE '%$searchTerm%' OR 
+        c.nombre LIKE '%$searchTerm%' OR 
+        c.apellido_paterno LIKE '%$searchTerm%' OR 
+        c.apellido_materno LIKE '%$searchTerm%'";
+}
+
+$sql = "SELECT v.id_venta, v.fecha, v.hora, 
+                       SUM(d.cantidad) AS total_articulos, 
+                       SUM(d.subtotal) AS total_compra,
+                       CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS nombre_completo
+                FROM ventas v
+                JOIN detalle_venta d ON v.id_venta = d.id_venta
+                JOIN clientes c ON v.id_cliente = c.id_cliente
+                GROUP BY v.id_venta
+                ORDER BY v.fecha DESC, v.hora DESC" . $searchQuery;
+
+        $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -16,21 +38,10 @@ $title = "Muebleria ┃ Admin Ventas";
 </head>
 <body>
 
-<div class="container-fluid d-flex">
+<div class="container-fluid d-flex" id="products-container">
     <main class="flex-fill p-4 overflow-auto" id="main-content">
         <h2 class="text-center text-primary fw-bold mt-2">Ventas</h2>
         <?php
-        $sql = "SELECT v.id_venta, v.fecha, v.hora, 
-                       SUM(d.cantidad) AS total_articulos, 
-                       SUM(d.subtotal) AS total_compra,
-                       CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS nombre_completo
-                FROM ventas v
-                JOIN detalle_venta d ON v.id_venta = d.id_venta
-                JOIN clientes c ON v.id_cliente = c.id_cliente
-                GROUP BY v.id_venta
-                ORDER BY v.fecha DESC, v.hora DESC";
-
-        $result = $conn->query($sql);
         $meses = [
             'January' => 'enero', 'February' => 'febrero', 'March' => 'marzo', 'April' => 'abril',
             'May' => 'mayo', 'June' => 'junio', 'July' => 'julio', 'August' => 'agosto',
@@ -92,5 +103,33 @@ $title = "Muebleria ┃ Admin Ventas";
         ?>
     </main>
 </div>
+
+<script>
+    function verTicket(idVenta) {
+        window.location.href = 'ticket/view_ticket.php?id_venta=' + idVenta;
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
+    $(document).ready(function() {
+        $('#search').on('input', function() {
+            let searchTerm = $(this).val();
+            
+            $.ajax({
+                url: "searchs/search_sales.php",
+                type: "GET",
+                data: { search: searchTerm },
+                success: function(response) {
+                    $('#products-container').html(response);
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
