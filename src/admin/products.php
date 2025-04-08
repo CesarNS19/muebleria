@@ -3,6 +3,18 @@ session_start();
 require '../../mysql/connection.php';
 require 'slidebar.php';
 $title = "Muebleria ┃ Admin Products";
+
+$searchQuery = "";
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $searchTerm = $_GET['search'];
+    $searchQuery = " WHERE p.nombre LIKE '%" . $conn->real_escape_string($searchTerm) . "%' ";
+}
+
+$sql = "SELECT p.id_producto, c.nombre AS categoria, m.nombre AS marca, p.nombre, p.descripcion, p.color, p.precio, p.imagen, p.stock
+        FROM productos p
+        JOIN categorias c ON p.id_categoria = c.id_categoria
+        JOIN marcas m ON p.id_marca = m.id_marca" . $searchQuery;
+$result = $conn->query($sql);
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -191,12 +203,12 @@ $title = "Muebleria ┃ Admin Products";
   </div>
 </div>
 
-<div id ="main-content" class="container-fluid">
-<section class="products-table container my-2">
-<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductsModal" style="float: right; margin: 10px;">
+<div class="container-fluid d-flex">
+    <main class="flex-fill p-4 overflow-auto" id="main-content">
+        <h2 class="fw-bold text-primary text-center">Administrar Productos</h2>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductsModal" style="float: right; margin: 10px;">
             Agregar Producto
         </button>
-        <h2 class="fw-bold text-primary text-center">Administrar Productos</h2>
     <div class="table-responsive">
         <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
             <thead class="bg-primary text-white">
@@ -210,9 +222,8 @@ $title = "Muebleria ┃ Admin Products";
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="products-container">
                 <?php
-                $sql = "SELECT * FROM productos";
                 $result = $conn->query($sql);
                 
                 if ($result->num_rows > 0) {
@@ -240,15 +251,28 @@ $title = "Muebleria ┃ Admin Products";
                 ?>
             </tbody>
         </table>
-    </div>
-</section>
+    </main>    
 </div>
 
 <script>
+    $(document).ready(function() {
+        $('#search').on('input', function() {
+            let searchTerm = $(this).val();
+            
+            $.ajax({
+                url: "products/search_products.php",
+                type: "GET",
+                data: { search: searchTerm },
+                success: function(response) {
+                    $('#products-container').html(response);
+                }
+            });
+        });
+    });
 
     function openEditModal(productsData) {
         $('#edit_id_producto').val(productsData.id_producto);
-        $('#edit_categoria').val(productsData.id_categoria);
+        $('#edit_id_categoria').val(productsData.id_categoria);
         $('#edit_id_marca').val(productsData.id_marca);
         $('#edit_nombre').val(productsData.nombre);
         $('#edit_descripcion').val(productsData.descripcion);  

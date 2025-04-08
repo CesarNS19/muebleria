@@ -13,12 +13,6 @@ $title = "Muebleria ┃ Admin Categories";
 
 <div id="Alert" class="container"></div>
 
-<section class="company-header">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoriesModal" style="float: right; margin: 10px;">
-            Agregar Categoria
-        </button>
-    </section>
-
 <!-- Modal para añadir categoria -->
 <div class="modal fade" id="addCategoriesModal" tabindex="-1" role="dialog" aria-labelledby="addCategoriesModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -97,10 +91,12 @@ $title = "Muebleria ┃ Admin Categories";
   </div>
 </div>
 
-<div id ="main-content" class="container-fluid">
- <!-- Tabla de Categorias -->
- <section class="container my-2">
+<div class="container-fluid d-flex">
+    <main class="flex-fill p-4 overflow-auto" id="main-content">
         <h2 class="fw-bold text-primary text-center">Administrar Categorías</h2>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoriesModal" style="float: right; margin: 10px;">
+            Agregar Categoria
+        </button>
         <div class="table-responsive">
         <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
             <thead class="bg-primary text-white">
@@ -136,8 +132,7 @@ $title = "Muebleria ┃ Admin Categories";
                 ?>
             </tbody>
         </table>
-    </div>
-</section>
+    </main>
 </div>
 
 <script>

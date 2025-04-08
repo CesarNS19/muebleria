@@ -94,14 +94,6 @@ $userData = $result->fetch_assoc();
 
 
 <script>
-    window.onload = () => {
-        const productCount = <?php echo array_sum(array_column($_SESSION["carrito"] ?? [], "cantidad")); ?>;
-        const badge = document.querySelector(".nav-item .badge");
-        if (badge) {
-            badge.textContent = productCount > 0 ? productCount : "";
-        }
-    }
-
     function mostrarToast(titulo, mensaje, tipo) {
             let icon = '';
             let alertClass = '';

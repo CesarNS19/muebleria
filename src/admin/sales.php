@@ -2,124 +2,95 @@
 session_start();
 include "../../mysql/connection.php";
 include "slidebar.php";
-$title = "Muebleria ┃ Admin sales";
+$title = "Muebleria ┃ Admin Ventas";
 ?>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title><?php echo $title; ?></title>
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <title><?php echo $title; ?></title>
+</head>
+<body>
 
-<div id="Alert" class="container"></div>
+<div class="container-fluid d-flex">
+    <main class="flex-fill p-4 overflow-auto" id="main-content">
+        <h2 class="text-center text-primary fw-bold mt-2">Ventas</h2>
+        <?php
+        $sql = "SELECT v.id_venta, v.fecha, v.hora, 
+                       SUM(d.cantidad) AS total_articulos, 
+                       SUM(d.subtotal) AS total_compra,
+                       CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS nombre_completo
+                FROM ventas v
+                JOIN detalle_venta d ON v.id_venta = d.id_venta
+                JOIN clientes c ON v.id_cliente = c.id_cliente
+                GROUP BY v.id_venta
+                ORDER BY v.fecha DESC, v.hora DESC";
 
-<div id ="main-content" class="container-fluid">
-<!-- Tabla de Ventas -->
-<section class="services-table container my-4">
-    <h2 class="text-center mb-4">Ventas</h2>
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th>Nombre del Cliente</th>
-                    <th>Nombre del producto</th>
-                    <th>Descripción</th>
-                    <th>Imagen</th>
-                    <th>Cantidad</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT d.cantidad, d.subtotal, p.nombre AS nombre_producto, v.fecha, v.hora, 
-                               p.imagen, p.descripcion, 
-                               CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS nombre_cliente
-                        FROM ventas v
-                        JOIN detalle_venta d ON v.id_venta = d.id_venta
-                        JOIN productos p ON d.id_producto = p.id_producto
-                        JOIN clientes c ON v.id_cliente = c.id_cliente";
+        $result = $conn->query($sql);
+        $meses = [
+            'January' => 'enero', 'February' => 'febrero', 'March' => 'marzo', 'April' => 'abril',
+            'May' => 'mayo', 'June' => 'junio', 'July' => 'julio', 'August' => 'agosto',
+            'September' => 'septiembre', 'October' => 'octubre', 'November' => 'noviembre', 'December' => 'diciembre'
+        ];
 
-                $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            echo "<div class='row row-cols-1 row-cols-md-2 g-4'>";
+            while ($venta = $result->fetch_assoc()) {
+                $fecha = new DateTime($venta['fecha']);
+                $hora = new DateTime($venta['hora']);
+                $fecha_formateada = $fecha->format('d') . " de " . $meses[$fecha->format('F')] . " de " . $fecha->format('Y');
+                $hora_formateada = $hora->format('h:i A');
+                $total_color = ($venta['total_compra'] >= 100) ? 'text-primary' : 'text-danger';
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row['nombre_cliente']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['nombre_producto']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['descripcion']) . "</td>";
-                        echo "<td><img src='img/" . htmlspecialchars($row['imagen']) . "' class='rounded' width='100px' height='60px' alt='Imagen Producto'></td>";
-                        echo "<td>" . htmlspecialchars($row['cantidad']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['hora']) . "</td>";
-                        echo "<td>" . htmlspecialchars(number_format($row['subtotal'], 2)) . "</td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='8'>No se han realizado ventas</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</section>
-</div>
+                echo "<div class='col'>";
+                echo "<div class='card border border-ligth shadow-sm rounded-4 h-100'>";
 
-<script>
-    function mostrarToast(titulo, mensaje, tipo) {
-            let icon = '';
-            let alertClass = '';
+                echo "<div class='card-header text-center fw-semibold rounded-top-4' style='border-top-left-radius: 1rem; border-top-right-radius: 1rem;'>";
+                echo "<i class='fas fa-receipt me-2'></i> Venta Realizada";
+                echo "</div>";
 
-            switch (tipo) {
-                case 'success':
-                    icon = '<span class="fas fa-check-circle text-white fs-6"></span>';
-                    alertClass = 'alert-success';
-                    break;
-                case 'error':
-                    icon = '<span class="fas fa-times-circle text-white fs-6"></span>';
-                    alertClass = 'alert-danger';
-                    break;
-                case 'warning':
-                    icon = '<span class="fas fa-exclamation-circle text-white fs-6"></span>';
-                    alertClass = 'alert-warning';
-                    break;
-                case 'info':
-                    icon = '<span class="fas fa-info-circle text-white fs-6"></span>';
-                    alertClass = 'alert-info';
-                    break;
-                default:
-                    icon = '<span class="fas fa-info-circle text-white fs-6"></span>';
-                    alertClass = 'alert-info';
-                    break;
+                echo "<div class='card-body px-4 py-3 d-flex flex-column justify-content-between h-100'>";
+
+                    echo "<div class='d-flex justify-content-between mb-3 text-muted small'>";
+                    echo "<div><i class='fas fa-calendar-alt me-1'></i> " . htmlspecialchars($fecha_formateada) . "</div>";
+                    echo "<div><i class='fas fa-clock me-1'></i> " . htmlspecialchars($hora_formateada) . "</div>";
+                    echo "</div>";
+
+                    echo "<div class='mb-3'>";
+                    echo "<div class='fw-semibold text-body mb-1'><i class='fas fa-user me-2'></i>Cliente</div>";
+                    echo "<div class='text-muted'>" . htmlspecialchars($venta['nombre_completo']) . "</div>";
+                    echo "</div>";
+
+                    echo "<div class='row mb-3'>";
+                    echo "<div class='col-6'>";
+                    echo "<div class='fw-semibold text-body'><i class='fas fa-box me-2'></i>Artículos: " . htmlspecialchars($venta['total_articulos']) . "</div>";
+                    echo "</div>";
+
+                    echo "<div class='col-6 text-end'>";
+                    echo "<div class='fw-bold'>Total:\$ " . number_format($venta['total_compra'], 2) . "</div>";
+                    echo "</div>";
+                    echo "</div>";
+
+                    echo "<div class='mt-auto text-end'>";
+                    echo "<button class='btn btn-primary btn-sm rounded-pill px-4' onclick='verTicket(" . $venta['id_venta'] . ")' data-bs-toggle='tooltip' data-bs-placement='top' title='Ver ticket de venta'>";
+                    echo "<i class='fas fa-eye me-1'></i>";
+                    echo "</button>";
+                    echo "</div>";
+
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
             }
-
-            const alert = `
-            <div class="alert ${alertClass} d-flex align-items-center alert-dismissible fade show" role="alert">
-                <div class="me-2">${icon}</div>
-                <div>${titulo}: ${mensaje}</div>
-                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>`;
-
-            $("#Alert").html(alert);
-
-            setTimeout(() => {
-                $(".alert").alert('close');
-            }, 4000);
+            echo "</div>";
+        } else {
+            echo "<p class='text-center text-muted'>No se han realizado ventas.</p>";
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            <?php if (isset($_SESSION['status_message']) && isset($_SESSION['status_type'])): ?>
-                <?php if ($_SESSION["status_type"] === "warning"): ?>
-                    mostrarToast("Advertencia", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php elseif ($_SESSION["status_type"] === "error"): ?>
-                    mostrarToast("Error", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php elseif ($_SESSION["status_type"] === "info"): ?>
-                    mostrarToast("Info", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php else: ?>
-                    mostrarToast("Éxito", '<?= $_SESSION["status_message"] ?>', '<?= $_SESSION["status_type"] ?>');
-                <?php endif; ?>
-                <?php unset($_SESSION['status_message'], $_SESSION['status_type']); ?>
-            <?php endif; ?>
-        });
-</script>
+        ?>
+    </main>
+</div>
+</body>
+</html>

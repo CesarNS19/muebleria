@@ -4,20 +4,19 @@ require '../../mysql/connection.php';
 require 'slidebar.php';
 $title = "Muebleria ┃ Admin Customers";
 ?>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title><?php echo $title; ?></title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title><?php echo $title; ?></title>
-
+<body>
+<html>
 <div id="Alert" class="container"></div>
-
-<section class="company-header">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCustomerModal" style="float: right; margin: 10px;">
-            Agregar Cliente
-        </button>
-    </section>
 
 <!-- Modal para añadir cliente -->
 <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
@@ -129,9 +128,12 @@ $title = "Muebleria ┃ Admin Customers";
   </div>
 </div>
 
-<div id ="main-content" class="container-fluid">
-<section class="services-table container my-4">
+<div class="container-fluid d-flex">
+    <main class="flex-fill p-4 overflow-auto" id="main-content">
     <h2 class="fw-bold text-primary text-center">Administrar Clientes</h2>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCustomerModal" style="float: right; margin: 10px;">
+            Agregar Cliente
+        </button>
     <div class="table-responsive">
         <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
             <thead class="bg-primary text-white">
@@ -185,8 +187,7 @@ $title = "Muebleria ┃ Admin Customers";
                 ?>
             </tbody>
         </table>
-    </div>
-</section>
+    </main>
 </div>
 
 <script>
@@ -261,5 +262,6 @@ $title = "Muebleria ┃ Admin Customers";
                 <?php unset($_SESSION['status_message'], $_SESSION['status_type']); ?>
             <?php endif; ?>
         });
-
     </script>
+</body>
+</html>

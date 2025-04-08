@@ -40,13 +40,11 @@ $_SESSION['last_activity'] = time();
         margin-top: 1px;
         overflow-y: auto;
         max-height: calc(100vh - 90px);
-        background-color: white;
     }
-
 </style>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -170,11 +168,20 @@ $_SESSION['last_activity'] = time();
 
         <div id="content-wrapper" class="d-flex flex-column">
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand topbar mb-4 static-top shadow">
 
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
+
+                    <div class="input-group col-4">
+                        <input id="search" type="text" class="form-control border-0 small" placeholder="Buscar" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-primary border-0 text-white">
+                                <i class="fas fa-search fa-sm"></i>
+                            </span>
+                        </div>
+                    </div>
 
                     <ul class="navbar-nav ml-auto">
 
@@ -184,16 +191,45 @@ $_SESSION['last_activity'] = time();
 
                             echo "
                             <div class='nav-item' style='display: flex; align-items: center; margin-left: auto;'>
-                                <a class='nav-link' style='color: black; font-size: 15px; text-decoration: none; font-weight: normal;'>
+                                <a class='nav-link' font-size: 15px; text-decoration: none; font-weight: normal;'>
                                     $greeting $fullName
                                 </a>
                             </div>";
                         } else {
                             echo "<div class='nav-item' style='display: flex; align-items: center; margin-left: auto;'>
-                            <a class='nav-link' href='../../login/login.php' style='color: black; font-size: 15px; text-decoration: none; font-weight: normal;'>Iniciar Sesión</a>
+                            <a class='nav-link' href='../../login/login.php' font-size: 15px; text-decoration: none; font-weight: normal;'>Iniciar Sesión</a>
                              </div>";
                         }
                     ?>
+
+                    <li class="nav-item ps-2 pe-0">
+                            <div class="dropdown theme-control-dropdown">
+                                <a class="nav-link d-flex align-items-center dropdown-toggle fs-9 pe-1 py-0" href="#" 
+                                role="button" id="themeSwitchDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                    <span class="fas fa-sun fs-7" data-theme-dropdown-toggle-icon="light"></span>
+                                    <span class="fas fa-moon fs-7" data-theme-dropdown-toggle-icon="dark"></span>
+                                    <span class="fas fa-adjust fs-7" data-theme-dropdown-toggle-icon="auto"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-caret border py-0 mt-3"
+                                    aria-labelledby="themeSwitchDropdown">
+                                    <div class="rounded-2 py-2">
+                                        <button class="dropdown-item d-flex align-items-center gap-2" type="button" value="light" data-theme-control="theme">
+                                            <span class="fas fa-sun"></span> Light
+                                            <span class=" ms-auto text-600"></span>
+                                        </button>
+                                        <button class="dropdown-item d-flex align-items-center gap-2" type="button" value="dark" data-theme-control="theme">
+                                            <span class="fas fa-moon"></span> Dark
+                                            <span class=" ms-auto text-600"></span>
+                                        </button>
+                                        <button class="dropdown-item d-flex align-items-center gap-2" type="button" value="auto" data-theme-control="theme">
+                                            <span class="fas fa-adjust"></span> Auto
+                                            <span class=" ms-auto text-600"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -227,11 +263,43 @@ $_SESSION['last_activity'] = time();
     <script src="../../js/demo/chart-area-demo.js"></script>
     <script src="../../js/demo/chart-pie-demo.js"></script>
 
-    <script>
-         if (!document.cookie.includes("timezone")) {
+<script>
+    if (!document.cookie.includes("timezone")) {
         document.cookie = "timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone;
-        location.reload();
     }
-    </script>
+
+    const themeButtons = document.querySelectorAll('[data-theme-control="theme"]');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+
+    applyTheme(savedTheme);
+    updateDropdown(savedTheme);
+
+    themeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const theme = button.value;
+            localStorage.setItem('theme', theme);
+            applyTheme(theme);
+            updateDropdown(theme);
+        });
+    });
+
+    function applyTheme(theme) {
+        const html = document.documentElement;
+
+        if (theme === 'auto') {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            html.setAttribute('data-bs-theme', prefersDark ? 'dark' : 'light');
+        } else {
+            html.setAttribute('data-bs-theme', theme);
+        }
+    }
+
+    function updateDropdown(theme) {
+        const icons = document.querySelectorAll('[data-theme-dropdown-toggle-icon]');
+        icons.forEach(icon => {
+            icon.style.display = icon.dataset.themeDropdownToggleIcon === theme ? 'inline-block' : 'none';
+        });
+    }
+</script>
 </body>
 </html>

@@ -13,11 +13,6 @@ $title = "Muebleria ┃ Admin Employees";
 
 <div id="Alert" class="container"></div>
 
-<section class="company-header">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeesModal" style="float: right; margin: 10px;">
-            Agregar Empleado
-        </button>
-    </section>
     <div class="modal fade" id="addEmployeesModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeesModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -127,10 +122,12 @@ $title = "Muebleria ┃ Admin Employees";
   </div>
 </div>
 
-<div id ="main-content" class="container-fluid">
-<!-- Tabla de Empleados -->
-<section class="services-table container my-4">
+<div class="container-fluid d-flex">
+    <main class="flex-fill p-4 overflow-auto" id="main-content">
     <h2 class="fw-bold text-primary text-center">Administrar Empleados</h2>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeesModal" style="float: right; margin: 10px;">
+            Agregar Empleado
+        </button>
     <div class="table-responsive">
         <table class="table table-hover table-bordered text-center align-middle shadow-sm rounded-3">
             <thead class="bg-primary text-white">
@@ -184,8 +181,7 @@ $title = "Muebleria ┃ Admin Employees";
                 ?>
             </tbody>
         </table>
-    </div>
-</section>
+    </main>
 </div>
 
 <script>
